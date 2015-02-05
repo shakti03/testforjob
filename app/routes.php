@@ -26,6 +26,15 @@ Route::group(['before' => 'logged'], function() {
 
 });
 Route::get('/','HomeController@showHome');
+Route::post('/user/signup', [
+        "before" => "csrf",
+        'uses'   => "UserController@postSignup"
+]);
+Route::get('/user/signup', [
+        'uses' => "UserController@signup"
+]);
+Route::get('/user/email-confirmation', ['uses' => "Jacopo\\Authentication\\Controllers\\UserController@emailConfirmation"]);
+Route::get('/user/signup-success', 'Jacopo\Authentication\Controllers\UserController@signupSuccess');
 
 
 Route::get('test', function(){

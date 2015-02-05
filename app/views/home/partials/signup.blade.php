@@ -3,7 +3,7 @@
   <div class="modal-dialog">
     <div class="row">
         <div class="col-xs-8">
-            <div class="panel panel-info">
+            <div class="panel panel-primary btn-lg">
                 <div class="panel-heading">
                     <h3 class="panel-title bariol-thin">Please sign up for {{Config::get('laravel-authentication-acl::app_name')}}</h3>
                 </div>
@@ -74,7 +74,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span id="captcha-img-container">
-                                            @include('laravel-authentication-acl::client.auth.captcha-image')
+                                            @include('home.captcha-image')
                                         </span>
                                         <a id="captcha-gen-button" href="#" class="btn btn-small btn-info margin-left-5"><i class="fa fa-refresh"></i></a>
                                     </div>
@@ -93,28 +93,26 @@
                         </div>
                         <input type="submit" value="Register" class="btn btn-info btn-block">
                     </form>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 margin-top-10">
-                        {{link_to_action('Jacopo\Authentication\Controllers\AuthController@getClientLogin','Already have an account? Login here')}}
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 margin-top-10">
+                                {{link_to_action('Jacopo\Authentication\Controllers\AuthController@getClientLogin','Already have an account? Login here')}}
+                            </div>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-  {{-- Js files --}}
-  {{ HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/jquery-1.10.2.min.js') }}
-  {{ HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/password_strength/strength.js') }}
 
   <script>
     $(document).ready(function() {
       //------------------------------------
       // password checking
       //------------------------------------
-      var password1         = $('#password1'); //id of first password field
+      var password1     = $('#password1'); //id of first password field
       var password2     = $('#password2'); //id of second password field
-      var passwordsInfo     = $('#pass-info'); //id of indicator element
+      var passwordsInfo = $('#pass-info'); //id of indicator element
 
       passwordStrengthCheck(password1,password2,passwordsInfo);
 
@@ -123,9 +121,9 @@
       //------------------------------------
       $("#captcha-gen-button").click(function(e){
             e.preventDefault();
-
+            
             $.ajax({
-              url: "{{URL::to('user/signup')}}/captcha-ajax",
+              url: "{{URL::to('/')}}/captcha-ajax",
               method: "POST"
             }).done(function(image) {
               $("#captcha-img-container").html(image);
@@ -133,5 +131,4 @@
         });
     });
   </script>
-  </div>
-</div>
+
