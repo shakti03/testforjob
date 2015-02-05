@@ -1,0 +1,45 @@
+<?php $__env->startSection('container'); ?>
+<div style="background-color:#ccaacc;" class="col-md-12" id="videolist">
+            <div name="url" type="application/x-shockwave-flash" value="https://www.youtube.com/v/tdTqyalsLt8" style="text-align:center" class="col-md-2 videoIcon">
+            <a href="http://www.youtube.com/embed/L9szn1QQfas?autoplay=1" class="various iframe">Youtube (iframe)</a>
+            
+        </div>
+            <div name="url" type="application/x-shockwave-flash" value="https://www.youtube.com/v/Xn6xXBxCym0" style="text-align:center" class="col-md-2 videoIcon">
+            <img style="width:100%;margin:2px;" src="http://testforjob.tailorsthought.com/public/images/videoIcon.png" class="btn">
+            <span>you tube url</span>
+        </div>
+            <div name="url" type="application/x-shockwave-flash" value="https://www.youtube.com/v/https://www.youtube.com/watch?v=qq4v5ywVGgg" style="text-align:center" class="col-md-2 videoIcon">
+            <img style="width:100%;margin:2px;" src="http://testforjob.tailorsthought.com/public/images/videoIcon.png" class="btn">
+            <span>youtube vdieo test</span>
+        </div>
+            <div name="url" type="application/x-shockwave-flash" value="https://www.youtube.com/v/x07XGXCBUeg" style="text-align:center" class="col-md-2 videoIcon">
+            <img style="width:100%;margin:2px;" src="http://testforjob.tailorsthought.com/public/images/videoIcon.png" class="btn">
+            <span>youtube url 3</span>
+        </div>
+            <div name="url" type="application/x-shockwave-flash" value="https://www.youtube.com/v/tdTqyalsLt8" style="text-align:center" class="col-md-2 videoIcon">
+            <img style="width:100%;margin:2px;" src="http://testforjob.tailorsthought.com/public/images/videoIcon.png" class="btn">
+            <span>youtube 1</span>
+        </div>
+            <div name="url" type="application/x-shockwave-flash" value="https://www.youtube.com/v/kXbu1VoR1oY" style="text-align:center" class="col-md-2 videoIcon">
+            <img style="width:100%;margin:2px;" src="http://testforjob.tailorsthought.com/public/images/videoIcon.png" class="btn">
+            <span>youtube 2</span>
+        </div>
+            <div name="url" type="application/x-shockwave-flash" value="https://www.youtube.com/v/Xn6xXBxCym0" style="text-align:center" class="col-md-2 videoIcon">
+            <img style="width:100%;margin:2px;" src="http://testforjob.tailorsthought.com/public/images/videoIcon.png" class="btn">
+            <span>Xn6xXBxCym0</span>
+        </div>
+            <div name="url" type="application/x-shockwave-flash" value="https://www.youtube.com/v/qq4v5ywVGgg" style="text-align:center" class="col-md-2 videoIcon">
+            <img style="width:100%;margin:2px;" src="http://testforjob.tailorsthought.com/public/images/videoIcon.png" class="btn">
+            <span>youtube 4</span>
+        </div>
+            <div name="url" type="application/x-shockwave-flash" value="https://www.youtube.com/v/x07XGXCBUeg" style="text-align:center" class="col-md-2 videoIcon">
+            <img style="width:100%;margin:2px;" src="http://testforjob.tailorsthought.com/public/images/videoIcon.png" class="btn">
+            <span>youtube 5</span>
+        </div>
+            <div name="url" type="application/x-shockwave-flash" value="https://www.youtube.com/v/tdTqyalsLt8" style="text-align:center" class="col-md-2 videoIcon">
+            <img style="width:100%;margin:2px;" src="http://testforjob.tailorsthought.com/public/images/videoIcon.png" class="btn">
+            <span>youtube 6</span>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

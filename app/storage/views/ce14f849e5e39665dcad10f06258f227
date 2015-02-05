@@ -1,0 +1,61 @@
+<?php $__env->startSection('container'); ?>
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="row">
+    <?php foreach($testTypes as $key=>$value): ?>
+        <div class="col-md-4">
+            <div class="thumbnail bgDarkSlateGray padding10">
+                <h4 class="text-white font18"> <?php echo ucfirst($value); ?> Test</h4> 
+                <?php echo Form::select("select$key", [''=>'Select question type', 'objective'=>'Objective','subjective'=>'Subjective'], null,['class'=>'form-control borderNone testType','data-id'=>$key]); ?> 
+            </div>
+        </div>
+    <?php endforeach; ?>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+            <?php foreach($testOptions as $option): ?>
+                <div class="col-md-4">
+                    <div class="minHeight200" style="overflow: hidden;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><?php echo strtoupper($option); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody data-id="<?php echo $option; ?>" class="testOption">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="minHeight200" style="overflow: hidden;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>TEST HISTORY</th>
+                    </tr>
+                </thead>
+                <tbody class="testOption">
+                    <?php foreach($testHistory as $value): ?>
+                        <tr><td><a href="<?php echo URL::to('restart-test',$value->id); ?>"><?php echo $value->name.' test '.$value->test_index; ?></a></td></tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<?php echo $__env->make('test.partials.tests', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<button data-toggle="modal" data-target="#test-links" class="hide" id="showTests"></button>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footer_scripts'); ?>
+    <?php echo HTML::script('assets/js/test/home.js'); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

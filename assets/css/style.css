@@ -1,0 +1,12 @@
+.boldText{ font-weight: bolder; }
+section.content{float:left;width:100%; padding:1%; height:90%; min-height:500px; background:#fff;-webkit-box-shadow:  0px 0px 10px 0px rgba(136, 135, 135, 05);box-shadow:  0px 0px 10px 0px rgba(136, 135, 135, 05);-webkit-border-radius: 15px;border-radius: 15px;}
+.minHeight130{min-height: 130px;}
+.minHeight150{min-height: 150px;}
+.minHeight200{min-height: 150px;}
+.borderNone{border-radius: 0px;}
+.green{color:green;}
+.red{color:red;}
+.padding0{padding:0px;}
+.modal.modal-wide .modal-dialog {width: 95%;}
+.modal-wide .modal-body {overflow-y: auto;}
+#tallModal .modal-body p { margin-bottom: 900px }
