@@ -1,13 +1,21 @@
 <html>
     <head>
         <title> Test For Job </title>
-        {{ HTML::style('assets/css/bootstrap.min.css')}}
+        <!-- css -->
+        {{ HTML::style('assets/css/bootstrap.min.css') }}
+        {{ HTML::style('assets/css/bootstrap-theme.min.css') }}
+        {{ HTML::style('assets/css/style.css') }}
+        {{ HTML::style('assets/css/color-font.css') }}
         {{ HTML::style('assets/css/cindex.css')}}
-        {{ HTML::script('assets/js/jquery-1.10.2.min.js')}}
+        
+        <!-- js -->
+        {{ HTML::script('assets/js/jquery-1.10.2.min.js') }}
+        {{ HTML::script('assets/js/bootstrap.min.js') }}
         {{ HTML::script('assets/js/live_chat.js')}}
+        {{ HTML::script('assets/js/home/custom.js')}}
     </head>
     <body>
-        <div class="row header">
+        <div class="row header" style="z-index:2;">
             <div class="col-md-5">
                 <img src="assets/images/logo.png"/>
             </div>
@@ -21,8 +29,9 @@
                 </ul>
             </div>
             <div class="col-md-2">
-                <a class="btn btn-default" href="#">Login</a>
-                <a style="margin-left: -5px;" class="btn btn-warning" href="#">SignUp</a>
+                <a id="btnlogin" class="btn btn-default" data-target="#login" data-toggle="modal"  href="javascript:void(0);">Login</a>
+                <!-- <a class="btn btn-default boldText" href="{{URL::to('login')}}">Login</a> -->
+                <a style="margin-left: -5px;" class="btn borderNone btn-warning" href="{{URL::to('user/signup')}}">SignUp</a>
             </div>
         </div>
         
@@ -32,7 +41,7 @@
                 <img class="bg-img" src="assets/images/temp_feature1.png"/>
             </div>
             <div class="col-md-12">
-                <div class="fg-img">Nitin Solanki</div>
+                <div class="fg-img"></div>
             </div>
             
         </div>
@@ -237,5 +246,6 @@
                 </div>
             </div>
         </div>
+        @include('home.partials.login')
     </body>
 </html>

@@ -11,10 +11,30 @@
 |
 */
 
+<<<<<<< HEAD
 Route::get('/', function()
 {
 	//return  View::make('hello');
 	return  View::make('index');
+=======
+});
+
+Route::group(['before' => 'logged'], function() {
+
+	Route::get('/', 'HomeController@showHome');
+	Route::get('/login', 'HomeController@showHome');
+	Route::get('/home', 'TestController@showHome');
+	Route::get('/test-home', 'TestController@showHome');
+	Route::get('/get-subject-test/{id}', 'TestController@getSubjectTest');
+	Route::get('/start-test/{id}', 'TestController@startTest');
+	Route::get('/get-test-contents/{testType}/{questionType}', 'TestController@getTestContents');
+	Route::get('/get-tests/{testOption}/{id}/{testTypeId}','TestController@getTests');
+	Route::get('/get-question/{page}/','TestController@getQuestion');
+	Route::get('/upload-excel','FileController@getExcel');
+	Route::post('/upload-excel', 'FileController@postExcel');
+	Route::post('/submit-question', 'TestController@submitQuestion');
+	Route::get('/get-solution/{id}', 'TestController@getSolution');
+>>>>>>> 659831d24a196cd2f39e9b39c6e85e792e33fcdc
 	
 });
 
