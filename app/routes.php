@@ -5,7 +5,9 @@ Route::group(['before' => 'unlogged'], function(){
 });
 
 Route::group(['before' => 'logged'], function() {
-	Route::get('/', 'TestController@showHome');
+
+	Route::get('/', 'HomeController@showHome');
+	Route::get('/login', 'HomeController@showHome');
 	Route::get('/home', 'TestController@showHome');
 	Route::get('/test-home', 'TestController@showHome');
 	Route::get('/get-subject-test/{id}', 'TestController@getSubjectTest');
