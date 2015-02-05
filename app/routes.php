@@ -1,8 +1,15 @@
 <?php
 
-Route::group(['before' => 'unlogged'], function(){
-
-});
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the Closure to execute when that URI is requested.
+|
+*/
 
 Route::group(['before' => 'logged'], function() {
 
@@ -20,10 +27,6 @@ Route::group(['before' => 'logged'], function() {
 	Route::post('/submit-question', 'TestController@submitQuestion');
 	Route::get('/get-solution/{id}', 'TestController@getSolution');
 	
-	Route::post('/upload-video','FileController@uploadVideo');
-	Route::get('/videos','FileController@showVideos');
-	Route::get('/restart-test/{id}','TestController@restartTest');
-
 });
 Route::get('/','HomeController@showHome');
 Route::post('/user/signup', [
@@ -36,7 +39,9 @@ Route::get('/user/signup', [
 Route::get('/user/email-confirmation', ['uses' => "Jacopo\\Authentication\\Controllers\\UserController@emailConfirmation"]);
 Route::get('/user/signup-success', 'Jacopo\Authentication\Controllers\UserController@signupSuccess');
 
-
-Route::get('test', function(){
-	TestHistory::getTestHistory();
-});
+//Route::get('chat', array('uses' => 'ChatController@getIndex'));
+//Route::get('chat/new', array( 'as'=>'new_cuser', 'uses' => 'ChatController@newCuser'));
+Route::any('chat/create', array( 'as'=>'create_cuser', 'uses' => 'ChatController@createCuser'));
+Route::any('chat/sendchat', array( 'as'=>'chat_window', 'uses' => 'ChatController@sendChat'));
+Route::any('chat/receivechat', array( 'as'=>'chat_window', 'uses' => 'ChatController@receiveChat'));
+//Route::any('chat/viewchat', array( 'as'=>'view_chat', 'uses' => 'ChatController@viewChat'));
