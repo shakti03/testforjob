@@ -21,7 +21,11 @@ Route::group(['before' => 'logged'], function() {
 	Route::post('/upload-video','FileController@uploadVideo');
 	Route::get('/videos','FileController@showVideos');
 	Route::get('/restart-test/{id}','TestController@restartTest');
+
 });
+Route::get('/','HomeController@showHome');
+
+
 Route::get('test', function(){
 	TestHistory::getTestHistory();
 });
