@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'testforjob@tailorsthought.com', 'name' => 'test'),
+	'from' => array('address' => 'testforjob@tailorsthought.com', 'name' => 'Test for job'),
 
 	/*
 	|--------------------------------------------------------------------------

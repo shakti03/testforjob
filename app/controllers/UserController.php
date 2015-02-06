@@ -67,7 +67,7 @@ class UserController extends Controller {
     public function signupSuccess()
     {
         $email_confirmation_enabled = Config::get('laravel-authentication-acl::email_confirmation');
-        return $email_confirmation_enabled ? View::make('home.signup-email-confirmation') : View::make('home.signup-success');
+        return $email_confirmation_enabled ? Redirect::back()->with('signup_success',true) : View::make('home.signup-success');
     }
 
     public function emailConfirmation()
@@ -83,6 +83,22 @@ class UserController extends Controller {
             return View::make('home.email-confirmation')->withErrors($this->register_service->getErrors());
         }
         return View::make('home.email-confirmation');
+    }
+
+    public function postReminder()
+    {
+        $email = Input::get('email');
+
+        try
+        {
+            $this->reminder->send($email);
+            return Redirect::to("/user/reminder-success");
+        }
+        catch(JacopoExceptionsInterface $e)
+        {
+            $errors = $this->reminder->getErrors();
+            return Redirect::back()->withErrors($errors);
+        }
     }
 
 }

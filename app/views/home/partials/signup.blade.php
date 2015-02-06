@@ -1,15 +1,16 @@
 <!-- Modal -->
-<div style="top:44px;right:-251px;" class="modal fade" id="signup" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="row">
-        <div class="col-xs-8">
+        <div class="col-xs-12 col-md-9 col-md-offset-3">
             <div class="panel panel-primary btn-lg">
                 <div class="panel-heading">
+                    <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span></button>
                     <h3 class="panel-title bariol-thin">Please sign up for {{Config::get('laravel-authentication-acl::app_name')}}</h3>
                 </div>
                 <?php $message = Session::get('message'); ?>
                 @if( isset($message) )
-                <div class="alert alert-success">{{$message}}</div>
+                <div id="alert_msg" class="alert alert-success">{{$message}}</div>
                 @endif
                 <div class="panel-body">
                     {{Form::open(["action" => 'Jacopo\Authentication\Controllers\UserController@postSignup', "method" => "POST", "id" => "user_signup"])}}
@@ -22,7 +23,7 @@
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                         {{Form::text('first_name', '', ['id' => 'first_name', 'class' => 'form-control', 'placeholder' => 'First Name', 'required', 'autocomplete' => 'off'])}}
                                     </div>
-                                    <span class="text-danger">{{$errors->first('first_name')}}</span>
+                                    <span class="text-danger err_msg">{{$errors->first('first_name')}}</span>
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
@@ -31,7 +32,7 @@
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                         {{Form::text('last_name', '', ['id' => 'last_name', 'class' => 'form-control', 'placeholder' => 'Last Name', 'required', 'autocomplete' => 'off'])}}
                                     </div>
-                                    <span class="text-danger">{{$errors->first('last_name')}}</span>
+                                    <span class="text-danger err_msg">{{$errors->first('last_name')}}</span>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +42,7 @@
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                 {{Form::email('email', '', ['id' => 'email', 'class' => 'form-control', 'placeholder' => 'Email address', 'required', 'autocomplete' => 'off'])}}
                             </div>
-                            <span class="text-danger">{{$errors->first('email')}}</span>
+                            <span class="text-danger err_msg">{{ ucfirst($errors->first('email'))}}</span>
                         </div>
 
                         <div class="row">
@@ -51,7 +52,7 @@
                                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                                         {{Form::password('password', ['id' => 'password1', 'class' => 'form-control', 'placeholder' => 'Password', 'required', 'autocomplete' => 'off'])}}
                                     </div>
-                                    <span class="text-danger">{{$errors->first('password')}}</span>
+                                    <span class="text-danger err_msg">{{$errors->first('password')}}</span>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -87,7 +88,7 @@
                                         {{Form::text('captcha_text',null, ['class'=> 'form-control', 'placeholder' => 'Fill in with the text of the image', 'required', 'autocomplete' => 'off'])}}
                                     </div>
                                 </div>
-                                <span class="text-danger">{{$errors->first('captcha_text')}}</span>
+                                <span class="text-danger err_msg">{{$errors->first('captcha_text')}}</span>
                             </div>
                             @endif
                         </div>
@@ -95,7 +96,8 @@
                     </form>
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 margin-top-10">
-                                {{link_to_action('Jacopo\Authentication\Controllers\AuthController@getClientLogin','Already have an account? Login here')}}
+                                <a href="javascript:void(0);" data-toggle="modal" data-target="#login" id="signupLogin">Already have an account? Login here</a>
+                                
                             </div>
                         </div>
                     </div>

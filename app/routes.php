@@ -36,9 +36,16 @@ Route::post('/user/signup', [
 Route::get('/user/signup', [
         'uses' => "UserController@signup"
 ]);
-Route::get('/user/email-confirmation', ['uses' => "Jacopo\\Authentication\\Controllers\\UserController@emailConfirmation"]);
-Route::get('/user/signup-success', 'Jacopo\Authentication\Controllers\UserController@signupSuccess');
-
+// Route::get('/user/email-confirmation', ['uses' => "UserController@emailConfirmation"]);
+Route::get('/user/signup-success', 'UserController@signupSuccess');
+Route::get('/user/reminder-success', function ()
+{
+    return Redirect::back()->with('reminder-success', true);
+});
+Route::post('/user/reminder', [
+        "before" => "csrf",
+        'uses'   => "UserController@postReminder"
+]);
 //Route::get('chat', array('uses' => 'ChatController@getIndex'));
 //Route::get('chat/new', array( 'as'=>'new_cuser', 'uses' => 'ChatController@newCuser'));
 Route::any('chat/create', array( 'as'=>'create_cuser', 'uses' => 'ChatController@createCuser'));

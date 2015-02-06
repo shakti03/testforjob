@@ -1,8 +1,8 @@
 <!-- Modal -->
-<div style="top:44px;right:-251px;" class="modal fade" id="login" tabindex="-1" role="dialog" aria-hidden="false">
+<div  class="modal fade" id="login" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="row">
-        <div class="col-xs-9">
+        <div class="col-xs-12 col-md-9 col-md-offset-3">
             <div class="panel panel-primary btn-lg">
                 <div class="panel-heading">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -41,12 +41,14 @@
                     {{Form::checkbox('remember')}}
                     <input type="submit" value="Login" class="btn btn-info btn-block">
                     {{Form::close()}}
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 margin-top-10">
-            {{link_to_action('Jacopo\Authentication\Controllers\AuthController@getReminder','Forgot password?')}}
-            or <a href="{{URL::action('Jacopo\Authentication\Controllers\UserController@signup')}}"><i class="fa fa-sign-in"></i> Signup here</a>
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 margin-top-10">
+                            
+                            <a href="javascript:void(0);" data-toggle="modal" data-target="#forgetpassword" id="btnforget">Forget password</a>
+                            or
+                            <a href="javascript:void(0);" data-toggle="modal" data-target="#signup" id="loginSignup"><i class="fa fa-sign-in"></i> Signup here</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

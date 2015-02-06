@@ -18,9 +18,14 @@
 
     </head>
     <body>
+        @if(Session::has('reminder-success'))
+            afafafaaaaaaaaaa
+        @endif
         <div class="row header" style="z-index:2;">
-            <div class="col-md-5">
-                <img src="{{URL::to('/')}}/assets/images/logo.png"/>
+            <div class="col-md-2">
+                <img style="height: 50px;" src="{{URL::to('/')}}/assets/images/1.jpg"/>
+            </div>
+            <div class="col-md-3">&nbsp;
             </div>
             <div class="col-md-5">
                 <ul>
@@ -34,7 +39,7 @@
             <div class="col-md-2">
                 <a id="btnlogin" class="btn btn-default" data-target="#login" data-toggle="modal"  href="javascript:void(0);">Login</a>
 
-                <a style="margin-left: -5px;" class="btn borderNone btn-warning" data-target="#signup" data-toggle="modal"  href="javascript:void(0);">SignUp</a>
+                <a id="btnSignup" style="margin-left: -5px;" class="btn borderNone btn-warning" data-target="#signup" data-toggle="modal"  href="javascript:void(0);">SignUp</a>
             </div>
         </div>
         
@@ -251,5 +256,6 @@
         </div>
         @include('home.partials.login')
         @include('home.partials.signup')
+        @include('home.partials.forget-password')
     </body>
 </html>
