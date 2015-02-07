@@ -28,15 +28,28 @@
         </div>
         
         <!-- Slider -->
-        <div class="row slider">
-            <div class="col-md-12">
-                <img class="bg-img" src="images/temp_feature1.png"/>
+        <div class="row ">
+            <div class="col-md-12 below-head">
+                <!--<img width="100%" src="images/temp_feature1.png"/>-->
             </div>
-            <div class="col-md-12">
-                <div class="fg-img">Nitin Solanki</div>
-            </div>
-            
         </div>
+        <div class="row">
+            <div class="col-md-12 slider">
+                <img width="105%" src="images/temp_feature1.png"/>
+            </div>
+            <!--<div class="col-md-12">
+                <div class="fg-img">Nitin Solanki</div>
+            </div>-->
+        </div>
+        <!--<div class="row">
+            <div class="col-md-12">
+                <img class="" src="images/temp_feature1.png"/>
+            </div>-->
+            <!--<div class="col-md-12">
+                <div class="fg-img">Nitin Solanki</div>
+            </div>-->
+            
+        <!--</div>-->
         
         <!-- Features Info -->
         <div class="feature">
@@ -77,7 +90,7 @@
         </div>
         
         <!-- Second Features Info -->
-        <div class="feature">
+        <div class="feature" style="margin-top:0%;">
             <div class="container">
                 <div class="col-md-12">
                     <h1 class="col-md-9">Features</h1>
