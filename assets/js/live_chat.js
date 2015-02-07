@@ -31,11 +31,15 @@ $(document).ready(function () {
                 $('.live-chat').hide();
                 $('.live-chat-window').show();
                 if (data) {
-                    $('.live-chat-window').append("<div class='chat_div'></div>");
-                    $('.chat_div').append('<div>Live Chat<a><img class="img-circle float close-chat" width="25px;" src="images/icon_close.png"/></a></div>');
-                    $('.chat_div').append("<div id='div_chat_"+ data['fid'] +"'><input type=\"hidden\" id=\"hide_" + data['fid'] + "\" value='"+JSON.stringify(data)+"'/>");
-                    $('#div_chat_'+ data['fid']).append("<div style='overflow-x:auto; height:70%;' id=\"chat_" + data['fid'] + "\"></div><br>");
+                    $('.live-chat-window').append("<div class='chat-div'></div>");
+                    $('.chat-div').append('<div class="live-chat-close">Live Chat<a><img class="float close-chat" width="25px;" src="images/icon_close.png"/></a></div>');
+                    $('.chat-div').append("<div class='online-chat-window' id='div_chat_"+ data['fid'] +"'><input type=\"hidden\" id=\"hide_" + data['fid'] + "\" value='"+JSON.stringify(data)+"'/>");
+                    $('#div_chat_'+ data['fid']).append("<div style='overflow-y:auto; height:60%;' id=\"chat_" + data['fid'] + "\"></div><br>");
                     $('#div_chat_'+ data['fid']).append("<input class=\"msg\" id=\"msg_" + data['fid'] + "\" type=\"text\" /></div>");
+                }
+                else {
+                    $('.live-chat-window').append("<div class='chat-div'>You are Online. <br></div>");
+                    //$('.chat-div').append('<div class=\'online-chat-window\' >  Let\'s Chat with Online Users<br>Wait for someone to chat with you...</div>');
                 }
             },
             error: function(xhr, status, error) {
@@ -61,16 +65,16 @@ $(document).ready(function () {
                             keys = Object.keys(data);
                             //console.log(keys);
                             if (((keys[0].split('_'))[0]) == 'activechat') {
-                                //console.log("create new block");
+                                console.log("create new block");
                                 $.each(data, function(k, v){
-                                    //$create_div = "<div id='chat_div'></div>";
+                                    //$create_div = "<div id='chat-div'></div>";
                                     temp = JSON.stringify(v);
                                     //console.log(temp);
                                     //console.log(v);
-                                    $('.live-chat-window').append("<div class='chat_div'></div>");
-                                    $('.chat_div').append('<div>Live Chat<a><img class="img-circle float close-chat" width="25px;" src="images/icon_close.png"/></a></div>');
-                                    $('.chat_div').append("<div id='div_chat_"+ (k.split('_')[1]) +"'><input id='hide_"+ (k.split('_')[1]) +"' type='hidden' value='"+ JSON.stringify(v) + "' />");
-                                    $('#div_chat_'+(k.split('_')[1])).append("<div style='overflow-x:auto; height:70%;'  id='chat_"+ (k.split('_')[1]) +"'></div>");
+                                    $('.live-chat-window').append("<div class='chat-div'></div>");
+                                    $('.chat-div').append('<div class="live-chat-close">Live Chat<a><img class="float close-chat" width="25px;" src="images/icon_close.png"/></a></div>');
+                                    $('.chat-div').append("<div class='online-chat-window' id='div_chat_"+ (k.split('_')[1]) +"'><input id='hide_"+ (k.split('_')[1]) +"' type='hidden' value='"+ JSON.stringify(v) + "' />");
+                                    $('#div_chat_'+(k.split('_')[1])).append("<div style='overflow-y:auto; height:60%;' id='chat_"+ (k.split('_')[1]) +"'></div>");
                                     $('#div_chat_'+ (k.split('_')[1])).append("<input class='msg' id='msg_"+ (k.split('_')[1]) +"' type='text' /><br></div>");
                                 });
                             }
@@ -83,14 +87,24 @@ $(document).ready(function () {
                                         rev_data['fid'] = v['fid']
                                         rev_data['sender'] = v['receiver']
                                         rev_data['receiver'] = v['sender']
-                                        $('.live-chat-window').append("<div class='chat_div'></div>");
-                                        $('.chat_div').append('<div>Live Chat<a><img class="img-circle float close-chat" width="25px;" src="images/icon_close.png"/></a></div>');
-                                        $('.chat_div').append("<div id='div_chat_"+ v['fid'] +"'><input id='hide_"+ v['fid'] +"' type='hidden' value='"+ JSON.stringify(rev_data) + "' />");
-                                        $('#div_chat_'+ v['fid']).append("<div style='overflow-x:auto; height:70%;'  id='chat_"+ v['fid'] +"'></div>");
+                                        $('.live-chat-window').append("<div class='chat-div'></div>");
+                                        $('.chat-div').append('<div class="live-chat-close">Live Chat<a><img class="float close-chat" width="25px;" src="images/icon_close.png"/></a></div>');
+                                        $('.chat-div').append("<div class='online-chat-window' id='div_chat_"+ v['fid'] +"'><input id='hide_"+ v['fid'] +"' type='hidden' value='"+ JSON.stringify(rev_data) + "' />");
+                                        $('#div_chat_'+ v['fid']).append("<div style='overflow-y:auto; height:60%;' id='chat_"+ v['fid'] +"'></div>");
                                         $('#div_chat_'+ v['fid']).append("<input class='msg' id='msg_"+ v['fid'] +"' type='text' /><br></div>");
                                     }
                                     //console.log("appending...");
-                                    $("#chat_"+v['fid']).append(v['sender'] +": " +  v['msg'] + "<br>");
+                                    if (v['msg'].length >= 20) {
+                                        for (i=0; i<(v['msg'].length); i+=20) {
+                                            $("#chat_"+v['fid']).append(v['sender'] +": " +  v['msg'].substring(i,20) + "<br>");
+                                        }
+                                    }
+                                    else{
+                                        $("#chat_"+v['fid']).append(v['sender'] +": " +  v['msg'] + "<br>");
+                                    }
+                                    $('#chat_'+v['fid']).animate({
+                                        scrollTop: ($('#chat_'+v['fid']).scrollTop()+20)
+                                    }, 100);
                                 });
                             }
                         }
@@ -128,8 +142,19 @@ $(document).ready(function () {
                             success: function (data) {
                             //console.log("sending..."+data);
                             //console.log(data);
-                            $(this.id).val('');
-                            $('#chat_'+msg_id).append(data['active_chat']['sender'] +": " +  data['msg']  + "<br>");
+                            $('#msg_'+msg_id).val('');
+                            if (data['msg'].length >= 20) {
+                                for (i=0; i<(data['msg'].length); i+=20) {
+                                    $("#chat_"+msg_id).append(data['active_chat']['sender'] +": " +  data['msg'].substring(i,20) + "<br>");
+                                }
+                            }
+                            else{
+                                $("#chat_"+msg_id).append(data['active_chat']['sender'] +": " +  data['msg'] + "<br>");
+                            }
+                            //$('#chat_'+msg_id).append(data['active_chat']['sender'] +": " +  data['msg']  + "<br>");
+                            $('#chat_'+msg_id).animate({
+                                scrollTop: ($('#chat_'+msg_id).scrollTop()+20)
+                            }, 100);
                             },
                             error: function(xhr, status, error) {
                                 //var err = eval("(" + xhr.responseText + ")");
