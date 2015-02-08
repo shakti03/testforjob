@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="top:30px;">
     <div class="row">
         <div class="col-xs-12 col-md-9 col-md-offset-3">
             <div class="panel panel-primary btn-lg">
