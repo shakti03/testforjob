@@ -48,10 +48,7 @@ Route::get('/user/reminder-success', function ()
 {
     return Redirect::back()->with('reminder-success', true);
 });
-Route::post('/user/reminder', [
-        "before" => "csrf",
-        'uses'   => "UserController@postReminder"
-]);
+// Route::post('/user/reminder', ["before" => "csrf",'uses'   => "UserController@postReminder"]);
 //Route::get('chat', array('uses' => 'ChatController@getIndex'));
 //Route::get('chat/new', array( 'as'=>'new_cuser', 'uses' => 'ChatController@newCuser'));
 Route::any('chat/create', array( 'as'=>'create_cuser', 'uses' => 'ChatController@createCuser'));
