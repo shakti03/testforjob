@@ -5,6 +5,7 @@
             <link href="css/cindex.css" rel="stylesheet">
             <script src="js/jquery.1.9.1.js" type="text/javascript"></script>
             <script src="js/live_chat.js" type="text/javascript"></script>
+            <script src="js/carousel.js"></script>
     </head>
     <body>
         <div class="row header">
@@ -27,20 +28,77 @@
             </div>
         </div>
         
-        <!-- Slider -->
         <div class="row ">
             <div class="col-md-12 below-head">
+                <h3 class="text-center">TEST FOR JOB</h3>
                 <!--<img width="100%" src="images/temp_feature1.png"/>-->
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 slider">
-                <img width="105%" src="images/temp_feature1.png"/>
-            </div>
-            <!--<div class="col-md-12">
-                <div class="fg-img">Nitin Solanki</div>
-            </div>-->
+        <!--<div class="row">-->
+        <!--    <div class="col-md-12 slider">-->
+        <!--        <img width="105%" src="images/a1.jpg"/>-->
+        <!--    </div>-->
+        <!--    <!--<div class="col-md-12">-->
+        <!--        <div class="fg-img">Nitin Solanki</div>-->
+        <!--    </div>-->
+        <!--</div>-->
+
+<!-- Slider -->
+<div class="row-fluid">
+    <div id="carousel-example-generic" class="col-md-12 carousel slider" data-ride="carousel">
+     
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+      </ol>
+
+      <!-- Slider Content (Wrapper for slides )-->
+      <div class="carousel-inner">
+        <div class="item active">
+          <img width="100%" src="images/a1.jpg">
+            <!--<div class="carousel-caption">-->
+            <!--</div>-->
         </div>
+        <div class="item">
+          <img width="100%" src="images/a2.jpg">
+            <!--<div class="carousel-caption">-->
+            <!--</div>-->
+        </div>
+        <div class="item">
+          <img width="100%" src="images/a3.jpg">
+            <!--<div class="carousel-caption">-->
+            <!--</div>-->
+        </div>
+        <div class="item">
+          <img width="100%" src="images/a4.jpg">
+            <!--<div class="carousel-caption">-->
+            <!--</div>-->
+        </div>
+        <div class="item">
+          <img width="100%" src="images/a5.jpg">
+            <!--<div class="carousel-caption">-->
+            <!--</div>-->
+        </div>
+      </div>
+     
+      <!-- Controls -->
+      
+      <a style="height:0%" class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+        <span style="margin-top:50%;"  class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+      <a style="height:0%" class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+        <span style="margin-top:50%;" class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+    </div>
+</div>
+        
+        
+        
+        
         <!--<div class="row">
             <div class="col-md-12">
                 <img class="" src="images/temp_feature1.png"/>
@@ -48,7 +106,7 @@
             <!--<div class="col-md-12">
                 <div class="fg-img">Nitin Solanki</div>
             </div>-->
-            
+
         <!--</div>-->
         
         <!-- Features Info -->
