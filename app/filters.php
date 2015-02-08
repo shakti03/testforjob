@@ -90,7 +90,7 @@ Route::filter('csrf', function()
 });
 
 Route::filter('logged', function ($request, $response, $custom_url = null) {
-    $redirect_url = $custom_url ?: '/login';
+    $redirect_url = $custom_url ?: '/';
     if(!App::make('authenticator')->check())
      return Redirect::to($redirect_url);
 });

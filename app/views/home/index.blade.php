@@ -13,8 +13,13 @@
         {{ HTML::script('assets/js/jquery-1.10.2.min.js') }}
         {{ HTML::script('assets/js/vendor/password_strength/strength.js') }}
         {{ HTML::script('assets/js/bootstrap.min.js') }}
-        <?php //HTML::script('assets/js/live_chat.js') ?>
+        {{ HTML::script('assets/js/live_chat.js') }}
         {{ HTML::script('assets/js/home/custom.js')}}
+
+        <script type="text/javascript">
+            base_url = "{{ URL::to('/')}}";
+        </script> 
+        
 
     </head>
     <body>

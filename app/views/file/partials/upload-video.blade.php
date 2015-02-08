@@ -11,7 +11,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label">Enter a title</label>
           <div class="col-sm-9">
-             {{ Form::text('title',null,['class'=>'form-control','placeholder'=>'Enter video title'])}}
+             {{ Form::text('title',null,['class'=>'form-control','placeholder'=>'Enter video title','required'])}}
           </div>
         </div>
 <!--         <div class="form-group">
