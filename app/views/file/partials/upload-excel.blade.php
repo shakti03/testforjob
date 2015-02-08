@@ -14,19 +14,19 @@
         <div class="form-group">
           <label class="col-sm-3 control-label">Test type</label>
           <div class="col-sm-9">
-             {{ Form::select('test_type',$testTypes,null,['class'=>'form-control'])}}
+             {{ Form::select('test_type',$testTypes,null,['class'=>'form-control','required'])}}
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-3 control-label">Question type</label>
           <div class="col-sm-9">
-            {{ Form::select('question_type',[''=>'Select question type', 'objective'=>'Objective','subjective'=>'Subjective'],null,['class'=>'form-control'])}}
+            {{ Form::select('question_type',[''=>'Select question type', 'objective'=>'Objective','subjective'=>'Subjective'],null,['class'=>'form-control','required'])}}
           </div>
         </div>
         <div class="form-group">
           <label  class="col-sm-3 control-label"> Excel file </label>
           <div class="col-sm-9">
-            {{ Form::file('uploadFile', ['class'=>'form-control padding0'])}}<br>
+            {{ Form::file('uploadFile', ['class'=>'form-control padding0','required'])}}<br>
           </div>
         </div>
       </div>

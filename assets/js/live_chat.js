@@ -22,7 +22,7 @@ $(document).ready(function () {
         var chat_uname = $('#chat_uname').val();
         var send_data = {'chat_uname':chat_uname};
         $.ajax({
-            url:  'http://localhost/laravel-master/public/chat/create',
+            url:  base_url+'/chat/create',
             type: 'post',
             data: send_data,
             dataType: 'json',
@@ -55,7 +55,7 @@ $(document).ready(function () {
                 //var sender = $("#cuser").val();
                 //var send_data = {"sender":sender , "reciever":reciever, "msg":msg, "status": 0};
                 $.ajax({
-                    url:  'http://localhost/laravel-master/public/chat/receivechat',
+                    url:  base_url+'/chat/receivechat',
                     type: 'post',
                     dataType: 'json',
                     success: function(data){
@@ -135,7 +135,7 @@ $(document).ready(function () {
                 var send_data = {"active_chat":active_chat , "msg":msg, "status": 0};
                 //console.log(send_data);
                 $.ajax({
-                            url:  'http://localhost/laravel-master/public/chat/sendchat',
+                            url:  base_url+'/chat/sendchat',
                             type: 'post',
                             data: send_data,
                             dataType: 'json',

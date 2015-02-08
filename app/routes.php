@@ -12,9 +12,7 @@
 */
 
 Route::group(['before' => 'logged'], function() {
-
-	Route::get('/', 'HomeController@showHome');
-	Route::get('/login', 'HomeController@showHome');
+	Route::get('/','HomeController@showHome');
 	Route::get('/home', 'TestController@showHome');
 	Route::get('/test-home', 'TestController@showHome');
 	Route::get('/get-subject-test/{id}', 'TestController@getSubjectTest');
@@ -26,9 +24,17 @@ Route::group(['before' => 'logged'], function() {
 	Route::post('/upload-excel', 'FileController@postExcel');
 	Route::post('/submit-question', 'TestController@submitQuestion');
 	Route::get('/get-solution/{id}', 'TestController@getSolution');
+	Route::get('/videos', 'FileController@showVideos');
+	Route::post('/upload-video', 'FileController@uploadVideo');
+	
+	Route::get('/restart-test/{id}', function(){
+		return Redirect::back()->with('flash_notice',['type'=>'danger','msg'=>'Test History not available']);
+	});
 	
 });
-Route::get('/','HomeController@showHome');
+
+Route::get('/login', 'HomeController@showHome');
+
 Route::post('/user/signup', [
         "before" => "csrf",
         'uses'   => "UserController@postSignup"
