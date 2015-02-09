@@ -56,6 +56,7 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 			'database'  => 'testforjob',
+                        'unix_socket' => '/var/run/mysqld/mysqld.sock',
 			'username'  => 'root',
 			'password'  => 'root',
 			'charset'   => 'utf8',

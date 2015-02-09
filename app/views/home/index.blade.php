@@ -27,18 +27,19 @@
             afafafaaaaaaaaaa
         @endif
         <div class="row header" style="z-index:2;">
-            <div class="col-md-2">
-                <img style="height: 50px;" src="{{URL::to('/')}}/assets/images/1.jpg"/>
+            <div class="col-md-2">                TEST FOR JOB
+                <!--<img style="height: 50px;" src="{{URL::to('/')}}/assets/images/1.jpg"/>-->
             </div>
             <div class="col-md-3">&nbsp;
             </div>
             <div class="col-md-5">
-                <ul>
-                    <li>What is SmarT?</li>
-                    <li>FAQ</li>
-                    <li>User Stories</li>
-                    <li>Plans</li>
-                    <li>Schools</li>
+                <ul>
+                    <li>IT-Freshers</li>
+                    <li>IT-Experience</li>
+                    <li>IT-Technologies</li>
+                    <li>Test Series</li>
+                    <li>About Us</li>
+                    <li>Contact Us</li>
                 </ul>
             </div>
             <div class="col-md-2">
