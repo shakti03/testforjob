@@ -1,5 +1,5 @@
-<?php
-
-class video extends BaseModel {
-	protected $fillable = ['title','link','thumbnail'];
+<?php
+
+class video extends BaseModel {
+	protected $fillable = ['title','link','thumbnail'];
 }

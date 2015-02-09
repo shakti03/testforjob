@@ -1,5 +1,5 @@
-<?php
-
-class TestType extends BaseModel {
-
+<?php
+
+class TestType extends BaseModel {
+
 }

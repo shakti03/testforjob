@@ -1,5 +1,5 @@
-<?php
-
-function test(){
-	echo "test";
+<?php
+
+function test(){
+	echo "test";
 }

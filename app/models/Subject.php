@@ -1,5 +1,5 @@
-<?php
-
-class Subject extends BaseModel {
-
+<?php
+
+class Subject extends BaseModel {
+
 }

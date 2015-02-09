@@ -125,7 +125,6 @@ return array(
 		'Maatwebsite\Excel\ExcelServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
-		'Chumper\Datatable\DatatableServiceProvider',
 	),
 
 	/*
@@ -194,7 +193,6 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Excel' 		  => 'Maatwebsite\Excel\Facades\Excel',
 		'Debugbar'		  => 'Barryvdh\Debugbar\Facade',
-		'Datatable' 	  => 'Chumper\Datatable\Facades\DatatableFacade',
 
 	),
 

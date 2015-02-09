@@ -1,5 +1,5 @@
-<?php
-
-class Company extends BaseModel {
-	protected $fillable = ['name'];
+<?php
+
+class Company extends BaseModel {
+	protected $fillable = ['name'];
 }
