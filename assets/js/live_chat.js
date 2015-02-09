@@ -37,11 +37,71 @@ $(document).ready(function () {
                     $('#div_chat_'+ data['fid']).append("<div style='overflow-y:auto; height:60%;' id=\"chat_" + data['fid'] + "\"></div><br>");
                     $('#div_chat_'+ data['fid']).append("<input class=\"msg\" id=\"msg_" + data['fid'] + "\" type=\"text\" /></div>");
                 }
-                else {
+                   else {
                     $('.live-chat-window').append("<div class='chat-div'>You are Online. <br></div>");
                     //$('.chat-div').append('<div class=\'online-chat-window\' >  Let\'s Chat with Online Users<br>Wait for someone to chat with you...</div>');
                 }
-                setInterval(function() {
+                
+            },
+            error: function(xhr, status, error) {
+                //var err = eval("(" + xhr.responseText + ")");
+                //console.log(xhr.responseText);
+            }
+        });
+    });
+    
+    // Start Chat Code
+    
+    
+        
+            $(".live-chat-window").on('keyup', '.msg', function(e){
+                if (e.which== 13) {
+                var msg_id = $((this.id).split('_'))[1];
+                var msg = $(this).val();
+                var active_chat = $("#hide_"+msg_id).val();
+                //console.log("msg");
+                active_chat = JSON.parse(active_chat);
+                ////console.log(typeof(active_chat) + active_chat);
+                //if (active_chat != "[object Object]") {
+                //    active_chat = JSON.parse(active_chat);
+                //}
+                //else {
+                //    active_chat = JSON.stringify(active_chat);
+                //    
+                //}
+                ////console.log(active_chat['fid']);
+                var send_data = {"active_chat":active_chat , "msg":msg, "status": 0};
+                //console.log(send_data);
+                $.ajax({
+                            url:  base_url+'/chat/sendchat',
+                            type: 'post',
+                            data: send_data,
+                            dataType: 'json',
+                            success: function (data) {
+                            //console.log("sending..."+data);
+                            //console.log(data);
+                            $('#msg_'+msg_id).val('');
+                            if (data['msg'].length >= 20) {
+                                for (i=0; i<(data['msg'].length); i+=20) {
+                                    $("#chat_"+msg_id).append(data['active_chat']['sender'] +": " +  data['msg'].substring(i,20) + "<br>");
+                                }
+                            }
+                            else{
+                                $("#chat_"+msg_id).append(data['active_chat']['sender'] +": " +  data['msg'] + "<br>");
+                            }
+                            //$('#chat_'+msg_id).append(data['active_chat']['sender'] +": " +  data['msg']  + "<br>");
+                            $('#chat_'+msg_id).animate({
+                                scrollTop: ($('#chat_'+msg_id).scrollTop()+20)
+                            }, 100);
+                            },
+                            error: function(xhr, status, error) {
+                                //var err = eval("(" + xhr.responseText + ")");
+                                //console.log(xhr.responseText);
+                            }
+                    });
+                }
+            });
+});setInterval(function() {
                     //var sender = $("#cuser").val();
                     //var send_data = {"sender":sender , "reciever":reciever, "msg":msg, "status": 0};
                     $.ajax({
@@ -105,63 +165,3 @@ $(document).ready(function () {
                         }
                     });
                 }, 5000);
-            },
-            error: function(xhr, status, error) {
-                //var err = eval("(" + xhr.responseText + ")");
-                //console.log(xhr.responseText);
-            }
-        });
-    });
-    
-    // Start Chat Code
-    
-    
-        
-            $(".live-chat-window").on('keyup', '.msg', function(e){
-                if (e.which== 13) {
-                var msg_id = $((this.id).split('_'))[1];
-                var msg = $(this).val();
-                var active_chat = $("#hide_"+msg_id).val();
-                //console.log("msg");
-                active_chat = JSON.parse(active_chat);
-                ////console.log(typeof(active_chat) + active_chat);
-                //if (active_chat != "[object Object]") {
-                //    active_chat = JSON.parse(active_chat);
-                //}
-                //else {
-                //    active_chat = JSON.stringify(active_chat);
-                //    
-                //}
-                ////console.log(active_chat['fid']);
-                var send_data = {"active_chat":active_chat , "msg":msg, "status": 0};
-                //console.log(send_data);
-                $.ajax({
-                            url:  base_url+'/chat/sendchat',
-                            type: 'post',
-                            data: send_data,
-                            dataType: 'json',
-                            success: function (data) {
-                            //console.log("sending..."+data);
-                            //console.log(data);
-                            $('#msg_'+msg_id).val('');
-                            if (data['msg'].length >= 20) {
-                                for (i=0; i<(data['msg'].length); i+=20) {
-                                    $("#chat_"+msg_id).append(data['active_chat']['sender'] +": " +  data['msg'].substring(i,20) + "<br>");
-                                }
-                            }
-                            else{
-                                $("#chat_"+msg_id).append(data['active_chat']['sender'] +": " +  data['msg'] + "<br>");
-                            }
-                            //$('#chat_'+msg_id).append(data['active_chat']['sender'] +": " +  data['msg']  + "<br>");
-                            $('#chat_'+msg_id).animate({
-                                scrollTop: ($('#chat_'+msg_id).scrollTop()+20)
-                            }, 100);
-                            },
-                            error: function(xhr, status, error) {
-                                //var err = eval("(" + xhr.responseText + ")");
-                                //console.log(xhr.responseText);
-                            }
-                    });
-                }
-            });
-});

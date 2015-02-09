@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'tailoslr_testforjob',
-			'username'  => 'tailoslr_tfj',
-			'password'  => 'tfj@2014',
+			'database'  => 'testforjob',
+			'username'  => 'root',
+			'password'  => 'root',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
