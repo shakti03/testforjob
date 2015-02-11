@@ -29,6 +29,7 @@ Route::group(['before' => 'logged'], function() {
 	Route::get('/restart-test/{id}', function(){
 		return Redirect::back()->with('flash_notice',['type'=>'danger','msg'=>'Test History not available']);
 	});
+	Route::get('/get-discussion-comments/{qid}', 'TestController@getDiscussionComments');
 	
 });
 
