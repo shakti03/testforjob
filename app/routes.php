@@ -30,6 +30,8 @@ Route::group(['before' => 'logged'], function() {
 		return Redirect::back()->with('flash_notice',['type'=>'danger','msg'=>'Test History not available']);
 	});
 	
+	Route::resource('questions', 'QuestionController');
+    Route::get('api/questions', array('as'=>'api.questions', 'uses'=>'QuestionController@getDatatable'));
 });
 
 Route::get('/login', 'HomeController@showHome');
