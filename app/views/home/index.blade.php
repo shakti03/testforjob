@@ -14,8 +14,9 @@
         {{ HTML::script('assets/js/vendor/password_strength/strength.js') }}
         {{ HTML::script('assets/js/bootstrap.min.js') }}
         {{ HTML::script('assets/js/live_chat.js') }}
-        {{ HTML::script('assets/js/home/custom.js')}}
-
+        {{ HTML::script('assets/js/home/custom.js')}}
+        
+        {{ HTML::script('assets/js/home/carousel.js')}}
         <script type="text/javascript">
             base_url = "{{ URL::to('/')}}";
         </script> 
@@ -26,31 +27,86 @@
         @if(Session::has('reminder-success'))
             afafafaaaaaaaaaa
         @endif
-        <div class="row header" style="z-index:2;">
-            <div class="col-md-2">                TEST FOR JOB
-                <!--<img style="height: 50px;" src="{{URL::to('/')}}/assets/images/1.jpg"/>-->
-            </div>
-            <div class="col-md-3">&nbsp;
-            </div>
-            <div class="col-md-5">
+
+        <div class="row header">
+            <div class="col-md-3">
+                <img width="80px;" src="{{URL::to('/')}}/assets/images/logo.png"/>
+            </div>
+            <div class="col-md-7">
                 <ul>
                     <li>IT-Freshers</li>
                     <li>IT-Experience</li>
                     <li>IT-Technologies</li>
                     <li>Test Series</li>
                     <li>About Us</li>
-                    <li>Contact Us</li>
-                </ul>
-            </div>
-            <div class="col-md-2">
-                <a id="btnlogin" class="btn btn-default" data-target="#login" data-toggle="modal"  href="javascript:void(0);">Login</a>
-
-                <a id="btnSignup" style="margin-left: -5px;" class="btn borderNone btn-warning" data-target="#signup" data-toggle="modal"  href="javascript:void(0);">SignUp</a>
-            </div>
-        </div>
-        
-        <!-- Slider -->
-        <div class="row slider">
+                    <li>Contact Us</li>
+                </ul>
+            </div>
+            <div class="col-md-2">                <a id="btnlogin" class="btn btn-default" data-target="#login" data-toggle="modal"  href="javascript:void(0);">Login</a>                <a id="btnSignup" style="margin-left: -5px;" class="btn borderNone btn-warning" data-target="#signup" data-toggle="modal"  href="javascript:void(0);">SignUp</a>            </div>        </div>
+        
+        <div class="row ">
+            <div class="col-md-12 below-head">
+                <h3 class="text-center">TEST FOR JOB</h3>
+                <!--<img width="100%" src="images/temp_feature1.png"/>-->
+            </div>
+        </div>
+
+<!-- Slider -->
+<div class="row-fluid">
+    <div id="carousel-example-generic" class="col-md-12 carousel slider" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+      </ol>
+
+      <!-- Slider Content (Wrapper for slides )-->
+      <div class="carousel-inner">
+        <div class="item active">
+          <img width="100%" src="{{URL::to('/')}}/assets/images/a1.jpg">
+            <!--<div class="carousel-caption">-->
+            <!--</div>-->
+        </div>
+        <div class="item">
+          <img width="100%" src="{{URL::to('/')}}/assets/images/a2.jpg">
+            <!--<div class="carousel-caption">-->
+            <!--</div>-->
+        </div>
+        <div class="item">
+          <img width="100%" src="{{URL::to('/')}}/assets/images/a3.jpg">
+            <!--<div class="carousel-caption">-->
+            <!--</div>-->
+        </div>
+        <div class="item">
+          <img width="100%" src="{{URL::to('/')}}/assets/images/a4.jpg">
+            <!--<div class="carousel-caption">-->
+            <!--</div>-->
+        </div>
+        <div class="item">
+          <img width="100%" src="{{URL::to('/')}}/assets/images/a5.jpg">
+            <!--<div class="carousel-caption">-->
+            <!--</div>-->
+        </div>
+      </div>
+     
+      <!-- Controls -->
+      
+      <a style="height:0%" class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+        <span style="margin-top:50%;"  class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+      <a style="height:0%" class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+        <span style="margin-top:50%;" class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+    </div>
+</div>
+
+        
+        
+        
+        <!--<div class="row slider">
             <div class="col-md-12">
                 <img class="bg-img" src="{{URL::to('/')}}/assets/images/temp_feature1.png"/>
             </div>
@@ -58,7 +114,7 @@
                 <div class="fg-img"></div>
             </div>
             
-        </div>
+        </div>-->
         
         <!-- Features Info -->
         <div class="feature">
