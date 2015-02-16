@@ -8,7 +8,7 @@ $(document).ready(function () {
     });
     
     $(".close-initial-chat").on('click', function(e){
-        $(this).parent().parent().parent().hide();
+        $('.live-chat').hide();
         $(".live-chat-btn").show();
     });
     
@@ -24,7 +24,7 @@ $(document).ready(function () {
         var chat_uname = $('#chat_uname').val();
         var send_data = {'chat_uname':chat_uname};
         $.ajax({
-            url:  "http://localhost/testforjob/chat/create",
+            url:  BASE_URL+"/chat/create",
             type: 'post',
             data: send_data,
             dataType: 'json',
@@ -34,7 +34,7 @@ $(document).ready(function () {
                 $('.live-chat-window').show();
                 if (data) {
                     $('.live-chat-window').append("<div class='chat-div'></div>");
-                    $('.chat-div').append('<div class="live-chat-close">Live Chat<a><img class="float close-chat" width="25px;" src="http://localhost/testforjob/assets/images/icon_close.png"/></a></div>');
+                    $('.chat-div').append('<div class="live-chat-close">Live Chat<a><img class="float close-chat" width="25px;" src="assets/images/icon_close.png"/></a></div>');
                     $('.chat-div').append("<div class='online-chat-window' id='div_chat_"+ data['fid'] +"'><input type=\"hidden\" id=\"hide_" + data['fid'] + "\" value='"+JSON.stringify(data)+"'/>");
                     $('#div_chat_'+ data['fid']).append("<div style='overflow-y:auto; height:60%;' id=\"chat_" + data['fid'] + "\"></div><br>");
                     $('#div_chat_'+ data['fid']).append("<input class=\"msg\" id=\"msg_" + data['fid'] + "\" type=\"text\" /></div>");
@@ -55,7 +55,7 @@ $(document).ready(function () {
             //var sender = $("#cuser").val();
             //var send_data = {"sender":sender , "reciever":reciever, "msg":msg, "status": 0};
             $.ajax({
-                url:  "http://localhost/testforjob/chat/receivechat",
+                url:  BASE_URL+"/chat/receivechat",
                 type: 'post',
                 dataType: 'json',
                 success: function(data){
@@ -72,7 +72,7 @@ $(document).ready(function () {
                                 //console.log(temp);
                                 //console.log(v);
                                 $('.live-chat-window').append("<div class='chat-div'></div>");
-                                $('.chat-div').append('<div class="live-chat-close">Live Chat<a><img class="float close-chat" width="25px;" src="http://localhost/testforjob/assets/images/icon_close.png"/></a></div>');
+                                $('.chat-div').append('<div class="live-chat-close">Live Chat<a><img class="float close-chat" width="25px;" src="assets/images/icon_close.png"/></a></div>');
                                 $('.chat-div').append("<div class='online-chat-window' id='div_chat_"+ (k.split('_')[1]) +"'><input id='hide_"+ (k.split('_')[1]) +"' type='hidden' value='"+ JSON.stringify(v) + "' />");
                                 $('#div_chat_'+(k.split('_')[1])).append("<div style='overflow-y:auto; height:60%;' id='chat_"+ (k.split('_')[1]) +"'></div>");
                                 $('#div_chat_'+ (k.split('_')[1])).append("<input class='msg' id='msg_"+ (k.split('_')[1]) +"' type='text' /><br></div>");
@@ -89,7 +89,7 @@ $(document).ready(function () {
                                     rev_data['sender'] = v['receiver']
                                     rev_data['receiver'] = v['sender']
                                     $('.live-chat-window').append("<div class='chat-div'></div>");
-                                    $('.chat-div').append('<div class="live-chat-close">Live Chat<a><img class="float close-chat" width="25px;" src="http://localhost/testforjob/assets/images/icon_close.png"/></a></div>');
+                                    $('.chat-div').append('<div class="live-chat-close">Live Chat<a><img class="float close-chat" width="25px;" src="assets/images/icon_close.png"/></a></div>');
                                     $('.chat-div').append("<div class='online-chat-window' id='div_chat_"+ v['fid'] +"'><input id='hide_"+ v['fid'] +"' type='hidden' value='"+ JSON.stringify(rev_data) + "' />");
                                     $('#div_chat_'+ v['fid']).append("<div style='overflow-y:auto; height:60%;' id='chat_"+ v['fid'] +"'></div>");
                                     $('#div_chat_'+ v['fid']).append("<input class='msg' id='msg_"+ v['fid'] +"' type='text' /><br></div>");
@@ -115,7 +115,7 @@ $(document).ready(function () {
                     //console.log(xhr.responseText);
                 }
             });
-        }, 1000);
+        }, 3000);
     });
     
     $(".live-chat-window").on('keyup', '.msg', function(e){
@@ -137,7 +137,7 @@ $(document).ready(function () {
         var send_data = {"active_chat":active_chat , "msg":msg, "status": 0};
         //console.log(send_data);
         $.ajax({
-                    url:  "http://localhost/testforjob/chat/sendchat",
+                    url:  BASE_URL+"/chat/sendchat",
                     type: 'post',
                     data: send_data,
                     dataType: 'json',

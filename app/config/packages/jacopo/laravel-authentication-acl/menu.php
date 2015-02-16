@@ -70,6 +70,13 @@ return [
                 "link"        => URL::route('users.selfprofile.edit'),
                 "permissions" => []
             ],
+            [
+                "name"        => "Question",
+                "route"       => "questions",
+                "link"        => URL::to('questions'),
+                "permissions" => []
+            ],
+
 
     ]
 ];

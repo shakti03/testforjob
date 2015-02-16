@@ -29,7 +29,8 @@
         "Jacopo\\Authentication\\AuthenticationServiceProvider",
         "Maatwebsite\\Excel\\ExcelServiceProvider",
         "Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider",
-        "Barryvdh\\Debugbar\\ServiceProvider"
+        "Barryvdh\\Debugbar\\ServiceProvider",
+        "Chumper\\Datatable\\DatatableServiceProvider"
     ],
     "eager": [
         "Illuminate\\Cookie\\CookieServiceProvider",
@@ -41,7 +42,8 @@
         "Illuminate\\Workbench\\WorkbenchServiceProvider",
         "Jacopo\\Authentication\\AuthenticationServiceProvider",
         "Maatwebsite\\Excel\\ExcelServiceProvider",
-        "Barryvdh\\Debugbar\\ServiceProvider"
+        "Barryvdh\\Debugbar\\ServiceProvider",
+        "Chumper\\Datatable\\DatatableServiceProvider"
     ],
     "deferred": {
         "artisan": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",

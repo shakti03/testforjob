@@ -37,11 +37,10 @@
 	@include('layouts.header')
     @include('layouts.contents')
     @include('layouts.footer')
-    
+{{ HTML::script('assets/js/home/custom.js')}}
+
     @include('home.partials.login')
     @include('home.partials.signup')
     @include('home.partials.forget-password')
-
-    {{ HTML::script('assets/js/home/custom.js')}}
 </body>
 </html>

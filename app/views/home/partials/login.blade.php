@@ -1,12 +1,12 @@
 <!-- Modal -->
-<div  class="modal fade" id="login" tabindex="-1" role="dialog" aria-hidden="true">
+<div  class="modal fade pull-right" id="login" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="row">
-        <div class="col-xs-12 col-md-8 col-md-offset-4">
-            <div class="panel panel-primary btn-lg">
-                <div class="panel-heading">
+        <div class="col-xs-12 col-md-9 col-md-offset-2">
+            <div class="panel panel-primary btn-lg" style="margin-top:70px">
+                <div class="panel-heading borderNone">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="panel-title bariol-thin">Login to {{Config::get('laravel-authentication-acl::app_name')}}</h3>
+                    <h3 class="panel-title bariol-thin"><i class="fa fa-user"></i>&nbsp; Login to {{Config::get('laravel-authentication-acl::app_name')}}</h3>
                 </div>
                 <?php $message = Session::get('message'); ?>
                 @if( isset($message) )

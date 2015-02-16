@@ -3,6 +3,24 @@ $(function(){
 		$('#btnlogin').click();
 	}
 
+	$('#reminderForm').submit(function(e){
+		e.preventDefault();
+		var data = $(this).serialize();
+		$('#recoverSubmit').text('please wait...');
+		$.post($(this).attr('action'), data, function(result){
+			var result = JSON.parse(result);
+			$('#reminderFormMsg').find('.msg').text(result.mail);
+			$('#reminderFormMsg').show();
+			$('#recoverSubmit').text('Recover');
+		});
+
+	});
+
+	$('#recoverSubmit').click(function(){
+		
+	});
+
+
 	$('#btnlogin').click(function(){
 		$('#login_error').hide();
 		
