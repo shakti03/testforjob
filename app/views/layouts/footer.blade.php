@@ -82,7 +82,7 @@
             </div>
 	    </div>
 	</div>
-	<div class="row">
+	<!--<div class="row">
 		<div class="col-md-6">
 			<a class="live-chat-btn" href="#"><img width="40px;" src="{{URL::to('/')}}/assets/images/icon_chat.png"/>Live chat</a>
 			
@@ -95,12 +95,42 @@
 	            <div class="panel-body">
 	            	<div class="live-chat-window" id='chat_div'></div>
 					<div class="">
-				        <input class="form-control" name="chat_uname" id="chat_uname" type="text" placeholder="Name"/><br>
+				        <input class="form-control" name="chat_uname" id="chat_uname" type="text" placeholder="Name"/><br>-->
 						    <!--<input name="chat_uname" id="chat_uname" type="text"/>-->
-					    <input class="btn btn-info" name="chat_submit" id="chat_submit" type="button" value="Start Chat"/>
+					    <!--<input class="btn btn-info" name="chat_submit" id="chat_submit" type="button" value="Start Chat"/>
 					</div>
 		        </div>
 	        </div>
 		</div>
-	</div>
+	</div>-->
+	
+	<div class="row">
+
+                <div class="col-md-10"></div>
+
+                <div class="col-md-2"><a class="live-chat-btn" href="#"><img width="40px;" src="{{URL::to('/')}}/assets/images/icon_chat.png"/>Live chat</a></div>                
+
+        </div>
+
+        <div class="row">
+
+                <div class="col-md-3 col-md-offset-9 ">                    
+
+                    <div class="live-chat-window" id='chat_div'></div>
+
+                </div>
+
+                <div class="col-md-3 col-md-offset-9 live-chat">
+
+                    <div>Live Chat<a><img class="img-circle float close-initial-chat" width="25px;" src="{{URL::to('/')}}/assets/images/icon_close.png"/></a></div>
+
+                    <input class="form-control" name="chat_uname" id="chat_uname" type="text" placeholder="Name"/><br>
+
+                    <!--<input name="chat_uname" id="chat_uname" type="text"/>-->
+
+                    <input class="btn btn-info" name="chat_submit" id="chat_submit" type="button" value="Start Chat"/>
+
+                </div>
+
+        </div>
 </div>
