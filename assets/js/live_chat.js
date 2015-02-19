@@ -5,6 +5,7 @@ $(document).ready(function () {
     $(".live-chat-btn").on('click', function(e){
         $('.live-chat').show();
         $(".live-chat-btn").hide();
+        $(".live-chat-window").show();
     });
     
     $(".close-initial-chat").on('click', function(e){
@@ -16,6 +17,7 @@ $(document).ready(function () {
     $(".live-chat-window").on('click', '.close-chat', function(e){
         $(this).parent().parent().parent().remove();
         $(".live-chat-btn").show();
+        $(".live-chat-window").hide();
         clearInterval(timer);
     });
     
