@@ -15,10 +15,26 @@ $(document).ready(function () {
     
     // Close Chat window
     $(".live-chat-window").on('click', '.close-chat', function(e){
+        chat_id = $(this).parent().parent().siblings('.online-chat-window').attr('id');
+        chat_id = chat_id.split("_")[2]
         $(this).parent().parent().parent().remove();
         $(".live-chat-btn").show();
         $(".live-chat-window").hide();
         clearInterval(timer);
+        var send_data = {'chat_id':chat_id};
+        $.ajax({
+            url:  BASE_URL+"/chat/deletechat",
+            type: 'post',
+            data: send_data,
+            dataType: 'json',
+            success: function(data){
+                //console.log("Successfully deleted.");
+            },
+            error: function(xhr, status, error) {
+                //var err = eval("(" + xhr.responseText + ")");
+                //console.log(xhr.responseText);
+            }
+        });
     });
     
     // Submit Chat username and start chat

@@ -55,6 +55,7 @@ Route::get('/user/reminder-success', function ()
 Route::any('/chat/create', array( 'as'=>'create_cuser', 'uses' => 'ChatController@createCuser'));
 Route::any('/chat/sendchat', array( 'as'=>'chat_window', 'uses' => 'ChatController@sendChat'));
 Route::any('/chat/receivechat', array( 'as'=>'chat_window', 'uses' => 'ChatController@receiveChat'));
+Route::any('/chat/deletechat', array( 'as'=>'chat_delete', 'uses' => 'ChatController@deleteChat'));
 //Route::any('chat/viewchat', array( 'as'=>'view_chat', 'uses' => 'ChatController@viewChat'));
 
 Route::get('test',function(){
