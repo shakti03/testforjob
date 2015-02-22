@@ -126,15 +126,15 @@ class TestController extends Controller {
 
 		$testHistory = TestHistory::createOrUpdate(['user_id'=>$logged_user->id,
 
-													'active_test'=>json_encode($testData['active_test']),
-
-													'test_option'=>Session::get('test_option'),
-
-													'test_index'=>array_search('test_'.$id, array_keys($testSets))+1,
-
-													'test_option_id'=>Session::get('test_option_id')
-
-													]);
+				'active_test'=>json_encode($testData['active_test']),
+		
+				'test_option'=>Session::get('test_option'),
+		
+				'test_index'=>array_search('test_'.$id, array_keys($testSets))+1,
+		
+				'test_option_id'=>Session::get('test_option_id')
+		
+				]);
 
 		$testData['testHistory_id'] = $testHistory->id;
 
@@ -254,10 +254,7 @@ class TestController extends Controller {
 
 		//$src = 'data: '.mime_content_type($image).';base64,'.$imageData;
 
-		return json_encode(['srcImg'=>$image]);
-
-
-
+		return json_encode(['srcImg'=>$image, 'qid'=>$id]);
 	}
 
 
@@ -269,8 +266,17 @@ class TestController extends Controller {
 	}
 	
 	public function getDiscussionComments($qid) {
-		$data = DiscussionForum::fetchAllCommentsById($qid);
-		print_r($data);exit;
+		$result = DiscussionForum::fetchAllCommentsById($qid);
+		$logged_user = App::make('authenticator')->getLoggedUser();
+		$uid = $logged_user->id;
+		$data = ['result' =>$result, 'qid' => $qid, 'uid' => $uid];
+		return json_encode($data);
+	}
+	
+	public function addComment() {
+		$data = Input:: all();
+		$result = DiscussionForum:: insertComments($data);
+		return json_encode($result);
 	}
 
 

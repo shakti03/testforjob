@@ -30,6 +30,7 @@ Route::group(['before' => 'logged'], function() {
 		return Redirect::back()->with('flash_notice',['type'=>'danger','msg'=>'Test History not available']);
 	});
 	Route::get('/get-discussion-comments/{qid}', 'TestController@getDiscussionComments');
+	Route::post('add-comment', 'TestController@addComment');
 	
 	Route::resource('questions', 'QuestionController');
     Route::get('api/questions', array('as'=>'api.questions', 'uses'=>'QuestionController@getDatatable'));

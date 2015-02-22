@@ -13,6 +13,7 @@ $(function(){
 				dataType: 'json',
 				success: function(response){
 					$('#solutionImg').attr('src',response.srcImg);
+					$('input[name=hide_qid]').val(response.qid);
 					$('#btnShowSolution').click();
 				},
 				error: function(response,xhr){
