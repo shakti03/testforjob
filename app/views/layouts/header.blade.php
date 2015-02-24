@@ -33,6 +33,11 @@
 <div class="header-bg-row">
 	&nbsp;
 </div>
+<div class="below-header-bg-row row">
+	<div class="col-md-3 col-md-push-1"><h2>Number of Questions</h2> <h3>15000</h3></div>
+	<div class="col-md-3 col-md-push-1"><h2>User visited</h2> <h3>15000</h3></div>
+	<div class="col-md-3 col-md-push-1"><h2>Number of Questions</h2> <h3>15000</h3></div>
+</div>
 <div class="carousel slide hidden-xs" id="myCarousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -53,7 +58,7 @@
     						  ];
 	  	?>
 	  	<div class="item active">
-          	<img width="100%" src="{{URL::to($sliderImages[0])}}">
+          	<img width="100%" src="{{URL::to($sliderImages[0])}}">		
         </div>
 	  	@for($i=1;$i<count($sliderImages);$i++)
         <div class="item">

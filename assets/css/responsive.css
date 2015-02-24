@@ -61,6 +61,11 @@ h5, h6          { font-weight: bolder }
   background: #4D768C;
 }
 
+.below-header-bg-row{
+  height:95px;
+  background: #0FAA86;
+}
+
 .header .logo{
     float: left;
 }

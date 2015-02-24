@@ -197,7 +197,7 @@ class TestController extends Controller {
 		$activeTest = $testData['active_test'];
 
 		$qid = $activeTest[$inputs['qid']-1];
-
+		
 		$qanswer = ObjectiveQuestion::getAnswer($qid);
 
 		$answer['correct'] = lcfirst($qanswer);
@@ -266,6 +266,8 @@ class TestController extends Controller {
 	}
 	
 	public function getDiscussionComments($qid) {
+		$testData = Session::get('test_data');
+		$qid = $testData['active_test'][$qid-1];
 		$result = DiscussionForum::fetchAllCommentsById($qid);
 		$logged_user = App::make('authenticator')->getLoggedUser();
 		$uid = $logged_user->id;
