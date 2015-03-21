@@ -10,7 +10,10 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-
+Route::get('admin',function(){
+	return Redirect::to('admin/login');
+});
+	
 Route::group(['before' => 'logged'], function() {
 	Route::get('/','HomeController@showHome');
 	Route::get('/home', 'TestController@showHome');
@@ -25,7 +28,7 @@ Route::group(['before' => 'logged'], function() {
 	Route::post('/submit-question', 'TestController@submitQuestion');
 	Route::get('/get-solution/{id}', 'TestController@getSolution');
 	Route::get('/videos', 'FileController@showVideos');
-        Route::post('/upload-video', 'FileController@uploadVideo');
+    Route::post('/upload-video', 'FileController@uploadVideo');
 	Route::get('/restart-test/{id}', function(){
 		return Redirect::back()->with('flash_notice',['type'=>'danger','msg'=>'Test History not available']);
 	});
@@ -34,6 +37,9 @@ Route::group(['before' => 'logged'], function() {
 	
 	Route::resource('questions', 'QuestionController');
     Route::get('api/questions', array('as'=>'api.questions', 'uses'=>'QuestionController@getDatatable'));
+
+    // set question time
+    Route::post('set-time', 'TestController@setTime');
 });
 
 Route::get('/login', 'HomeController@showHome');
