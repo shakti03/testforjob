@@ -14,11 +14,9 @@
 	        </div>
 	        <div class="collapse navbar-collapse pull-right" id="nav-main-menu">
 	            <ul class="nav navbar-nav">
-			        <li><a href="#">IT Fresher</a></li>
-					<li><a href="#">IT Experience</a></li>
-					<li><a href="#">IT Technologies</a></li>
-					<li><a href="#">Test series</a></li>
-					<li><a href="#">About us</a></li>
+					<li><a href="it-fresher">IT Fresher</a></li>
+					<li><a href="it-experience">IT Experience</a></li>
+					<li><a href="contact-us">Contact us</a></li>
 	            </ul>
 	            <div class="navbar-nav nav navbar-right">
 	            	<div>
@@ -50,15 +48,16 @@
     
     <!-- Wrapper for Slides -->
     <div class="carousel-inner">
-    	<?php $sliderImages = [	'assets/images/a1.jpg',
-    							'assets/images/a2.jpg',
-    							'assets/images/a3.jpg',
-    							'assets/images/a4.jpg',
-    							'assets/images/a5.jpg'
+	<img style="position:absolute; left:0px; top:0px; z-index:0;" width=100% src="{{URL::to('assets/images/bg_green.png')}}">
+    	<?php $sliderImages = [	'assets/images/img_1.png',
+    							'assets/images/img_2.png',
+    							'assets/images/img_3.png',
+    							'assets/images/img_4.png',
+    							'assets/images/img_5.png'
     						  ];
 	  	?>
 	  	<div class="item active">
-          	<img width="100%" src="{{URL::to($sliderImages[0])}}">		
+          	<img width="100%" src="{{URL::to($sliderImages[0])}}">
         </div>
 	  	@for($i=1;$i<count($sliderImages);$i++)
         <div class="item">
@@ -76,4 +75,32 @@
     </a>
 
 </div>
-	
+<?php 
+	$featuresImgs = [	'assets/images/feature_1.jpg',
+						'assets/images/feature_2.jpg',
+						'assets/images/feature_3.jpg',
+						'assets/images/feature_4.jpg',
+						'assets/images/feature_5.jpg',
+						'assets/images/feature_6.jpg',
+						'assets/images/feature_7.jpg',
+						'assets/images/feature_8.jpg'
+					];
+?>
+<div class="container">
+	<div class="row">&nbsp;</div>
+	<div class="row">&nbsp;</div>
+	<h1 class="text-center">100+ Exam Categories</h1>
+	<h5 class="text-center">Crack your exam with India's no 1 testing platform.</h5>
+	<div class="row">&nbsp;</div>
+	<div class="row">&nbsp;</div>
+	<div class="row">&nbsp;</div>
+	<div class="row">
+		@foreach($featuresImgs as $img)
+		<div class="col-md-3">
+			<center><img src="{{URL::to($img)}}" class="img-responsive"></center>
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
+    	</div>
+    	@endforeach
+    </div>
+</div>

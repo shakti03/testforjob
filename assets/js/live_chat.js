@@ -133,7 +133,7 @@ $(document).ready(function () {
                     //console.log(xhr.responseText);
                 }
             });
-        }, 3000);
+        }, 1000);
     });
     
     $(".live-chat-window").on('keyup', '.msg', function(e){
