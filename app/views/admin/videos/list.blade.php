@@ -5,13 +5,13 @@
 @stop
 
 @section('sidebar')
-    @include('admin.question.partials.side-bar')
+    @include('admin.videos.partials.side-bar')
 @stop
 
 @section('content')
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-      <h3><i class="fa fa-dashboard"></i> Test Questions</h3>
+      <h3><i class="fa fa-dashboard"></i> Videos</h3>
       <hr/>
     </div>
 </div>
@@ -29,19 +29,12 @@
             @endforeach
         @endif
         
-        
-        {{ Datatable::table()
-        ->addColumn('question','option_a','option_b','option_c','option_d')
-        ->setUrl(route('api.questions'))
-        ->render() }}
        
     </div>
 </div>
-@include('admin.partials.upload-excel')
+@include('admin.partials.upload-video')
 @stop
 
 @section('head_css')
-    <link rel="stylesheet" type="text/css" href="assets/css/jquery-dataTables.css">
-    <!-- DataTables -->
-    <script type="text/javascript" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
+    >
 @stop

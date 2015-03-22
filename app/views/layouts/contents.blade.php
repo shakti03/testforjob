@@ -1,31 +1,5 @@
-<?php 
-	$featuresImgs = [	'assets/images/feature_1.jpg',
-						'assets/images/feature_2.jpg',
-						'assets/images/feature_3.jpg',
-						'assets/images/feature_4.jpg',
-						'assets/images/feature_5.jpg',
-						'assets/images/feature_6.jpg',
-						'assets/images/feature_7.jpg',
-						'assets/images/feature_8.jpg'
-					];
-?>
+
 <div class="container">
-	<div class="row">&nbsp;</div>
-	<div class="row">&nbsp;</div>
-	<h1 class="text-center">100+ Exam Categories</h1>
-	<h5 class="text-center">Crack your exam with India's no 1 testing platform.</h5>
-	<div class="row">&nbsp;</div>
-	<div class="row">&nbsp;</div>
-	<div class="row">&nbsp;</div>
-	<div class="row">
-		@foreach($featuresImgs as $img)
-		<div class="col-md-3">
-			<center><img src="{{URL::to($img)}}" class="img-responsive"></center>
-			<div>&nbsp;</div>
-			<div>&nbsp;</div>
-    	</div>
-    	@endforeach
-    </div>
     <div class="row">&nbsp;</div>
     <div class="row">&nbsp;</div>
     <div class="row">

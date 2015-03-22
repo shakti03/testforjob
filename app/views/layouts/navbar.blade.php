@@ -6,14 +6,13 @@
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
             </button>
         </div>
         <div class="collapse navbar-collapse" id="nav-main-menu">
             <ul class="nav navbar-nav">
 		        <li class=""><a class="menu" href="{{URL::to('videos')}}" >Videos</a></li>
                 <li class=""><a class="menu" href="javascript:void(0);" id="package"> Test Plans</a></li>
-                <li class=""><a class="menu" href="javascript:void(0);" data-toggle="modal" data-target="#uploadExcel"> Upload Excel</a></li>
+                <li class=""><a class="menu" href="javascript:void(0);" id="package"> Progress report</a></li>
             </ul>
             <div class="navbar-nav nav navbar-right">
                 <li class="dropdown dropdown-user">

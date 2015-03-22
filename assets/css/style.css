@@ -7,10 +7,7 @@ section.content{float:left;width:100%; padding:1%; height:90%; min-height:500px;
 .green{color:green;}
 .red{color:red;}
 .padding0{padding:0px;}
-/*.modal.modal-wide .modal-dialog {width: 95%;}
-.modal-wide .modal-body {overflow-y: auto;}
-#tallModal .modal-body p { margin-bottom: 900px }
-*/
+
 .cir {
 	padding: 1em;
 	text-align: center;
@@ -73,3 +70,10 @@ section.content{float:left;width:100%; padding:1%; height:90%; min-height:500px;
     padding: 2%;
     color: #333;
 }
+
+.modal.modal-wide .modal-dialog {width: 95%;}
+.modal-wide .modal-body {overflow-y: auto;}
+#tallModal .modal-body p { margin-bottom: 900px }
+
+.width-fixed-150{width:150px;float:left;}
+.thumbnail-padding{margin:0px;padding:0 20px 10px 20px;}

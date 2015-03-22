@@ -36,14 +36,25 @@ Route::group(['before' => 'logged'], function() {
 	Route::post('add-comment', 'TestController@addComment');
 	
 	Route::resource('questions', 'QuestionController');
+
     Route::get('api/questions', array('as'=>'api.questions', 'uses'=>'QuestionController@getDatatable'));
 
     // set question time
     Route::post('set-time', 'TestController@setTime');
+    Route::get('admin/videos', 'FileController@getVideos');
+
 });
 
 Route::get('/login', 'HomeController@showHome');
-
+Route::get('/it-fresher',function(){
+	return View::make('home.it-fresher');
+});
+Route::get('/it-experience', function(){
+	return View::make('home.it-experience');
+});
+Route::get('/contact-us', function(){
+	return View::make('home.contact-us');
+});
 Route::post('/user/signup', [
         "before" => "csrf",
         'uses'   => "UserController@postSignup"

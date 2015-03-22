@@ -85,7 +85,7 @@ return [
    | Avatar
    |--------------------------------------------------------------------------
    */
-  "default_avatar_path" => 'assets/images/avatar.png',
+  "default_avatar_path" => URL::to('assets/images/avatar.png'),
   /*
    * Set to true if you want to use the user gravatar instead
    */

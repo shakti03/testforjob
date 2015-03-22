@@ -76,6 +76,12 @@ return [
                 "link"        => URL::to('questions'),
                 "permissions" => []
             ],
+            [
+                "name"        => "videos",
+                "route"       => "videos",
+                "link"        => URL::to('admin/videos'),
+                "permissions" => []
+            ],
 
 
     ]

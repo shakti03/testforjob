@@ -17,8 +17,8 @@
     {{ HTML::style('assets/css/font-awesome.min.css') }}
 
 
-        {{ HTML::script('assets/js/jquery-1.10.2.min.js') }}
-        {{ HTML::script('assets/js/bootstrap.min.js') }}
+    {{ HTML::script('assets/js/jquery-1.10.2.min.js') }}
+    {{ HTML::script('assets/js/bootstrap.min.js') }}
     @yield('head_css')
     {{-- End head css --}}
 

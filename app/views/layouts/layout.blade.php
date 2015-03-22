@@ -37,9 +37,8 @@
         @endif
         @yield('container')
         
-        @include('file.partials.upload-excel')
     </section>
-    <img id="loader" src="assets/images/loader.gif" style="position:fixed;top:40%;left:40%;display:none">
+    <img id="loader" src="{{URL::to('assets/images/loader.gif')}}" style="position:fixed;top:40%;left:40%;display:none">
 
     <!-- js -->
 
