@@ -77,3 +77,4 @@ section.content{float:left;width:100%; padding:1%; height:90%; min-height:500px;
 
 .width-fixed-150{width:150px;float:left;}
 .thumbnail-padding{margin:0px;padding:0 20px 10px 20px;}
+.unstyledList{list-style: none;}
