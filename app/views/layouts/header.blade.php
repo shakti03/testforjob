@@ -2,7 +2,7 @@
 	<div class="navbar navbar-default" role="navigation">
 	    <div class="container">
 	        <div class="navbar-header">
-	        	<a class="" href="#">
+	        	<a class="" href="login">
 	    			<img class="logo" src="assets/images/logo.png">
 	    		</a>
 	        	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-main-menu">
@@ -14,6 +14,8 @@
 	        </div>
 	        <div class="collapse navbar-collapse pull-right" id="nav-main-menu">
 	            <ul class="nav navbar-nav">
+					<li><a href="login">Home</a></li>
+					<li><a href="#">Test Plan</a></li>
 					<li><a href="it-fresher">IT Fresher</a></li>
 					<li><a href="it-experience">IT Experience</a></li>
 					<li><a href="contact-us">Contact us</a></li>
@@ -48,13 +50,14 @@
     
     <!-- Wrapper for Slides -->
     <div class="carousel-inner">
-	<img style="position:absolute; left:0px; top:0px; z-index:0;" width=100% src="{{URL::to('assets/images/bg_green.png')}}">
-    	<?php $sliderImages = [	'assets/images/img_1.png',
-    							'assets/images/img_2.png',
-    							'assets/images/img_3.png',
-    							'assets/images/img_4.png',
-    							'assets/images/img_5.png'
-    						  ];
+	<img style="background-repeat: repeat-y; position:absolute; left:0px; top:0px; z-index:0;" width=100% src="{{URL::to('assets/images/bg_green.png')}}">
+    	<?php $sliderImages = [	'assets/images/slider images 1.png',
+				'assets/images/slider images 2.png',
+				'assets/images/slider images 3.png',
+				'assets/images/slider images 4.png',
+				'assets/images/slider images 5.png',
+				'assets/images/slider images 6.png'
+			      ];
 	  	?>
 	  	<div class="item active">
           	<img width="100%" src="{{URL::to($sliderImages[0])}}">
