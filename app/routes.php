@@ -74,6 +74,7 @@ Route::any('/chat/create', array( 'as'=>'create_cuser', 'uses' => 'ChatControlle
 Route::any('/chat/sendchat', array( 'as'=>'chat_window', 'uses' => 'ChatController@sendChat'));
 Route::any('/chat/receivechat', array( 'as'=>'chat_window', 'uses' => 'ChatController@receiveChat'));
 Route::any('/chat/deletechat', array( 'as'=>'chat_delete', 'uses' => 'ChatController@deleteChat'));
+Route::post('enquiry', array('as'=>'enquiry', 'uses'=>'EnquiryController@getContactForm'));
 //Route::any('chat/viewchat', array( 'as'=>'view_chat', 'uses' => 'ChatController@viewChat'));
 
 Route::get('test',function(){
