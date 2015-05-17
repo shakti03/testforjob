@@ -18,11 +18,8 @@ class EnquiryController extends Controller {
             $enquiry->message = $data['message'];
             $enquiry->save();
              //Send email using Laravel send function
-            Mail::send('home.partials.thankyou', $data, function($message) use ($data)
-            {
-                $message->from($data['email'] , $data['name']);
-                $message->to('abc@gmail.com', 'my name')->subject('contact request');
-            });
+            MailHelper::sendMail($data,'home.partials.thankyou');
+            
             return Redirect:: to('contact-us')->with('success', 'Thank you for making Enquiry');
         }
         else{
