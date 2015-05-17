@@ -45,7 +45,10 @@ class FileController extends Controller {
 
 
 	public function showVideos(){
-		$videos = DB::table('videos')->get();
+		$videos = DB::table('videos')->leftJoin('video_category','video_category.id','=','videos.video_category_id')
+						->get(['videos.*','video_category.name']);
+
+
 		return View::make('file.videos',['videos'=>$videos]);
 	}
 
@@ -81,7 +84,9 @@ class FileController extends Controller {
 	}
 
 	public function getVideos() {
-		$videos = DB::table('videos')->get();
-		return View::make('admin.videos.list',['videos'=>$videos,'']);
+		$videos = DB::table('videos')->leftJoin('video_category','video_category.id','=','videos.video_category_id')
+						->get();
+
+		return View::make('admin.videos.list',['videos'=>$videos]);
 	}
 }

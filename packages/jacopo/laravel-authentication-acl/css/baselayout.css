@@ -105,3 +105,17 @@ a:hover {
 .placeholder img {
     border-radius: 50%;
 }
+.navbar{background-color:#3796B2 !important; border-bottom: 4px solid rgb(237, 156, 40);color:#fff !important;}
+.navbar-inverse .navbar-nav > li > a {
+  background-color: #3796B2;
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+}
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+  background-color: #3796B2;
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+}
+.navbar-brand {
+  padding:0;
+}

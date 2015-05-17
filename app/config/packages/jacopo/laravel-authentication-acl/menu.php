@@ -49,35 +49,35 @@ return [
                  */
                 "skip_permissions" => ["users.selfprofile.edit", "users.profile.edit"]
             ],
+            // [
+            //         "name"        => "Groups",
+            //         "route"       => "groups",
+            //         "link"        => URL::route('groups.list'),
+            //         "permissions" => ["_superadmin", "_group-editor"]
+            // ],
+            // [
+            //         "name"        => "Permission",
+            //         "route"       => "permission",
+            //         "link"        => URL::route('permission.list'),
+            //         "permissions" => ["_superadmin", "_permission-editor"]
+            // ],
+            // [
+            //     /*
+            //      * Route to edit the current user profile
+            //      */
+            //     "name"        => "",
+            //     "route"       => "selfprofile",
+            //     "link"        => URL::route('users.selfprofile.edit'),
+            //     "permissions" => []
+            // ],
             [
-                    "name"        => "Groups",
-                    "route"       => "groups",
-                    "link"        => URL::route('groups.list'),
-                    "permissions" => ["_superadmin", "_group-editor"]
-            ],
-            [
-                    "name"        => "Permission",
-                    "route"       => "permission",
-                    "link"        => URL::route('permission.list'),
-                    "permissions" => ["_superadmin", "_permission-editor"]
-            ],
-            [
-                /*
-                 * Route to edit the current user profile
-                 */
-                "name"        => "",
-                "route"       => "selfprofile",
-                "link"        => URL::route('users.selfprofile.edit'),
+                "name"        => "Test",
+                "route"       => "test",
+                "link"        => URL::to('admin/test/list'),
                 "permissions" => []
             ],
             [
-                "name"        => "Question",
-                "route"       => "questions",
-                "link"        => URL::to('questions'),
-                "permissions" => []
-            ],
-            [
-                "name"        => "videos",
+                "name"        => "Videos",
                 "route"       => "videos",
                 "link"        => URL::to('admin/videos'),
                 "permissions" => []

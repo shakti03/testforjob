@@ -1,51 +1,52 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
-*/
-Route::get('admin',function(){
-	return Redirect::to('admin/login');
+Route::group(['before'=>'admin', 'prefix'=>'admin'], function(){
+	Route::get('/', function(){
+		return Redirect::to('admin/login');
+	});
+
+	Route::any('test/list', 'AdminTestController@getTestList');
+	Route::any('test/list-data', 'AdminTestController@getTestListData');
+	Route::any('test/view/{slug}', 'AdminTestController@getTestQuestions');
+	Route::any('test/test-data/{slug}/{type}', 'AdminTestController@getTestViewData');
+	Route::post('test/add', 'AdminTestController@addTest');
+	Route::post('test/edit', 'AdminTestController@editTest');
+	Route::post('test/delete', 'AdminTestController@deleteSelectedTest');
+
+	Route::get('test/delete/{slug}','AdminTestController@deleteTest')->where('slug', '[A-Za-z0-9\-]+');;
+	Route::get('download-excel/{testType}/{fileid}', 'AdminTestController@downloadExcelFile');
+
+	Route::get('test/question/delete/{id}','AdminTestController@deleteQuestion')->where('slug', '[A-Za-z0-9\-]+');;
+	Route::post('test/question/delete', 'AdminTestController@deleteSelectedQuestion');
+	Route::post('test/question/add','AdminTestController@addQuestion');
+
+	Route::get('videos', 'AdminController@showVideos');
+    Route::post('upload-video', 'AdminController@uploadVideo');
+    Route::get('videos/category/delete/{id}', 'AdminController@deleteVideoCategory');
+    Route::get('videos/delete/{id}', 'AdminController@deleteVideo');
 });
 	
 Route::group(['before' => 'logged'], function() {
-	Route::get('/','HomeController@showHome');
-	Route::get('/home', 'TestController@showHome');
-	Route::get('/test-home', 'TestController@showHome');
-	Route::get('/get-subject-test/{id}', 'TestController@getSubjectTest');
-	Route::get('/start-test/{id}', 'TestController@startTest');
-	Route::get('/get-test-contents/{testType}/{questionType}', 'TestController@getTestContents');
-	Route::get('/get-tests/{testOption}/{id}/{testTypeId}','TestController@getTests');
-	Route::get('/get-question/{page}/','TestController@getQuestion');
-	Route::get('/upload-excel','FileController@getExcel');
-	Route::post('/upload-excel', 'FileController@postExcel');
-	Route::post('/submit-question', 'TestController@submitQuestion');
-	Route::get('/get-solution/{id}', 'TestController@getSolution');
-	Route::get('/videos', 'FileController@showVideos');
-    Route::post('/upload-video', 'FileController@uploadVideo');
-	Route::get('/restart-test/{id}', function(){
-		return Redirect::back()->with('flash_notice',['type'=>'danger','msg'=>'Test History not available']);
-	});
-	Route::get('/get-discussion-comments/{qid}', 'TestController@getDiscussionComments');
-	Route::post('add-comment', 'TestController@addComment');
-	
-	Route::resource('questions', 'QuestionController');
+	Route::get('/home', 'FrontTestController@getTestList');
+	Route::any('user/test/list', 'FrontTestController@getTestList');
+	Route::any('user/test/list-data', 'FrontTestController@getTestListData');
+	Route::get('user/test/start/{id}/', 'FrontTestController@startTest');
+	Route::get('user/get-solution/{id}/', 'FrontTestController@getSolution');
+	Route::get('user/get-question/{id}', 'FrontTestController@getQuestion');
+	Route::post('user/set-time', 'FrontTestController@setTime');
+	Route::post('user/submit-question', 'FrontTestController@submitQuestion');
+	Route::get('/get-discussion-comments/{qid}', 'FrontTestController@getDiscussionComments');
+	Route::post('add-comment', 'FrontTestController@addComment');
 
-    Route::get('api/questions', array('as'=>'api.questions', 'uses'=>'QuestionController@getDatatable'));
-
-    // set question time
-    Route::post('set-time', 'TestController@setTime');
-    Route::get('admin/videos', 'FileController@getVideos');
-
+	Route::get('user/dashboard', 'FrontUserController@showDashboard');
+	Route::get('user/videos', 'FrontUserController@showVideos');
+	Route::get('user/test-history', 'FrontUserController@showTestHistory');
 });
 
-Route::get('/login', 'HomeController@showHome');
+Route::get('/', 'HomeController@showHome');
+Route::get('/login', function(){
+	return Redirect::to('/');
+});
 Route::get('/it-fresher',function(){
 	return View::make('home.it-fresher');
 });
@@ -62,20 +63,15 @@ Route::post('/user/signup', [
 Route::get('/user/signup', [
         'uses' => "UserController@signup"
 ]);
-// Route::get('/user/email-confirmation', ['uses' => "UserController@emailConfirmation"]);
+
 Route::get('/user/signup-success', 'UserController@signupSuccess');
 Route::get('/user/reminder-success', function ()
 {
     return json_encode(['mail'=>['Password recovery mail has been sent.']]);
 });
-//Route::get('chat', array('uses' => 'ChatController@getIndex'));
-//Route::get('chat/new', array( 'as'=>'new_cuser', 'uses' => 'ChatController@newCuser'));
+
 Route::any('/chat/create', array( 'as'=>'create_cuser', 'uses' => 'ChatController@createCuser'));
 Route::any('/chat/sendchat', array( 'as'=>'chat_window', 'uses' => 'ChatController@sendChat'));
 Route::any('/chat/receivechat', array( 'as'=>'chat_window', 'uses' => 'ChatController@receiveChat'));
 Route::any('/chat/deletechat', array( 'as'=>'chat_delete', 'uses' => 'ChatController@deleteChat'));
-//Route::any('chat/viewchat', array( 'as'=>'view_chat', 'uses' => 'ChatController@viewChat'));
 
-Route::get('test',function(){
-	return View::make('layouts.base');
-});

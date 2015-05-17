@@ -94,3 +94,7 @@ Route::filter('logged', function ($request, $response, $custom_url = null) {
     if(!App::make('authenticator')->check())
      return Redirect::to($redirect_url);
 });
+
+Route::filter('admin_logged', function () {
+    if(!App::make('authenticator')->check()) return Redirect::to('/admin/login');
+});

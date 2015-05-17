@@ -1,7 +1,7 @@
 <?php
 /**
  * An helper file for Laravel 4, to provide autocomplete information to your IDE
- * Generated for Laravel 4.2.16 on 2015-02-03.
+ * Generated for Laravel 4.2.17 on 2015-04-18.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -4266,6 +4266,20 @@ namespace {
         }
         
         /**
+         * Add a "where date" statement to the query.
+         *
+         * @param string $column
+         * @param string $operator
+         * @param int $value
+         * @param string $boolean
+         * @return \Illuminate\Database\Query\Builder|static 
+         * @static 
+         */
+        public static function whereDate($column, $operator, $value, $boolean = 'and'){
+            return \Illuminate\Database\Query\Builder::whereDate($column, $operator, $value, $boolean);
+        }
+        
+        /**
          * Add a "where day" statement to the query.
          *
          * @param string $column
@@ -5098,11 +5112,12 @@ namespace {
          *
          * @param string $path
          * @param string $contents
+         * @param bool $lock
          * @return int 
          * @static 
          */
-        public static function put($path, $contents){
-            return \Illuminate\Filesystem\Filesystem::put($path, $contents);
+        public static function put($path, $contents, $lock = false){
+            return \Illuminate\Filesystem\Filesystem::put($path, $contents, $lock);
         }
         
         /**
@@ -5528,6 +5543,7 @@ namespace {
          * Create a number input field.
          *
          * @param string $name
+         * @param string|null $value
          * @param array $options
          * @return string 
          * @static 
@@ -7758,7 +7774,7 @@ namespace {
          * Register an error_log handler.
          *
          * @param string $level
-         * @param integer $messageType
+         * @param int $messageType
          * @return void 
          * @static 
          */
@@ -12882,6 +12898,53 @@ namespace {
         public static function offsetUnset($key){
             //Method inherited from \DebugBar\DebugBar            
             return \Barryvdh\Debugbar\LaravelDebugbar::offsetUnset($key);
+        }
+        
+    }
+
+
+    class Datatable extends \Chumper\Datatable\Facades\DatatableFacade{
+        
+        /**
+         * 
+         *
+         * @param $query
+         * @return \Chumper\Datatable\QueryEngine 
+         * @static 
+         */
+        public static function query($query){
+            return \Chumper\Datatable\Datatable::query($query);
+        }
+        
+        /**
+         * 
+         *
+         * @param $collection
+         * @return \Chumper\Datatable\CollectionEngine 
+         * @static 
+         */
+        public static function collection($collection){
+            return \Chumper\Datatable\Datatable::collection($collection);
+        }
+        
+        /**
+         * 
+         *
+         * @return \Chumper\Datatable\Table 
+         * @static 
+         */
+        public static function table(){
+            return \Chumper\Datatable\Datatable::table();
+        }
+        
+        /**
+         * 
+         *
+         * @return bool True if the plugin should handle this request, false otherwise
+         * @static 
+         */
+        public static function shouldHandle(){
+            return \Chumper\Datatable\Datatable::shouldHandle();
         }
         
     }

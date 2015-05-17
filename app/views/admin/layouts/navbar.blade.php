@@ -1,7 +1,9 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid margin-right-15">
         <div class="navbar-header">
-            <a class="navbar-brand bariol-thin" href="#">{{$app_name}}</a>
+            <a class="navbar-brand bariol-thin" href="javascript:void(0);">
+                <img width="100px" height="50px" class="logo" src="{{URL::asset('assets/images/logo.png')}}">
+            </a>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-main-menu">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -18,7 +20,7 @@
                     @endforeach
                 @endif
             </ul>
-            <ul class="navbar-nav nav navbar-right">
+            <div class="navbar-nav nav navbar-right">
                 <li class="dropdown dropdown-user">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown-profile">
                         @include('laravel-authentication-acl::admin.layouts.partials.avatar', ['size' => 30])
@@ -34,7 +36,7 @@
                         </li>
                     </ul>
                 </li>
-            </ul><!-- nav-right -->
+            </div><!-- nav-right -->
         </div><!--/.nav-collapse -->
     </div>
 </div>

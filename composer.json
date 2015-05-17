@@ -7,10 +7,9 @@
 		"laravel/framework": "4.2.*",
 		"jacopo/laravel-authentication-acl": "~1.2",
 		"maatwebsite/excel": "~1.2.1",
-		"barryvdh/laravel-ide-helper": "~1.11",
 		"barryvdh/laravel-debugbar": "~1.8",
-		"codesleeve/asset-pipeline": "~2.1",
 		"chumper/datatable": "2.*"
+
 	},
 	"autoload": {
 		"classmap": [

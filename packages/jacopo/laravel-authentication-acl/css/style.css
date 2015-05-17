@@ -166,3 +166,12 @@ div.paginator
 .form-error{
   border: 1px solid red;
 }
+.navbar{background-color:#3796B2 !important; border-bottom: 4px solid rgb(237, 156, 40);color:#fff !important;}
+.navbar-brand {
+  padding:0;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+  background-color: #3796B2 !important;
+  color: rgb(255, 255, 255);
+}

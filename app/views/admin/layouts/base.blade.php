@@ -16,10 +16,17 @@
     {{ HTML::style('assets/css/fonts.css') }}
     {{ HTML::style('assets/css/font-awesome.min.css') }}
 
+    {{ HTML::style('assets/admin/css/style.css') }}
+    {{ HTML::style('assets/css/color-font.css') }}
 
-    {{ HTML::script('assets/js/jquery-1.10.2.min.js') }}
+    {{ HTML::script('assets/admin/js/jquery.min.js')}}
     {{ HTML::script('assets/js/bootstrap.min.js') }}
-    @yield('head_css')
+    {{ HTML::script('assets/admin/js/jquery.validate.min.js')}}
+    
+    @yield('misc-styles')
+    @yield('styles')
+
+    <script type="text/javascript">var baseUrl = '{{URL::to('/admin')}}'; </script>
     {{-- End head css --}}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->

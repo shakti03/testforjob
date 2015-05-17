@@ -13,17 +13,11 @@ $(function(){
 		qid= $('input[name=qid]').val();
 		solution = $('#solutionImg').attr('src');
 		if(!solution){
-			$.ajax({
-				url: BASE_URL+'/get-solution/'+qid,
-				dataType: 'json',
-				success: function(response){
-					$('#solutionImg').attr('src',response.srcImg);
-					$('input[name=hide_qid]').val(response.qid);
-					$('#studysolution').show();
-				},
-				error: function(response,xhr){
-					console.log(response);
-				}
+			$.get( BASE_URL+'/user/get-solution/'+qid, function(response){
+
+					$('#solutionImg').attr('src',response);
+					$('input[name=hide_qid]').val(qid);
+					$('#studysolution').modal('show');
 			});
 		}
 		else{
@@ -76,7 +70,7 @@ $(function(){
 		clearInterval(timerId);
 		$('#loader').show();
 		$.ajax({
-			url  : BASE_URL+'/set-time',
+			url  : baseUrl+'/user/set-time',
 			type : 'post',
 			data : {'hours':hours, 'minutes':minutes, 'seconds': seconds},
 			async: false,
