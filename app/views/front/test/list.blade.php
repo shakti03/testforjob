@@ -40,17 +40,45 @@
 @include('misc.datatable')
 @section('scripts')
 	<script type="text/javascript">
+		var table;
         $(document).ready(function(){
             $('#selectCompany').change(function(){
+				showCompany();
+			});
+			function showCompany(){
 				if( $('#selectCompany:checked').length)
 					$('#company').show();
 				else
 					$('#company').hide();
-			});
+			}
+			showCompany();
 
-            $('#testData').dataTable({
-                "ajax": "{{URL::to('user/test/list-data')}}",
-            });
+            table = $('#testData').dataTable({
+			                "ajax": {
+			                	url : "{{URL::to('user/test/list-data')}}",
+			                	data : function(d){
+			                		d.company = $('#searchForm [name=company]').val();
+			                		d.subject = $('#searchForm [name=subject]').val();
+			                		d.test_type = $('#searchForm [name=test_type]').val();	
+			                		d.question_type = $('#searchForm [name=question_type]').val();
+			                		d.difficulty_level = $('#searchForm [name=difficulty_level]').val();
+			                	}
+			                },
+			                aoColumns : [
+			                  	{ "sWidth": '130px',sClass : 'text-center' },
+			                  	{ "bSortable": true },
+			                  	{ "bSortable": true },
+			                  	{ "bSortable": true , sClass : 'text-center'},
+			                  	{ "bSortable": true , sClass : 'text-center'},
+			                  	{ "bSortable": true },
+			                  	{ sClass : 'text-center'},
+			                ]
+			            });
+
+            $('#searchForm').submit(function(e){
+		        e.preventDefault();
+		        table.api().ajax.reload();
+		    });	
 
         });
     </script>

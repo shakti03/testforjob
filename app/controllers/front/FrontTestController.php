@@ -10,7 +10,8 @@ class FrontTestController extends Controller {
     }
 
     public function getTestListData(){
-        $tests = Test::getTestSets();
+        $inputs = Input::all();
+        $tests = Test::getTestSets($inputs);
 
         return Datatable::collection($tests)
         ->addColumn('name',function($model) {
