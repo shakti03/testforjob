@@ -4,7 +4,7 @@
 
 class TestHistory extends BaseModel {
 
-	protected $fillable = ['active_test','answers','viewed','user_id','test_option','test_index','test_option_id'];
+	protected $fillable = ['test_slug','question_ids', 'answers','viewed','user_id'];
 
 	protected $table = 'test_history';
 
