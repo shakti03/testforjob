@@ -17,8 +17,8 @@ class FrontTestController extends Controller {
         ->addColumn('name',function($model) {
             return ucfirst($model->name);
         })
-        ->addColumn('test_type',function($model) {
-            return ucfirst($model->test_type);
+        ->addColumn('subject_name',function($model) {
+            return ucfirst($model->subject_name);
         })
         ->addColumn('question_type',function($model) {
             return ucfirst($model->question_type);

@@ -17,7 +17,7 @@
 				                    <thead>
 				                        <tr>
 				                            <th>Name</th>
-				                            <th>Test</th>
+				                            <th>Subject</th>
 				                            <th>Type</th>
 				                            <th>Difficulty</th>
 				                            <th>Questions</th>
@@ -46,10 +46,12 @@
 				showCompany();
 			});
 			function showCompany(){
-				if( $('#selectCompany:checked').length)
+				if( $('#selectCompany:checked').length){
 					$('#company').show();
-				else
+				}
+				else{
 					$('#company').hide();
+				}
 			}
 			showCompany();
 
@@ -65,8 +67,8 @@
 			                	}
 			                },
 			                aoColumns : [
-			                  	{ "sWidth": '130px',sClass : 'text-center' },
-			                  	{ "bSortable": true },
+			                  	{ "sWidth": '130px'},
+			                  	{ "bSortable": true, sClass : 'text-center'},
 			                  	{ "bSortable": true },
 			                  	{ "bSortable": true , sClass : 'text-center'},
 			                  	{ "bSortable": true , sClass : 'text-center'},
@@ -79,7 +81,6 @@
 		        e.preventDefault();
 		        table.api().ajax.reload();
 		    });	
-
         });
     </script>
 @stop

@@ -5,7 +5,7 @@ class Test  extends Eloquent {
     protected $table = 'test_questions';
     protected $fillable = ['question','option_a','option_b','option_c','option_d','answer','subject_id','company_id','test_type','test_name','difficulty_level','test_slug'];
 
-    public static function getTestSets($inputs) {
+    public static function getTestSets($inputs = []) {
         $result =  Test::select('test_questions.test_name as name', 'test_type', 'question_type', 'difficulty_level', DB::raw('count(test_questions.test_name) as no_of_questions'),'test_timings.time','test_questions.test_slug as test_slug','subjects.name as subject_name','companies.name as company_name')
                     ->leftJoin('subjects','subjects.id','=','test_questions.subject_id')
                     ->leftJoin('companies','companies.id','=','test_questions.company_id')
