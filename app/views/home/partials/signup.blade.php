@@ -220,17 +220,17 @@
 
     $(document).ready(function() {
 
-      //------------------------------------
+      /*------------------------------------
 
       // password checking
 
-      //------------------------------------
+      //------------------------------------*/
 
-      var password1     = $('#password1'); //id of first password field
+      var password1     = $('#password1'); /*id of first password field*/
 
-      var password2     = $('#password2'); //id of second password field
+      var password2     = $('#password2'); /*id of second password field*/
 
-      var passwordsInfo = $('#pass-info'); //id of indicator element
+      var passwordsInfo = $('#pass-info'); /*id of indicator element*/
 
 
 
@@ -238,11 +238,11 @@
 
 
 
-      //------------------------------------
+      /*------------------------------------
 
       // captcha regeneration
 
-      //------------------------------------
+      //------------------------------------*/
 
       $("#captcha-gen-button").click(function(e){
 

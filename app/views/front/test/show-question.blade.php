@@ -9,7 +9,7 @@
 <div class="container">
 	<div>&nbsp;</div>
 	<div class="row">
-		<div class="col-md-8" style="min-height:500px;border-right:1px solid;">
+		<div id="questionBox" class="col-md-8 borderRight minHeight500">
 			<div class="row">
 				<div class="col-md-9">
 					<span class="text-saffron font18">
@@ -62,10 +62,10 @@
 	                    	<div class="col-md-3">
 								@if($answer == null)
 	        						@if(!$timeOver)
-									<button class="btn btn-lg btn-warning borderNone pull-right" type="submit" id="save"  name="save"> Save &amp; Next</button>
+									<button class="btn btn-lg btn-warning borderNone " type="submit" id="save"  name="save"> Save &amp; Next</button>
 									@endif
 								@else	
-									<button class="btn btn-lg btn-info boldText pull-right borderNone" type="button" id="study" name="study"> Study Solution</button>   
+									<button class="btn btn-lg btn-info boldText borderNone" type="button" id="study" name="study"> Study Solution</button>   
 								@endif
 							</div>
 							<div class="col-md-9">
@@ -81,6 +81,10 @@
     				</form>
 				</div>
 			</div>
+		</div>
+		<div id="studySolution" class="col-md-8 displayNone borderRight minHeight500">
+			<h1> Study solution <button type="button" class="btn btn-primary pull-right" id="goToQuesiton"><i class="fa fa-arrow-left"></i>Back to Question</button></h1>
+			
 		</div>
 		
 		<div class="col-md-4">
@@ -100,7 +104,7 @@
 @stop
 
 @section('scripts')
-@include('front.test.partials.studysolution-modal')
+
 
 {{ HTML::script('assets/js/canvasjs.min.js')}}
 {{ HTML::script('assets/js/test/get-question.js')}}
@@ -110,7 +114,18 @@
 		if($timeOver) {
 			echo 'testOver = true;';
 		} 
-	?> 
+	?>
+	$(function(){
+		$('#study').click(function(){
+			$('#questionBox').toggle();
+			$('#studySolution').toggle(1000);
+		});
+
+		$('#goToQuesiton').click(function(){
+			$('#studySolution').toggle();
+			$('#questionBox').toggle(1000);
+		})
+	}); 
 </script>
 @stop
 
