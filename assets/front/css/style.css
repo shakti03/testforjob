@@ -129,3 +129,5 @@ ul.horizontal li{
 .unstyledList li{padding-top:10px;}
 .paddingTop5{padding-top: 5px;}
 .videoIcon{width:100%;}
+.minHeight500{min-height:500px}
+.borderRight{border-right:1px solid;} 
