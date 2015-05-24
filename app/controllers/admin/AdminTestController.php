@@ -88,7 +88,9 @@ class AdminTestController extends Controller {
 
 
     public function getTestQuestions($slug){
-        $testType = Test::where('test_slug',$slug)->first()->question_type;
+        $testType = Test::where('test_slug',$slug)->first();
+        if(empty($testType))
+            return Redirect::to('admin/test/list');
         return View::make('admin.test.questions',['slug'=>$slug,'question_type'=>$testType]);
     }
 

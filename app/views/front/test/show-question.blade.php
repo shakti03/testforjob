@@ -9,7 +9,7 @@
 <div class="container">
 	<div>&nbsp;</div>
 	<div class="row">
-		<div id="questionBox" class="col-md-8 borderRight questionleftPane">
+		<div id="questionBox" class="col-md-8 borderRight questionleftPane minHeight500">
 			<div class="row">
 				<div class="col-md-9">
 					<span class="text-saffron font18">
@@ -40,7 +40,7 @@
 		             		<div class="radio">
 		             			@if($answer == null)
 			             			<label class="radio-inline">
-									  <input name="option" type="radio" value="{{$key}}"> {{$option}} 
+									  <input name="option" type="radio" value="{{$key}}" {{ $timeOver ? 'disabled' : ''}}> {{$option}} 
 									  <span id="errMsg"></span>
 									</label>
 								@else 
@@ -71,7 +71,9 @@
 							<div class="col-md-9">
 								<div>&nbsp;</div>
 								<div>&nbsp;</div>
+								@if(!$timeOver)
 	        					@include('front.test.partials.pagination',['pag'=>$page,'las'=>$last])	
+	        					@endif
 							</div>
 						</div>
 
@@ -83,7 +85,7 @@
 			</div>
 		</div>
 		@if(!empty($answer))
-		<div id="studySolution" class="col-md-8 displayNone borderRight questionleftPane">
+		<div id="studySolution" class="col-md-8 displayNone borderRight questionleftPane minHeight500">
 			<h1> Study solution <button type="button" class="btn btn-primary pull-right" id="goToQuesiton"><i class="fa fa-arrow-left"></i>Back to Question</button></h1>
 			<div>
 				@if(!empty($studySolution))
@@ -97,8 +99,8 @@
 				Discussion forum</button>
 		</div>
 		
-		<div id="discussionForum" class="col-md-8 displayNone borderRight displayNone questionleftPane" style="">
-			<h1> Discussion forum &nbsp;<button type="button" class="btn btn-primary pull-right marginRight" id="studysolution"><i class="fa fa-arrow-left"></i>Study solution</button> &nbsp; <button type="button" class="btn btn-primary pull-right marginRight gotoQuestion" ><i class="fa fa-arrow-left"></i>Back to Question</button> &nbsp;</h1>
+		<div id="discussionForum" class="col-md-8 displayNone borderRight displayNone questionleftPane minHeight500">
+			<h1> Discussion forum &nbsp;<button type="button" class="btn btn-primary pull-right marginRight" id="studyButton"><i class="fa fa-arrow-left"></i>Study solution</button> &nbsp; <button type="button" class="btn btn-primary pull-right marginRight gotoQuestion" ><i class="fa fa-arrow-left"></i>Back to Question</button> &nbsp;</h1>
 			<hr>
 			<div class="well">
 				<div><b>Question:</b> {{$question->question}}</div>
@@ -168,20 +170,20 @@
 	?>
 	$(function(){
 		$('#study').click(function(){
-			$('#questionBox').toggle();
-			$('#studySolution').toggle(1000);
+			$('.questionleftPane').hide();
+			$('#studySolution').fadeIn(1000);
 		});
 
 		$('#goToQuesiton').click(function(){
-			$('#studySolution').toggle();
-			$('#questionBox').toggle(1000);
+			$('.questionleftPane').hide();
+			$('#questionBox').fadeIn(1000);
 		});
 
 		$('#showComments').click(function(){
 			var id = $(this).data('id');
 			loadComments(id, function(){
-				$('#studySolution').toggle();
-				$('#discussionForum').toggle(1000);
+				$('.questionleftPane').hide();
+				$('#discussionForum').fadeIn(1000);
 			});
 		});
 
@@ -190,6 +192,7 @@
 			$.get(baseUrl+'/question/get-discussion-comments/'+id, function(response){
 				var response = JSON.parse(response);
 				var commentHtml = '';
+				
 				$.each(response.result, function(){
 					if(commentHtml != '')
 						commentHtml += '<hr>';
@@ -202,9 +205,9 @@
 			});
 		}
 
-		$('#studysolution').click(function(){
-			$('#discussionForum').toggle();
-			$('#studySolution').toggle(1000);
+		$('#studyButton').click(function(){
+			$('.questionleftPane').hide();
+			$('#studySolution').fadeIn(1000);
 		});
 
 		$('#commentForm').submit(function(e){
@@ -226,6 +229,14 @@
 		$('.gotoQuestion').click(function(){
 			$('.questionleftPane').hide();
 			$('#questionBox').show(1000);
+		});
+
+		$('#frmTest').on("keyup keypress", function(e) {
+		  var code = e.keyCode || e.which; 
+		  if (code  == 13) {               
+		    e.preventDefault();
+		    return false;
+		  }
 		});
 	}); 
 </script>
