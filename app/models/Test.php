@@ -88,6 +88,7 @@ class Test  extends Eloquent {
     		$test->question = $row['question'];
     		$test->answer = $row['answer'];
 
+            $test->study_solution = isset($row['study_solution']) ? $row['study_solution'] : null;
     		if($inputData['test-type'] == 'objective') {
     			$test->option_a = $row['option_a'];
     			$test->option_b = $row['option_b'];
@@ -170,6 +171,12 @@ class Test  extends Eloquent {
         Subject::whereNotIn('id',$subjects)->delete();
         $companies = array_unique(Test::lists('company_id'));
         Company::whereNotIn('id',$companies)->delete();
+    }
+
+    public static function getStudySolution($qid){
+        $question = Test::find($qid);
+        
+        return $question->study_solution;
     }
 }
 

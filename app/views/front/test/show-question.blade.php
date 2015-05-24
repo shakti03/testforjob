@@ -9,7 +9,7 @@
 <div class="container">
 	<div>&nbsp;</div>
 	<div class="row">
-		<div id="questionBox" class="col-md-8 borderRight minHeight500">
+		<div id="questionBox" class="col-md-8 borderRight questionleftPane">
 			<div class="row">
 				<div class="col-md-9">
 					<span class="text-saffron font18">
@@ -82,11 +82,62 @@
 				</div>
 			</div>
 		</div>
-		<div id="studySolution" class="col-md-8 displayNone borderRight minHeight500">
+		@if(!empty($answer))
+		<div id="studySolution" class="col-md-8 displayNone borderRight questionleftPane">
 			<h1> Study solution <button type="button" class="btn btn-primary pull-right" id="goToQuesiton"><i class="fa fa-arrow-left"></i>Back to Question</button></h1>
-			
+			<div>
+				@if(!empty($studySolution))
+					<pre>{{ $studySolution}}</pre>
+				@else
+					No solution available
+				@endif
+			</div>
+			<div>&nbsp;</div>
+			<button type="button" class="btn btn-success" id="showComments" data-id="{{$page}}">
+				Discussion forum</button>
 		</div>
 		
+		<div id="discussionForum" class="col-md-8 displayNone borderRight displayNone questionleftPane" style="">
+			<h1> Discussion forum &nbsp;<button type="button" class="btn btn-primary pull-right marginRight" id="studysolution"><i class="fa fa-arrow-left"></i>Study solution</button> &nbsp; <button type="button" class="btn btn-primary pull-right marginRight gotoQuestion" ><i class="fa fa-arrow-left"></i>Back to Question</button> &nbsp;</h1>
+			<hr>
+			<div class="well">
+				<div><b>Question:</b> {{$question->question}}</div>
+				<div> &nbsp;</div>
+				@foreach($options as $key=>$option)
+             		<div>
+             			{{$option}} 
+						@if($answer['correct'] == $key)
+							<span class="green boldText"><i class="fa fa-check"></i> Correct</span>
+						@else
+							<span class="red"><i class="fa"></i> wrong </span>
+						@endif
+					</div>
+            	@endforeach
+			</div>
+			<hr>
+			<div id="comments">
+			@if(isset($comments) && count($comments))
+				@foreach($comments as $comment)
+					{{ $comment->comment}}
+				@endforeach
+			@else
+				No feedbacks are available. Be first to ask a question.
+			@endif
+			</div>	
+			{{ Form::open(['url'=>'question/add-comment','method'=>'post','id'=>'commentForm'])}}
+				<input type="hidden" name="question_no" value="{{$page}}">
+				<hr>
+				{{Form::textarea('comment',null , ['class'=>'form-control','placeholder'=>'Enter your feedback','rows'=>'3','required'])}}
+		
+				<div>&nbsp;</div>
+				<button type="submit" class="btn btn-warning" id="AddFeedback">
+				Add feedback</button>
+			{{Form::close()}}	
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
+		</div>	
+		@endif
+
 		<div class="col-md-4">
 			<label class="text-cadetBlue"><u>STATISTICS</u></label>
 				<div>&nbsp;</div>
@@ -105,7 +156,7 @@
 
 @section('scripts')
 
-
+{{ HTML::script('assets/admin/js/jquery.form.min.js')}}
 {{ HTML::script('assets/js/canvasjs.min.js')}}
 {{ HTML::script('assets/js/test/get-question.js')}}
 <script type="text/javascript">
@@ -124,7 +175,58 @@
 		$('#goToQuesiton').click(function(){
 			$('#studySolution').toggle();
 			$('#questionBox').toggle(1000);
-		})
+		});
+
+		$('#showComments').click(function(){
+			var id = $(this).data('id');
+			loadComments(id, function(){
+				$('#studySolution').toggle();
+				$('#discussionForum').toggle(1000);
+			});
+		});
+
+		function loadComments(id, callback){
+			$('.loader').show();
+			$.get(baseUrl+'/question/get-discussion-comments/'+id, function(response){
+				var response = JSON.parse(response);
+				var commentHtml = '';
+				$.each(response.result, function(){
+					if(commentHtml != '')
+						commentHtml += '<hr>';
+					commentHtml += '<p><b>'+this.first_name+':</b> '+this.comment+'</p>';
+				});
+				
+				$('#discussionForum #comments').html(commentHtml);
+				$('.loader').hide();
+				return callback();
+			});
+		}
+
+		$('#studysolution').click(function(){
+			$('#discussionForum').toggle();
+			$('#studySolution').toggle(1000);
+		});
+
+		$('#commentForm').submit(function(e){
+			e.preventDefault();
+			var id = $('#showComments').data('id');
+			$('#commentForm').ajaxSubmit({
+                beforeSubmit:  function(){
+                    $('.loader').show();
+                }, 
+                success: function(response){
+                    $('.loader').hide();
+                    loadComments(id, function(){
+                    	$('#commentForm')[0].reset();	
+                    });
+                }
+            });	
+		});
+
+		$('.gotoQuestion').click(function(){
+			$('.questionleftPane').hide();
+			$('#questionBox').show(1000);
+		});
 	}); 
 </script>
 @stop

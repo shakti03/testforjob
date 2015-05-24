@@ -36,8 +36,8 @@ Route::group(['before' => 'logged'], function() {
 	Route::post('user/set-time', 'FrontTestController@setTime');
 	Route::post('set-time', 'FrontTestController@setTime');
 	Route::post('user/submit-question', 'FrontTestController@submitQuestion');
-	Route::get('/get-discussion-comments/{qid}', 'FrontTestController@getDiscussionComments');
-	Route::post('add-comment', 'FrontTestController@addComment');
+	Route::get('question/get-discussion-comments/{qid}', 'FrontTestController@getDiscussionComments');
+	Route::post('question/add-comment', 'FrontTestController@addComment');
 
 	Route::get('user/dashboard', 'FrontUserController@showDashboard');
 	Route::get('user/videos', 'FrontUserController@showVideos');

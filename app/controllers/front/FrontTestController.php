@@ -68,6 +68,7 @@ class FrontTestController extends Controller {
         $activeTest = $testData['active_test'];
         $last = count($activeTest);
         $answer = null;
+        $studySolution = null;
         $totalAnswered = 0;
 
         if(isset($activeTest[$page-1])){
@@ -86,7 +87,10 @@ class FrontTestController extends Controller {
             }
 
             if(isset($testData['answers'])) {
-                $answer = isset($testData['answers'][$activeTest[$page-1]]) ? $testData['answers'][$activeTest[$page-1]] : null;
+                if(isset($testData['answers'][$activeTest[$page-1]])) {
+                    $answer =  $testData['answers'][$activeTest[$page-1]];
+                    $studySolution = Test::getStudySolution($activeTest[$page-1]);
+                }
                 $totalAnswered = count($testData['answers']);
             }
 
@@ -103,7 +107,8 @@ class FrontTestController extends Controller {
                                                     'incorrectAnswered' => isset($testData['incorrect_answer']) ? $testData['incorrect_answer'] : 0,
                                                     'hours'     => $hours,
                                                     'minutes'   => $minutes,
-                                                    'seconds'   => $seconds
+                                                    'seconds'   => $seconds,
+                                                    'studySolution' => $studySolution
                                                    ]);
         }
     }
@@ -125,9 +130,23 @@ class FrontTestController extends Controller {
     }
     
     public function addComment() {
-        $data = Input:: all();
-        $result = DiscussionForum:: insertComments($data);
-        return json_encode($result);
+        $inputs = Input:: all();
+        if(isset($inputs['question_no']) && isset($inputs['comment'])) {
+            $loggedUser = App::make('authenticator')->getLoggedUser();
+
+            $testData = Session::get('test_data');
+            $question_no = $inputs['question_no'];
+            $qid = $testData['active_test'][$question_no-1];
+
+            $data = [];
+            $data['question_id'] = $qid;
+            $data['user_id'] = $loggedUser->id;
+            $data['comment'] = $inputs['comment'];
+
+            DiscussionForum::insertComment($data);
+            return json_encode('success');
+        }
+        return json_encode('false');
     }
 
     public function submitQuestion(){

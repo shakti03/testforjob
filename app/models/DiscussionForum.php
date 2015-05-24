@@ -12,14 +12,9 @@ class DiscussionForum extends BaseModel {
         return $result;
     }
     
-    public static function insertComments($data) {
-        $result = DiscussionForum:: insert(array ("question_id" => $data['qid'], "user_id" => $data['uid'], "comment" => $data['comment']));
-        if($result) {
-            $user_name = DB:: table('user_profile')->where('user_id',$data['uid'])->get();
-            $user_name = $user_name[0]->first_name;
-            return $user_name;
-        }
-        return $result;
+    public static function insertComment($data) {
+        DiscussionForum::insert(array ("question_id" => $data['question_id'], "user_id" => $data['user_id'], "comment" => $data['comment']));
+        return true;
     }
 }
 ?>
