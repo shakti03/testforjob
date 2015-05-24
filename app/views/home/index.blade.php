@@ -41,7 +41,7 @@
         <div class="row">
             <div class="col-md-2">
                 <h3 style="color:#C9908C">Latest News</h3>
-                <marquee "behavior="scroll", direction="up" loop="true">
+                <marquee behavior="scroll", direction="up" loop="true">
                 <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
                 <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
                 <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
@@ -76,7 +76,7 @@
             </div>
             <div class="col-md-2">
                 <h3 style="color:#C9908C">Latest News</h3>
-                <marquee "behavior="scroll", direction="up" loop="true">
+                <marquee behavior="scroll", direction="up" loop="true">
                 <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
                 <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
                 <p class="text-justify">Wipro, TCS are coming to hire new employees</p>

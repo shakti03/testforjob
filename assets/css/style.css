@@ -171,9 +171,9 @@ div.paginator
 
 .boldText{ font-weight: bolder; }
 section.content{float:left;width:100%; padding:1%; height:90%; min-height:500px; background:#fff;-webkit-box-shadow:  0px 0px 10px 0px rgba(136, 135, 135, 05);box-shadow:  0px 0px 10px 0px rgba(136, 135, 135, 05);-webkit-border-radius: 15px;border-radius: 15px;}
-.minHeight130{min-height: 130px;}
-.minHeight150{min-height: 150px;}
-.minHeight200{min-height: 150px;}
+.minHeight130{min-height: 130px;height:130;overflow-y:auto;}
+.minHeight150{min-height: 150px;height:150;overflow-y:auto;}
+.minHeight200{min-height: 150px;height:200;overflow-y:auto;}
 .borderNone{border-radius: 0px;}
 .green{color:green;}
 .red{color:red;}

@@ -72,7 +72,6 @@
                 </div>
             </div>
             <div class="col-md-7">
-                <img src="..."/>
                 <div>
 		@if(Session::has('success'))
 		    <div class="alert-box success">

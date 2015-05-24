@@ -51,12 +51,12 @@
     <!-- Wrapper for Slides -->
     <div class="carousel-inner">
 	<img style="background-repeat: repeat-y; position:absolute; left:0px; top:0px; z-index:0;" width=100% src="{{URL::to('assets/images/bg_green.png')}}">
-    	<?php $sliderImages = [	'assets/images/slider images 1.png',
-				'assets/images/slider images 2.png',
-				'assets/images/slider images 3.png',
-				'assets/images/slider images 4.png',
-				'assets/images/slider images 5.png',
-				'assets/images/slider images 6.png'
+    	<?php $sliderImages = [	'assets/images/sliderimages1.png',
+				'assets/images/sliderimages2.png',
+				'assets/images/sliderimages3.png',
+				'assets/images/sliderimages4.png',
+				'assets/images/sliderimages5.png',
+				'assets/images/sliderimages6.png'
 			      ];
 	  	?>
 	  	<div class="item active">

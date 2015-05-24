@@ -116,7 +116,7 @@ ul.horizontal li{
     display:inline;
 }
 
-.main-container{min-height: 560px;}
+.main-container{min-height: 560px;display: block;overflow: auto;}
 .displayNone{display: none}
 .tableData table tbody{font-size: 14px;font-weight: normal;}
 .testPanel{min-height: 400px;}
@@ -129,5 +129,6 @@ ul.horizontal li{
 .unstyledList li{padding-top:10px;}
 .paddingTop5{padding-top: 5px;}
 .videoIcon{width:100%;}
-.minHeight500{min-height:500px}
+.minHeight500{min-height:500px;height:500px;overflow-y:auto;}
 .borderRight{border-right:1px solid;} 
+.marginRight{margin-right:10px} 
