@@ -16,7 +16,9 @@
 					</span>
 				@else
 					<br><br>
-					<p class="text-grey font18 bold"> Test Slug </p>
+					<div class="panel panel-default">
+					<div class="panel-body">
+					<p class="text-bgDarkSlateGray font18 bold"> Test Slug </p>
 					@foreach($value_user_test_detail as $each_test_detail)
 						
 						<br><br>
@@ -34,18 +36,24 @@
 							</ul>
 							<div>&nbsp;</div>	
 							</div>
-						</div>
+						</div>				
 					@endforeach
+					</div>
+					</div>
 				@endif
 			@endforeach
 		</div>
 		<div class="col-md-4">
 			<br><br>
-			<div class="tests_info text-grey bold">
-				
+			<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="tests_info text-grey bold">
+					
+				</div>
+				<div>&nbsp;</div>
+				<div id="chartContainer" style="height: 250px; width: 100%;"></div>
 			</div>
-			<div>&nbsp;</div>
-			<div id="chartContainer" style="height: 250px; width: 100%;"></div>
+			</div>
 		</div>
 	</div>
 </div>
