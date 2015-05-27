@@ -4,27 +4,6 @@ $(function(){
 	var seconds = $("#seconds").attr('value');
 	var timerId = null;
 
-	$(".modal-wide").on("show.bs.modal", function() {
-	  var height = $(window).height() - 200;
-	  $(this).find(".modal-body").css("max-height", height);
-	});
-
-	$('#study').click(function(){
-		qid= $('input[name=qid]').val();
-		solution = $('#solutionImg').attr('src');
-		if(!solution){
-			$.get( BASE_URL+'/user/get-solution/'+qid, function(response){
-
-					$('#solutionImg').attr('src',response);
-					$('input[name=hide_qid]').val(qid);
-					$('#studysolution').modal('show');
-			});
-		}
-		else{
-			$('#studysolution').show();
-		}
-	});
-	
 	$('#timer').html(hours+':'+minutes+':'+seconds);
 
 	if(!testOver) {

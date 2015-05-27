@@ -34,8 +34,8 @@
 	</div>
 	@include('front.footer')
 
-	<div class="loader">
-		<img class="spinner" src="{{URL::to('assets/images/loader.gif')}}">
+	<div class="loader" id="loader">
+		<img src="{{URL::to('assets/images/loader.gif')}}">
 	</div>
 	
 	@yield('misc-scripts')

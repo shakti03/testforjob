@@ -9,7 +9,7 @@
 <div class="container">
 	<div>&nbsp;</div>
 	<div class="row">
-		<div class="col-md-8" style="min-height:500px;border-right:1px solid;">
+		<div id="questionBox" class="col-md-8 borderRight questionleftPane minHeight500">
 			<div class="row">
 				<div class="col-md-9">
 					<span class="text-saffron font18">
@@ -40,7 +40,7 @@
 		             		<div class="radio">
 		             			@if($answer == null)
 			             			<label class="radio-inline">
-									  <input name="option" type="radio" value="{{$key}}"> {{$option}} 
+									  <input name="option" type="radio" value="{{$key}}" {{ $timeOver ? 'disabled' : ''}}> {{$option}} 
 									  <span id="errMsg"></span>
 									</label>
 								@else 
@@ -62,16 +62,18 @@
 	                    	<div class="col-md-3">
 								@if($answer == null)
 	        						@if(!$timeOver)
-									<button class="btn btn-lg btn-warning borderNone pull-right" type="submit" id="save"  name="save"> Save &amp; Next</button>
+									<button class="btn btn-lg btn-warning borderNone " type="submit" id="save"  name="save"> Save &amp; Next</button>
 									@endif
 								@else	
-									<button class="btn btn-lg btn-info boldText pull-right borderNone" type="button" id="study" name="study"> Study Solution</button>   
+									<button class="btn btn-lg btn-info boldText borderNone" type="button" id="study" name="study"> Study Solution</button>   
 								@endif
 							</div>
 							<div class="col-md-9">
 								<div>&nbsp;</div>
 								<div>&nbsp;</div>
+								@if(!$timeOver)
 	        					@include('front.test.partials.pagination',['pag'=>$page,'las'=>$last])	
+	        					@endif
 							</div>
 						</div>
 
@@ -82,7 +84,62 @@
 				</div>
 			</div>
 		</div>
+		@if(!empty($answer))
+		<div id="studySolution" class="col-md-8 displayNone borderRight questionleftPane minHeight500">
+			<h1> Study solution <button type="button" class="btn btn-primary pull-right" id="goToQuesiton"><i class="fa fa-arrow-left"></i>Back to Question</button></h1>
+			<div>
+				@if(!empty($studySolution))
+					<pre>{{ $studySolution}}</pre>
+				@else
+					No solution available
+				@endif
+			</div>
+			<div>&nbsp;</div>
+			<button type="button" class="btn btn-success" id="showComments" data-id="{{$page}}">
+				Discussion forum</button>
+		</div>
 		
+		<div id="discussionForum" class="col-md-8 displayNone borderRight displayNone questionleftPane minHeight500">
+			<h1> Discussion forum &nbsp;<button type="button" class="btn btn-primary pull-right marginRight" id="studyButton"><i class="fa fa-arrow-left"></i>Study solution</button> &nbsp; <button type="button" class="btn btn-primary pull-right marginRight gotoQuestion" ><i class="fa fa-arrow-left"></i>Back to Question</button> &nbsp;</h1>
+			<hr>
+			<div class="well">
+				<div><b>Question:</b> {{$question->question}}</div>
+				<div> &nbsp;</div>
+				@foreach($options as $key=>$option)
+             		<div>
+             			{{$option}} 
+						@if($answer['correct'] == $key)
+							<span class="green boldText"><i class="fa fa-check"></i> Correct</span>
+						@else
+							<span class="red"><i class="fa"></i> wrong </span>
+						@endif
+					</div>
+            	@endforeach
+			</div>
+			<hr>
+			<div id="comments">
+			@if(isset($comments) && count($comments))
+				@foreach($comments as $comment)
+					{{ $comment->comment}}
+				@endforeach
+			@else
+				No feedbacks are available. Be first to ask a question.
+			@endif
+			</div>	
+			{{ Form::open(['url'=>'question/add-comment','method'=>'post','id'=>'commentForm'])}}
+				<input type="hidden" name="question_no" value="{{$page}}">
+				<hr>
+				{{Form::textarea('comment',null , ['class'=>'form-control','placeholder'=>'Enter your feedback','rows'=>'3','required'])}}
+		
+				<div>&nbsp;</div>
+				<button type="submit" class="btn btn-warning" id="AddFeedback">
+				Add feedback</button>
+			{{Form::close()}}	
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
+		</div>	
+		@endif
+
 		<div class="col-md-4">
 			<label class="text-cadetBlue"><u>STATISTICS</u></label>
 				<div>&nbsp;</div>
@@ -100,8 +157,8 @@
 @stop
 
 @section('scripts')
-@include('front.test.partials.studysolution-modal')
 
+{{ HTML::script('assets/admin/js/jquery.form.min.js')}}
 {{ HTML::script('assets/js/canvasjs.min.js')}}
 {{ HTML::script('assets/js/test/get-question.js')}}
 <script type="text/javascript">
@@ -110,7 +167,78 @@
 		if($timeOver) {
 			echo 'testOver = true;';
 		} 
-	?> 
+	?>
+	$(function(){
+		$('#study').click(function(){
+			$('.questionleftPane').hide();
+			$('#studySolution').fadeIn(1000);
+		});
+
+		$('#goToQuesiton').click(function(){
+			$('.questionleftPane').hide();
+			$('#questionBox').fadeIn(1000);
+		});
+
+		$('#showComments').click(function(){
+			var id = $(this).data('id');
+			loadComments(id, function(){
+				$('.questionleftPane').hide();
+				$('#discussionForum').fadeIn(1000);
+			});
+		});
+
+		function loadComments(id, callback){
+			$('.loader').show();
+			$.get(baseUrl+'/question/get-discussion-comments/'+id, function(response){
+				var response = JSON.parse(response);
+				var commentHtml = '';
+				
+				$.each(response.result, function(){
+					if(commentHtml != '')
+						commentHtml += '<hr>';
+					commentHtml += '<p><b>'+this.first_name+':</b> '+this.comment+'</p>';
+				});
+				
+				$('#discussionForum #comments').html(commentHtml);
+				$('.loader').hide();
+				return callback();
+			});
+		}
+
+		$('#studyButton').click(function(){
+			$('.questionleftPane').hide();
+			$('#studySolution').fadeIn(1000);
+		});
+
+		$('#commentForm').submit(function(e){
+			e.preventDefault();
+			var id = $('#showComments').data('id');
+			$('#commentForm').ajaxSubmit({
+                beforeSubmit:  function(){
+                    $('.loader').show();
+                }, 
+                success: function(response){
+                    $('.loader').hide();
+                    loadComments(id, function(){
+                    	$('#commentForm')[0].reset();	
+                    });
+                }
+            });	
+		});
+
+		$('.gotoQuestion').click(function(){
+			$('.questionleftPane').hide();
+			$('#questionBox').show(1000);
+		});
+
+		$('#frmTest').on("keyup keypress", function(e) {
+		  var code = e.keyCode || e.which; 
+		  if (code  == 13) {               
+		    e.preventDefault();
+		    return false;
+		  }
+		});
+	}); 
 </script>
 @stop
 
