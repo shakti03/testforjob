@@ -79,13 +79,13 @@
 
 </div>
 <?php 
-	$featuresImgs = [	'assets/images/feature_1.jpg',
-						'assets/images/feature_2.jpg',
-						'assets/images/feature_3.jpg',
-						'assets/images/feature_4.jpg',
-						'assets/images/feature_5.jpg',
-						'assets/images/feature_6.jpg',
-						'assets/images/feature_7.jpg',
+	$featuresImgs = [	'assets/images/Management.png',
+						'assets/images/Study ABD.png',
+						'assets/images/jobs.png',
+						'assets/images/arts sci law.png',
+						'assets/images/Language Skill.png',
+						'assets/images/Sci & techno.png',
+						'assets/images/school pro.png',
 						'assets/images/feature_8.jpg'
 					];
 ?>

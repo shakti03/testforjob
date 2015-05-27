@@ -42,15 +42,15 @@
             <div class="col-md-2">
                 <h3 style="color:#C9908C">Latest News</h3>
                 <marquee "behavior="scroll", direction="up" loop="true">
-                <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
-                <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
-                <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
-                <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
-                <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
-                <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
+                <p class="text-justify bold">Wipro, TCS are coming to hire new employees</p>
+                <p class="text-justify bold">Wipro, TCS are coming to hire new employees</p>
+                <p class="text-justify bold">Wipro, TCS are coming to hire new employees</p>
+                <p class="text-justify bold">Wipro, TCS are coming to hire new employees</p>
+                <p class="text-justify bold">Wipro, TCS are coming to hire new employees</p>
+                <p class="text-justify bold">Wipro, TCS are coming to hire new employees</p>
                 </marquee>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6 col-md-offset-1">
                 <h2 style="color:#C36568;">TestForJob Online Test Prep Features</h2>
                 <p class="text-justify">TestForJob is an adaptive learning platform for test preparation that diagnoses each IT candidate (Fresher’s as well as experience) strengths and weaknesses and creates a personalized study plan based on their needs(require IT jobs in IT Organizations). TestForJob is also fully integrated in to the Naviance platform.</p>
                 <p class="text-justify">
@@ -74,15 +74,15 @@
                 <h3>Connect with OUR IT Experties</h3>
                 <p class="text-justify">All IT fressor as well as experience candidates can connect with our IT Experties whose is currently working in Organasition.</p>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 col-md-offset-1">
                 <h3 style="color:#C9908C">Latest News</h3>
                 <marquee "behavior="scroll", direction="up" loop="true">
-                <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
-                <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
-                <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
-                <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
-                <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
-                <p class="text-justify">Wipro, TCS are coming to hire new employees</p>
+                <p class="text-justify bold">Wipro, TCS are coming to hire new employees</p>
+                <p class="text-justify bold">Wipro, TCS are coming to hire new employees</p>
+                <p class="text-justify bold">Wipro, TCS are coming to hire new employees</p>
+                <p class="text-justify bold">Wipro, TCS are coming to hire new employees</p>
+                <p class="text-justify bold">Wipro, TCS are coming to hire new employees</p>
+                <p class="text-justify bold">Wipro, TCS are coming to hire new employees</p>
                 </marquee>
             </div>
         </div>
