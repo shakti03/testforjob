@@ -127,7 +127,7 @@ class Test  extends Eloquent {
         return Test::leftJoin('subjects','subjects.id','=','test_questions.subject_id')
                     ->leftJoin('companies','companies.id','=','test_questions.company_id')
                     ->where('test_questions.id',$id)
-                    ->select('question','option_a','option_b','option_c','option_d','subjects.name as subject_name','companies.name as company_name')
+                    ->select('question','option_a','option_b','option_c','option_d','subjects.name as subject_name','companies.name as company_name','question_type')
                     ->first();
     }
 

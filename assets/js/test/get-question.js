@@ -31,18 +31,22 @@ $(function(){
 
     $('#frmTest').submit(function(){
     	$('#loader').show();
-		var option = $('input[name=option]:checked').val();
+		var questionType = $('[name=question_type]').val();
+		
+		if(questionType == 'objective'){
+			var option = $('input[name=option]:checked').val();
 
-		$("input#hours").attr('value', hours);
-		$("input#minutes").attr('value', minutes);
-		$("input#seconds").attr('value', seconds); 
+			$("input#hours").attr('value', hours);
+			$("input#minutes").attr('value', minutes);
+			$("input#seconds").attr('value', seconds); 
 
-		if(!option) {
-			alert('Please select an option.');
-			$('#loader').hide();
-			return false;
+			if(!option) {
+				alert('Please select an option.');
+				$('#loader').hide();
+				return false;
+			}
 		}
-		clearInterval(timerId);
+		clearInterval(timerId);	
 	});
 
 	$('.pagination a').click(function(e){
