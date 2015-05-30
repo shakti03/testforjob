@@ -29,33 +29,46 @@
 			<div class="row">&nbsp;</div>
 			<div class="row">
 				<div class="col-md-12">
-					<?php $options = ['a'=>$question->option_a,'b'=>$question->option_b,'c'=>$question->option_c,'d'=>$question->option_d]; ?>
 					<form method="post" action="{{URL::to('user/submit-question')}}" id="frmTest">
+						{{--*/ $questionType = $question->question_type;/*--}}
+						<input type="hidden" name="question_type" value="{{$questionType}}">
 						<input type="hidden" name="qid" value="{{$page}}"/>
 						<div class="minHeight250">
 							<div>&nbsp;</div>
 		                	<span class="boldText" id="question"> {{'Q.'.$page.': &nbsp;'.$question->question}}</span>
 
-		             		@foreach($options as $key=>$option)
-		             		<div class="radio">
-		             			@if($answer == null)
-			             			<label class="radio-inline">
-									  <input name="option" type="radio" value="{{$key}}" {{ $timeOver ? 'disabled' : ''}}> {{$option}} 
-									  <span id="errMsg"></span>
-									</label>
-								@else 
-									<label class="radio-inline">
-									  <input name="option" type="radio" value="{{$key}}" {{ ($answer['user_answer'] == $key) ? 'checked' : '' }} disabled> {{$option}} 
-									</label>
+		                	@if($questionType == 'objective')
+			                	{{--*/ $options = ['a'=>$question->option_a,'b'=>$question->option_b,'c'=>$question->option_c,'d'=>$question->option_d];/*--}} 
+			             		@foreach($options as $key=>$option)
+			             		<div class="radio">
+			             			@if($answer == null)
+				             			<label class="radio-inline">
+										  <input name="option" type="radio" value="{{$key}}" {{ $timeOver ? 'disabled' : ''}}> {{$option}} 
+										  <span id="errMsg"></span>
+										</label>
+									@else 
+										<label class="radio-inline">
+										  <input name="option" type="radio" value="{{$key}}" {{ ($answer['user_answer'] == $key) ? 'checked' : '' }} disabled> {{$option}} 
+										</label>
 
-									@if($answer['correct'] == $key)
-										<span class="green boldText"><i class="fa fa-check"></i> Correct</span>
-									@else
-										<span class="red"><i class="fa"></i> wrong </span>
+										@if($answer['correct'] == $key)
+											<span class="green boldText"><i class="fa fa-check"></i> Correct</span>
+										@else
+											<span class="red"><i class="fa"></i> wrong </span>
+										@endif
 									@endif
-								@endif
-		             		</div>
-		                	@endforeach
+			             		</div>
+			                	@endforeach
+			                @else
+			                	<div>&nbsp;</div>
+			                	<div class="form-group">
+			                		@if($answer == null)
+				                	{{Form::textarea('answer',null , ['class'=>'form-control','placeholder'=>'Type your answer','rows'=>'7','required'])}}
+			                		@else
+				                	{{Form::textarea('answer',$answer['user_answer'] , ['class'=>'form-control','placeholder'=>'Type your answer','rows'=>'7','required','disabled'])}}
+				                	@endif
+			                	</div>
+			                @endif	
 		                </div>
 
 	                	<div class="row">
@@ -105,7 +118,9 @@
 			<div class="well">
 				<div><b>Question:</b> {{$question->question}}</div>
 				<div> &nbsp;</div>
-				@foreach($options as $key=>$option)
+				@if($question->question_type == 'objective')
+
+					@foreach($options as $key=>$option)
              		<div>
              			{{$option}} 
 						@if($answer['correct'] == $key)
@@ -114,7 +129,10 @@
 							<span class="red"><i class="fa"></i> wrong </span>
 						@endif
 					</div>
-            	@endforeach
+            		@endforeach
+            	@else
+            		{{ $question->answer}}	
+            	@endif	
 			</div>
 			<hr>
 			<div id="comments">
@@ -231,13 +249,13 @@
 			$('#questionBox').show(1000);
 		});
 
-		$('#frmTest').on("keyup keypress", function(e) {
+		/*$('#frmTest').on("keyup keypress", function(e) {
 		  var code = e.keyCode || e.which; 
 		  if (code  == 13) {               
 		    e.preventDefault();
 		    return false;
 		  }
-		});
+		});*/
 	}); 
 </script>
 @stop
