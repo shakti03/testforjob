@@ -24,6 +24,12 @@ Route::group(['before'=>'admin', 'prefix'=>'admin'], function(){
     Route::post('upload-video', 'AdminController@uploadVideo');
     Route::get('videos/category/delete/{id}', 'AdminController@deleteVideoCategory');
     Route::get('videos/delete/{id}', 'AdminController@deleteVideo');
+
+    Route::get('test-plan/list', 'AdminTestPlanController@getTestPlanList');
+    Route::any('test-plan-data', 'AdminTestPlanController@testPlanData');
+    Route::post('test-plan/add', 'AdminTestPlanController@addTestPlan');
+    Route::get('test-plan/delete/{id}', 'AdminTestPlanController@deleteTestPlan');
+
 });
 	
 Route::group(['before' => 'logged'], function() {
