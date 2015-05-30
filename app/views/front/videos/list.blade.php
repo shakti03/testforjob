@@ -35,6 +35,22 @@
 {{HTML::script("assets/fancybox/lib/jquery.mousewheel-3.0.6.pack.js")}}
 {{HTML::script("assets/fancybox/source/jquery.fancybox.pack.js")}}
 {{HTML::script("assets/front/js/videos.js")}}
+<script type="text/javascript">
+	$(function(){
+		$('#videoType').change(function(){
+			var rex = ''+$(this).val();
+	        if(rex) {
+	          $('.videoFile').hide();
+	          $('.videoFile').filter(function(){
+	            return rex === ''+$(this).data('filter');
+	          }).show();
+	        }
+	        else{
+	          $('.videoFile').show();
+	        }
+		});
+	});
+</script>
 @stop
 
 @section('styles')

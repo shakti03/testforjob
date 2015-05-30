@@ -1,12 +1,12 @@
 $(function(){
 	$(".various").fancybox();
-	$('#videoType').change(function(){
-		var rex = new RegExp($(this).val(),'gi');
-		$('.videoFile').hide();
-		$('.videoFile').filter(function(){
-			return rex.test($(this).data('filter'));
-		}).show();
-	});
+	// $('#videoType').change(function(){
+	// 	var rex = new RegExp($(this).val(),'gi');
+	// 	$('.videoFile').hide();
+	// 	$('.videoFile').filter(function(){
+	// 		return rex.test($(this).data('filter'));
+	// 	}).show();
+	// });
 
 	$('.modal').on('hidden.bs.modal', function(){
 	$(this).find('form')[0].reset();

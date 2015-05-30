@@ -41,12 +41,8 @@
 </div>
 <script type="text/javascript">
   $(function(){
-        $('#videoType').change(function(){
-          var rex = new RegExp($(this).val(),'gi');
-          $('.videoFile').hide();
-          $('.videoFile').filter(function(){
-            return rex.test($(this).data('filter'));
-          }).show();
-        });
+        $('#uploadVideoForm').submit(function(){
+          $('loader').show();
+        }); 
   });
 </script>
