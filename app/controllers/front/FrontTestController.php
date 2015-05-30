@@ -81,7 +81,6 @@ class FrontTestController extends Controller {
 
             // set question status as viewed
             if(!in_array($qid,$viewedQuestion)){
-
                 $viewedQuestion[] = $qid;
                 $testHistory->viewed = json_encode($viewedQuestion);
                 $testHistory->save();

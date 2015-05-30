@@ -27,6 +27,15 @@ class TestHistory extends BaseModel {
 		return $testHistory;
 
 	}
+	
+	public static function getTestHistoryByUser($id) {
+		return DB::table('test_history')
+			->leftJoin('users', 'users.id', '=', 'test_history.user_id')
+			->where('test_history.user_id', '=', $id)
+			->get();
+	}
+	
+	
 
 }
 

@@ -19,6 +19,7 @@
 
 	{{ HTML::script('assets/front/js/jquery.min.js')}}
 	{{ HTML::script('assets/front/js/bootstrap.min.js')}}
+	{{ HTML::script('assets/front/js/user.js')}}
 
 	@yield('misc-styles')
 	@yield('styles')
