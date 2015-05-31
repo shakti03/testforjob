@@ -69,9 +69,9 @@
             </div>
             <div class="col-md-3">
                 <ul class="horizontal">
-                    <li><a><img src="{{URL::asset('assets/images/icon_fb.jpg')}}"></a></li>
-                    <li><a><img src="{{URL::asset('assets/images/icon_twitter.jpg')}}"></a></li>
-                    <li><a><img src="{{URL::asset('assets/images/icon_google_plus.jpg')}}"></a></li>
+                    <li><a href="https://www.facebook.com/pages/TechnogoalItSolution/1441947032695791"><img src="{{URL::asset('assets/images/icon_fb.jpg')}}"></a></li>
+                    <li><a href="https://twitter.com/Technogoalit"><img src="{{URL::asset('assets/images/icon_twitter.jpg')}}"></a></li>
+                    <li><a href="https://plus.google.com/109994343096422747688/posts"><img src="{{URL::asset('assets/images/icon_google_plus.jpg')}}"></a></li>
                 </ul>
             </div>
             <div class="col-md-4">

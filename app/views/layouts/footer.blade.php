@@ -68,10 +68,11 @@
                 @2015  TCY Learning(P) LTD. All Rights Reserved.
             </div>
             <div class="col-md-3">
-                <ul class="horizontal">
-                    <li><a><img src="assets/images/icon_fb.jpg"></a></li>
-                    <li><a><img src="assets/images/icon_twitter.jpg"></a></li>
-                    <li><a><img src="assets/images/icon_google_plus.jpg"></a></li>
+                <ul class="horizontal ">
+                    <li><a target="blank" href="https://www.facebook.com/pages/TechnogoalItSolution/1441947032695791"><img class="social-icons-fb" src="{{URL::asset('assets/images/icon_fb.png')}}"></a></li>
+                    <li><a target="blank" href="https://twitter.com/Technogoalit"><img class="social-icons-twitter" src="{{URL::asset('assets/images/icon_twitter.png')}}"></a></li>
+                    <li><a target="blank" href="https://plus.google.com/109994343096422747688/posts"><img class="social-icons-google" src="{{URL::asset('assets/images/icon_googleplus.png')}}"></a></li>
+		    <li><a target="blank" href=" http://www.linkedin.com/pub/technogoalitsolution/87/1b0/1b3"><img class="social-icons-linkedin" src="{{URL::asset('assets/images/icon_linkedin.png')}}"></a></li>
                 </ul>
             </div>
             <div class="col-md-4">

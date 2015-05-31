@@ -1,4 +1,20 @@
 /*///////////////// structure ////////////////*/
+p
+{
+	color: #62676B;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 13px;
+	line-height: 25px;
+	text-indent: 30px;
+	margin: 0;
+}
+
+h3{
+	color: #444749;
+	font-family: 'Open Sans', sans-serif;
+	line-height: 25px;
+	margin: 10px;
+}
 .container-body
 {
     margin-top: 65px;

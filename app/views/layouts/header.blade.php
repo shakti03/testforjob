@@ -78,14 +78,14 @@
     </a>
 
 </div>
-<?php 
-	$featuresImgs = [	'assets/images/Management.png',
-						'assets/images/Study ABD.png',
+<?php
+	$featuresImgs =                [	'assets/images/Management.png',
+						'assets/images/study_abd.png',
 						'assets/images/jobs.png',
-						'assets/images/arts sci law.png',
-						'assets/images/Language Skill.png',
-						'assets/images/Sci & techno.png',
-						'assets/images/school pro.png',
+						'assets/images/arts_sci_law.png',
+						'assets/images/language_skill.png',
+						'assets/images/sci_techno.png',
+						'assets/images/school_pro.png',
 						'assets/images/feature_8.jpg'
 					];
 ?>
