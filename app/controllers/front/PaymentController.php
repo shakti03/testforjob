@@ -13,50 +13,37 @@ class PaymentController extends Controller{
 		$txnid = '';
 		
 		// Hash Sequence
-		$hashSequence = "key|txnid|amount|productinfo|firstname|email";
+		$hashSequence = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10";
 
 		$posted['key'] =$MERCHANT_KEY;
 		$posted['hash'] = '';
-		$posted['txnid'] = '';
+		$posted['txnid'] = substr(hash('sha256', mt_rand() . microtime()), 0, 20);
 		$posted['amount'] = 100;
 		$posted['firstname'] = 'shakti';
 		$posted['email'] = 'shaktisingh03@gmail.com';
 		$posted['phone'] = '11111111111';
 		$posted['productinfo'] = 'test plan';
-		$posted['surl'] = 'payment-success';
-		$posted['furl'] = 'paymetn-fail';
-		$posted['curl'] = 'payment-cancel';
+		$posted['surl'] = URL::to('payment-success').'/';
+		$posted['furl'] = URL::to('paymetn-fail').'/';
+		$posted['curl'] = URL::to('payment-cancel').'/';
 		$posted['service_provider'] = 'payu_paisa';
 
-		if(empty($posted['txnid'])) {
-		  	// Generate random transaction id
-		  	$txnid = substr(hash('sha256', mt_rand() . microtime()), 0, 20);
-		} 
-		else {
-		  	$txnid = $posted['txnid'];
-		}
+		// hash string
+		$hashVarsSeq = explode('|', $hashSequence);
+	    $hash_string = '';	
+		foreach($hashVarsSeq as $hash_var) {
+	      $hash_string .= isset($posted[$hash_var]) ? $posted[$hash_var] : '';
+	      $hash_string .= '|';
+	    }
 
-		if(empty($posted['hash'])) {
-		  	//$posted['productinfo'] = json_encode(json_decode('[{"name":"tutionfee","description":"","value":"500","isRequired":"false"},{"name":"developmentfee","description":"monthly tution fee","value":"1500","isRequired":"false"}]'));
-			$hashVarsSeq = explode('|', $hashSequence);
-		    $hash_string = '';	
-			foreach($hashVarsSeq as $hash_var) {
-		      $hash_string .= isset($posted[$hash_var]) ? $posted[$hash_var] : '';
-		      $hash_string .= '|';
-		    }
-
-		    $hash_string .= $SALT;
-		    $hash = strtolower(hash('sha512', $hash_string));
-		    $action = $PAYU_BASE_URL . '/_payment';
-	  	}
-		else {
-		  $hash = $posted['hash'];
-		  $action = $PAYU_BASE_URL . '/_payment';
-		}
-
+	    $hash_string .= $SALT;
+	    $hash = strtolower(hash('sha512', $hash_string));
+	    $action = $PAYU_BASE_URL . '/_payment';
+	  	
+	  	// send data to 
 		$data['hash'] = $hash;
 		$data['action'] = $action;
-		$data['txnid'] = $txnid;
+		$data['txnid'] = $posted['txnid'];
 		$data['MERCHANT_KEY'] = $MERCHANT_KEY;
 		$data['SALT']=$SALT;
 		$data['surl'] = $posted['surl'];

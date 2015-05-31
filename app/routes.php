@@ -49,7 +49,10 @@ Route::group(['before' => 'logged'], function() {
 	Route::get('user/videos', 'FrontUserController@showVideos');
 	Route::get('user/test-history', 'FrontUserController@showTestHistory');
 	Route::get('user/test-plans','FrontUserController@getTestPlans');
-	Route::get('user/get-plan/{id}','PaymentController@getTestPlan');
+	Route::any('user/get-plan/{id}','PaymentController@getTestPlan');
+	Route::any('payment-success','PaymentController@getTestPlan');
+	Route::any('payment-cancel','PaymentController@getTestPlan');
+	Route::any('payment-fail','PaymentController@getTestPlan');
 });
 
 Route::get('/', 'HomeController@showHome');
