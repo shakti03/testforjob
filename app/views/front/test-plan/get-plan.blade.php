@@ -1,75 +1,81 @@
 @extends('front.layout')
 @section('content')
 <div class="container">
-    <div class="row">
-    	<div class="col-md-12">
-    		<h2>PayU Form</h2>
-    		<hr>
-    	    <form class="form-horizontal" action="{{ $action }}" method="post" name="payuForm">
-		      	<input type="hidden" name="key" value="{{ $MERCHANT_KEY }}" />
-		      	<input type="hidden" name="hash" value="{{ $hash }}"/>
-		      	<input type="hidden" name="txnid" value="{{ $txnid }}" />
-		      	<input type="hidden" name="surl" value="{{ $surl }}" />
-		      	<input type="hidden" name="furl" value="{{ $furl }}" />
-		      	<input type="hidden" name="curl" value="{{ $curl }}" />
-		      	<input type="hidden" name="service_provider" value="{{ $service_provider}}" />
-		      	<input type="hidden" name="productinfo" value="{{$productinfo }}" />
-		      	<input type="hidden" name="amount" value="{{ $posted['amount'] }}" />
-		      	<input type="hidden" name="firstname" value="{{ $posted['firstname'] }}" />
-		      	
-		      	<div class="form-group">
-		      		<label class="col-md-2">Plan Name</label>
-		      		<div class="col-md-3">
-		      			<label>{{ $planName }}</label>
-		      		</div>
-		      	</div>
-		      	<hr>
-		      	<div class="form-group">
-		      		<label class="col-md-2">Price</label>
-		      		<div class="col-md-3">
-		      			<label>{{ $posted['amount'] }}</label>
-		      		</div>
-		      	</div>
-		      	<hr>
-		      	<div class="form-group">
-		      		<label class="col-md-2">First Name:</label>
-		      		<div class="col-md-3">
-		      			<label>{{ $posted['firstname'] }}</label>
-		      		</div>
-		      	</div>
-		      	<hr>
-		      	<div class="form-group">
-		      		<label class="col-md-2">Email:</label>
-		      		<div class="col-md-3">
-		      			<label>{{ $posted['email'] }}</label>
-		      		</div>
-		      	</div>
-		      	<hr>
-		      	<div class="form-group">
-		      		<label class="col-md-2">Phone:</label>
-		      		<div class="col-md-3">
-		      			<label>{{ $posted['phone'] }}</label>
-		      		</div>
-		      	</div>
-		      	<hr>	
-				<div class="form-group">
-					<input class="btn btn-primary" type="submit" value="Make Payment" />
-				</div>
-		    </form>
-    	</div>	
+	<div class="row">
+        <h2>User Payment Information</h2>
+        <hr>
+        {{ Form::open(['url'=>$action, 'method'=>'post' , 'class'=>'form-horizontal', 'name'=>"payuForm", 'id'=>"payuForm"]) }}
+            @if($hash != '')
+                <input type="hidden" name="key" value="{{ $key }}">
+                <input type="hidden" name="hash" value="{{ $hash }}">
+                <input type="hidden" name="txnid" value="{{ $txnid }}">
+                <input type="hidden" name="service_provider" value="{{ $service_provider }}">
+                <input type="hidden" name="surl" value="{{ $surl }}">
+                <input type="hidden" name="furl" value="{{ $furl }}">
+            @endif
+            
+                <div class="form-group">
+                    <label class="col-md-2">Plan name</label>
+                    <div class="col-md-3">
+                        <input type="hidden" name="productinfo" value="{{ $productinfo }}">
+                        <label>{{ $productinfo }} </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2">Price</label>
+                    <div class="col-md-3">
+                        <input type="hidden" name="amount" value="{{ $amount }}">
+                        <label>{{ $amount }} </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2">Payer's Name </label>
+                    <div class="col-md-3">
+                    	<input type="hidden" name="firstname" value="{{ $firstname }}">
+                        <label>{{ $firstname }} </label>
+                    </div>    
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2">Email</label>
+                    <div class="col-md-3">
+                        <input type="hidden" name="email" value="{{ $email }}">
+                        <label>{{ $email }} </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2">Phone</label>
+                    <div class="col-md-3">
+                        <input type="hidden" name="phone" value="{{ $phone }}">
+                        <label>{{ $phone }} </label>
+                    </div>
+                </div>
+                @if(empty($hash))
+                <div class="form-group">
+                	<div class="col-md-12">
+                    	<input class="btn btn-warning" type="submit" name="submit" value="Make payment">
+                    </div>
+                </div>
+                @endif
+            </div>
+        {{Form::close()}}
+        <input type="hidden" id="tempHashID" value="{{$hash}}">
     </div>
 </div>
 @stop
 
 @section('scripts')
-<script type="text/javascript">
-    var hash = '<?php echo $hash ?>';
-    function submitPayuForm() {
-      if(hash == '') {
-        return;
-      }
-      var payuForm = document.forms.payuForm;
-      payuForm.submit();
+<script type="text/JavaScript">
+var hash = $('#tempHashID').val();
+function submitPayuForm() {
+    if(hash == '') {
+    	return;
     }
+    $('#tempHashID').val('');
+    $('#payuForm').submit();
+}
+
+$(document).ready(function(){
+    submitPayuForm();
+});
 </script>
 @stop    	
