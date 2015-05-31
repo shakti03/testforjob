@@ -38,4 +38,8 @@ class FrontUserController extends Controller {
 		$user_test_details = [ 'first_name'=> $user->first_name, 'last_name'=> $user->last_name, 'last_name'=> $user->last_name, 'country' => $user->country, 'email' => $user->email, 'test_history' => $test_history ];
 		return View::make('front.user.test-history', ["user_test_details" => $user_test_details]);
 	}
+
+	public function getTestPlans(){
+		return View::make('front.test-plan.list');
+	}
 }

@@ -27,8 +27,6 @@
         "Illuminate\\View\\ViewServiceProvider",
         "Illuminate\\Workbench\\WorkbenchServiceProvider",
         "Jacopo\\Authentication\\AuthenticationServiceProvider",
-        "Maatwebsite\\Excel\\ExcelServiceProvider",
-        "Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider",
         "Barryvdh\\Debugbar\\ServiceProvider",
         "Chumper\\Datatable\\DatatableServiceProvider"
     ],
@@ -41,7 +39,6 @@
         "Illuminate\\View\\ViewServiceProvider",
         "Illuminate\\Workbench\\WorkbenchServiceProvider",
         "Jacopo\\Authentication\\AuthenticationServiceProvider",
-        "Maatwebsite\\Excel\\ExcelServiceProvider",
         "Barryvdh\\Debugbar\\ServiceProvider",
         "Chumper\\Datatable\\DatatableServiceProvider"
     ],
@@ -117,9 +114,7 @@
         "translator": "Illuminate\\Translation\\TranslationServiceProvider",
         "translation.loader": "Illuminate\\Translation\\TranslationServiceProvider",
         "validator": "Illuminate\\Validation\\ValidationServiceProvider",
-        "validation.presence": "Illuminate\\Validation\\ValidationServiceProvider",
-        "command.ide-helper.generate": "Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider",
-        "command.ide-helper.models": "Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider"
+        "validation.presence": "Illuminate\\Validation\\ValidationServiceProvider"
     },
     "when": {
         "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider": [],
@@ -140,7 +135,6 @@
         "Illuminate\\Auth\\Reminders\\ReminderServiceProvider": [],
         "Illuminate\\Database\\SeedServiceProvider": [],
         "Illuminate\\Translation\\TranslationServiceProvider": [],
-        "Illuminate\\Validation\\ValidationServiceProvider": [],
-        "Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider": []
+        "Illuminate\\Validation\\ValidationServiceProvider": []
     }
 }

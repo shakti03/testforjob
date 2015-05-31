@@ -133,7 +133,11 @@ class Test  extends Eloquent {
 
     public static function getAnswer($id){
         $question = Test::find($id);
-        return $question->answer;
+        $answer = '';
+        if($question){
+            $answer = $question->answer;
+        }
+        return $answer;
     }
 
     public static function getTestQuestions($slug){
@@ -179,5 +183,3 @@ class Test  extends Eloquent {
         return $question->study_solution;
     }
 }
-
-?>

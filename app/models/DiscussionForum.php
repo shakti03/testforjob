@@ -17,4 +17,3 @@ class DiscussionForum extends BaseModel {
         return true;
     }
 }
-?>

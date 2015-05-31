@@ -122,8 +122,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Jacopo\Authentication\AuthenticationServiceProvider',
-		'Maatwebsite\Excel\ExcelServiceProvider',
-		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+		
 		'Barryvdh\Debugbar\ServiceProvider',
 		'Chumper\Datatable\DatatableServiceProvider',
 	),

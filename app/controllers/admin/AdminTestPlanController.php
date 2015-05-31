@@ -3,6 +3,8 @@
 class AdminTestPlanController extends Controller {
 
 	public function getTestPlanList(){
+        $features = PlanFeature::lists('name');
+        echo '<pre>'; ; print_r($features); echo '</pre>';
 		return View::make('admin.test-plans.list');
 	}
 

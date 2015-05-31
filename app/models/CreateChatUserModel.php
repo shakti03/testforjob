@@ -13,5 +13,3 @@ class CreateChatUserModel extends Eloquent {
     
 
 }
-
-?>

@@ -48,6 +48,8 @@ Route::group(['before' => 'logged'], function() {
 	Route::get('user/dashboard', 'FrontUserController@showDashboard');
 	Route::get('user/videos', 'FrontUserController@showVideos');
 	Route::get('user/test-history', 'FrontUserController@showTestHistory');
+	Route::get('user/test-plans','FrontUserController@getTestPlans');
+	Route::get('user/get-plan/{id}','PaymentController@getTestPlan');
 });
 
 Route::get('/', 'HomeController@showHome');

@@ -13,4 +13,3 @@ class ChatSendReceiveModel  extends Eloquent {
 
 }
 
-?>

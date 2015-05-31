@@ -8,28 +8,42 @@
         </div>
         {{ Form::open(['url' => 'admin/test-plan/add', 'class'=>'form-horizontal', 'id'=>'addTestPlanForm','method'=>'post' ,'enctype'=>'multipart/form-data'])}}
         <div class="modal-body">
-        	<div class="form-group">
-                <label class="col-md-4">Plan name:</label>
-                <div class="col-md-8">
-                {{ Form::text('plan_name', null,['class'=>'form-control','placeholder'=>'Test plan name/title', 'required'])}}
+            <div class="row">
+                <div class="col-md-7">
+                	<div class="form-group">
+                        <label class="col-md-4">Plan name:</label>
+                        <div class="col-md-8">
+                        {{ Form::text('plan_name', null,['class'=>'form-control','placeholder'=>'Test plan name/title', 'required'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">Price:</label>
+                        <div class="col-md-8">
+                        {{ Form::text('price', null,['class'=>'form-control','placeholder'=>'Test plan price', 'required'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">Validity time</label>
+                        <div class="col-md-8">
+                        	{{ Form::input('number', 'validity_time', null, ['class'=>'form-control','placeholder'=>'Validitiy time (e.g. 1.6 => 1 year 6 month)', 'step'=>"0.01" ,'required'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">Description</label>
+                        <div class="col-md-8">
+                        	{{ Form::textarea('description', null, ['class'=>'form-control','placeholder'=>'Description', 'required']) }}
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-4">Price:</label>
-                <div class="col-md-8">
-                {{ Form::text('price', null,['class'=>'form-control','placeholder'=>'Test plan price', 'required'])}}
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-4">Validity time</label>
-                <div class="col-md-8">
-                	{{ Form::input('number', 'validity_time', null, ['class'=>'form-control','placeholder'=>'Validitiy time (e.g. 1.6 => 1 year 6 month)', 'step'=>"0.01" ,'required'])}}
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-4">Description</label>
-                <div class="col-md-8">
-                	{{ Form::textarea('description', null, ['class'=>'form-control','placeholder'=>'Description', 'required']) }}
+                <div class="col-md-5">
+                    <?php 
+                        $features = PlanFeature::lists('name','id');
+                    ?>
+                    @foreach($features as $feature)
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="feature[]"> {{$feature}}</label>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 		</div>

@@ -35,6 +35,11 @@
 						</a>
 					</li>
 					<li>
+						<a href="{{URL::to('user/test-plans')}}">
+							<i class="fa fa-tasks"></i> <span>Test plans</span> 
+						</a>
+					</li>
+					<li>
 						<a href="{{URL::to('user/logout')}}">
 							<i class="fa fa-sign-out"></i> <span>Logout</span> 
 						</a>
