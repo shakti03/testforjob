@@ -36,7 +36,7 @@
               <li class="col-md-2 col-xs-12 col-sm-2 videoFile" data-filter="{{$video->video_category_id}}">
                 <div style="position:absolute;z-index:2;right:16px;">
                   <a title="Edit" data-content="{{json_encode($video)}}" class="btn btn-xs btn-danger"><i class="fa fa-pencil"></i></a>
-                  <a title="delete" href="{{URL::to('admin/videos/delete',$video->id)}}" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+                  <a title="delete" href="{{URL::to('admin/videos/delete',$video->id)}}" class="btn btn-xs btn-danger delete"><i class="fa fa-trash"></i></a>
                 </div>
                 <a title="{{$video->title}}" class="various" style="z-index:1" href="{{$video->link}}" data-fancybox-type="iframe">
                   <img class="videoIcon" alt="thumbnail" src="{{$video->thumbnail}}">
@@ -65,6 +65,7 @@
      $('#deleteCategory').click(function(){
         var videoType = $('#videoType').val();
         if(videoType != undefined && videoType != ''){
+          $('.loader').show();
           $.get(baseUrl + '/videos/category/delete/'+videoType, function(response){
               window.location.reload();
           });
@@ -73,6 +74,24 @@
           alert('Please select Video type from the list');
         }
      });
+
+      $('#videoType').change(function(){
+        var rex = ''+$(this).val();
+        if(rex) {
+          $('.videoFile').hide();
+          $('.videoFile').filter(function(){
+            return rex === ''+$(this).data('filter');
+          }).show();
+        }
+        else{
+          $('.videoFile').show();
+        }
+      });
+
+     $('.delete').click(function(){
+      $('.loader').show();
+     });
+
    });
 </script>
 @stop

@@ -79,7 +79,10 @@
 
             $('#searchForm').submit(function(e){
 		        e.preventDefault();
-		        table.api().ajax.reload();
+		        $('.loader').show();
+		        table.api().ajax.reload(function(){
+		        	$('.loader').hide();
+		        });
 		    });	
         });
     </script>

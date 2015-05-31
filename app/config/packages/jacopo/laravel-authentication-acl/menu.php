@@ -74,13 +74,19 @@ return [
                 "name"        => "Test",
                 "route"       => "test",
                 "link"        => URL::to('admin/test/list'),
-                "permissions" => []
+                "permissions" => ["_superadmin"]
             ],
             [
                 "name"        => "Videos",
                 "route"       => "videos",
                 "link"        => URL::to('admin/videos'),
-                "permissions" => []
+                "permissions" => ["_superadmin"]
+            ],
+            [
+                "name"        => "Test-plans",
+                "route"       => "videos",
+                "link"        => URL::to('admin/test-plan/list'),
+                "permissions" => ["_superadmin"]
             ],
 
 

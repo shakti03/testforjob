@@ -14,7 +14,6 @@
 
     {{ HTML::script('assets/js/jquery-1.10.2.min.js') }}
     {{ HTML::script('assets/js/bootstrap.min.js') }}
-    {{ HTML::script('assets/js/test/discussion_forum.js') }}
 
     <script type="text/javascript">
         BASE_URL = "{{ URL::to('/')}}";

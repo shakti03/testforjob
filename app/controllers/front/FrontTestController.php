@@ -74,6 +74,7 @@ class FrontTestController extends Controller {
         if(isset($activeTest[$page-1])){
 
             $question =  Test::getQuestion($activeTest[$page-1]);
+            
             $testHistory = TestHistory::find($testData['testHistory_id']);
             $viewedQuestion = $testHistory->viewed ? json_decode($testHistory->viewed) : [];
             $qid = $testData['active_test'][$page-1];
@@ -150,36 +151,47 @@ class FrontTestController extends Controller {
 
     public function submitQuestion(){
         $inputs = Input::all();
+
         $testData = Session::get('test_data');
         $activeTest = $testData['active_test'];
         $qid = $activeTest[$inputs['qid']-1];
+        $questionType = $inputs['question_type'];
         
-        $qanswer = Test::getAnswer($qid);
-        $answer['correct'] = lcfirst($qanswer);
-        $answer['user_answer'] = lcfirst($inputs['option']);
-        
-        $testData['answers'][$qid] = $answer;
-        if($answer['correct'] == $answer['user_answer']) {
-            if(isset($testData['correct_answer']))
-                $testData['correct_answer']++;
-            else 
-                $testData['correct_answer'] = 1;    
+        if($questionType == 'objective') {
+            $qanswer = Test::getAnswer($qid);
+            $answer['correct'] = lcfirst($qanswer);
+            $answer['user_answer'] = lcfirst($inputs['option']);
+            
+            $testData['answers'][$qid] = $answer;
+            if($answer['correct'] == $answer['user_answer']) {
+                if(isset($testData['correct_answer']))
+                    $testData['correct_answer']++;
+                else 
+                    $testData['correct_answer'] = 1;    
+            }
+            else{
+                if(isset($testData['incorrect_answer']))
+                    $testData['incorrect_answer']++;
+                else 
+                    $testData['incorrect_answer'] = 1;    
+            }
+
+            // save user answer in database
+            $testHistory = TestHistory::find($testData['testHistory_id']);
+            $answered = $testHistory->answers ? (array)json_decode($testHistory->answers) : [];
+            if(!array_key_exists($qid,$answered) ){
+
+                $answered[$qid] = lcfirst($inputs['option']);
+                $testHistory->answers = json_encode($answered);
+                $testHistory->save();
+            }
         }
         else{
-            if(isset($testData['incorrect_answer']))
-                $testData['incorrect_answer']++;
-            else 
-                $testData['incorrect_answer'] = 1;    
-        }
-
-        // save user answer in database
-        $testHistory = TestHistory::find($testData['testHistory_id']);
-        $answered = $testHistory->answers ? (array)json_decode($testHistory->answers) : [];
-        if(!array_key_exists($qid,$answered) ){
-
-            $answered[$qid] = lcfirst($inputs['option']);
-            $testHistory->answers = json_encode($answered);
-            $testHistory->save();
+            $qanswer = Test::getAnswer($qid);
+            $answer['correct'] = lcfirst($qanswer);
+            $answer['user_answer'] = $inputs['answer'];
+            $testData['answers'][$qid] = $answer;
+            
         }
 
         Session::put('test_data',$testData);

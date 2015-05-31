@@ -1,13 +1,13 @@
 $(function(){
 	$(".various").fancybox();
 
-	$('#videoType').change(function(){
-		var rex = new RegExp($(this).val(),'gi');
-		$('.videoFile').hide();
-		$('.videoFile').filter(function(){
-			return rex.test($(this).data('filter'));
-		}).show();
-	});
+	// $('#videoType').change(function(){
+	// 	var rex = new RegExp($(this).val(),'gi');
+	// 	$('.videoFile').hide();
+	// 	$('.videoFile').filter(function(){
+	// 		return rex.test($(this).data('filter'));
+	// 	}).show();
+	// });
 
 	$('.modal').on('hidden.bs.modal', function(){
 	$(this).find('form')[0].reset();
@@ -18,11 +18,11 @@ $(function(){
 
 	  if(typeValue == 'others'){
 	    $('input[name="other_type"]').attr('required',true);
-	    $('input[name="other_type"]').prop('disabled', true);
+	    $('input[name="other_type"]').prop('disabled', false);
 	    $('input[name="other_type"]').show();
 	  }else{
 	    $('input[name="other_type"]').attr('required', false);
-	    $('input[name="other_type"]').prop('disabled', false);
+	    $('input[name="other_type"]').prop('disabled', true);
 	    $('input[name="other_type"]').hide();
 	  }
 	});
