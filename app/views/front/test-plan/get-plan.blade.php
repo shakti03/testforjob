@@ -1,9 +1,4 @@
-@extends('admin.layouts.layout')
-
-@section('title')
-    Admin area: Test plans
-@stop
-
+@extends('front.layout')
 @section('content')
 <div class="container">
     <div class="row">
