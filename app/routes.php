@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['before'=>'admin', 'prefix'=>'admin'], function(){
+Route::group(['before'=>'admin_logged', 'prefix'=>'admin'], function(){
 	Route::get('/', function(){
 		return Redirect::to('admin/login');
 	});

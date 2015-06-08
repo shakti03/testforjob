@@ -49,12 +49,12 @@ return [
                  */
                 "skip_permissions" => ["users.selfprofile.edit", "users.profile.edit"]
             ],
-            // [
-            //         "name"        => "Groups",
-            //         "route"       => "groups",
-            //         "link"        => URL::route('groups.list'),
-            //         "permissions" => ["_superadmin", "_group-editor"]
-            // ],
+            [
+                    "name"        => "Groups",
+                    "route"       => "groups",
+                    "link"        => URL::route('groups.list'),
+                    "permissions" => ["_superadmin", "_group-editor"]
+            ],
             // [
             //         "name"        => "Permission",
             //         "route"       => "permission",
