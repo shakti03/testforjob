@@ -2,14 +2,18 @@
 
 class PaymentController extends Controller{
 
-	public function getTestPlan() 
+	public function getTestPlan($id = null) 
 	{
 		$posted = [];
-		$paymentID = 1;
-
-		if(Request::isMethod('post'))
+		
+        if(Request::isMethod('post'))
 		{
-			$MERCHANT_KEY = "JBZaLc";
+			$loggedUser = App::make('authenticator')->getLoggedUser();
+            // $userProfile = DB::table('user_profile')->find($loggedUser->id);
+            
+            // $testPlan = TestPlan::find($planID);
+
+            $MERCHANT_KEY = "JBZaLc";
 			$SALT = 'GQs7yium';
 			$PAYU_BASE_URL = 'https://test.payu.in';
 
@@ -46,9 +50,13 @@ class PaymentController extends Controller{
 
         }
         else{
-            $posted = array('firstname' => 'shakti',
-                                'amount'=> 100,
-                                'productinfo'=>'Test Plan '.$paymentID,
+            $planID =$id;
+            // echo '<pre>'; print_r(); echo '</pre>';exit;
+            $testPlan = TestPlan::find($planID);
+            // echo '<pre>'; print_r(); echo '</pre>';exit;
+            $posted = array('firstname' => 'temp-user',
+                                'amount'=> isset($testPlan->cost) ? $testPlan->cost : 0,
+                                'productinfo'=>'Test Plan ',
                                 'email' => 'shaktisingh03@gmail.com',
                                 'phone' => '8983541172',
                                 'action' => URL::to('user/get-plans'),
@@ -56,7 +64,21 @@ class PaymentController extends Controller{
                                 );
             Session::forget('txnid');
         }
+        $posted['plan_id'] = $id;
 		return View::make('front.test-plan.get-plan',$posted);
 	}
+
+    public function paymentSuccess(){
+        return View::make('payment-success');
+        // echo '<pre>'; print_r(Input::all()); echo '</pre>';exit;
+    }
+
+    public function paymentCancel(){
+        return "Payment Cancelled.";
+    }
+
+    public function paymentFail(){
+        return "Failed to complete your last transaction.";
+    }
 }
 	

@@ -6,5 +6,3 @@ class Enquiry extends Eloquent{
     protected $fillable = ['name', 'mobile', 'email', 'message'];
     
 }
-
-

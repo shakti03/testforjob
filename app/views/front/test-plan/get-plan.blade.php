@@ -13,7 +13,8 @@
                 <input type="hidden" name="surl" value="{{ $surl }}">
                 <input type="hidden" name="furl" value="{{ $furl }}">
             @endif
-            
+                <input type="hidden" name="plan_id" value="{{ $plan_id}}" >
+                
                 <div class="form-group">
                     <label class="col-md-2">Plan name</label>
                     <div class="col-md-3">

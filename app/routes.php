@@ -51,9 +51,9 @@ Route::group(['before' => 'logged'], function() {
 	Route::get('user/test-plans','FrontUserController@getTestPlans');
 	Route::get('user/get-plan/{id}','PaymentController@getTestPlan');
 	Route::post('user/get-plans','PaymentController@getTestPlan');
-	Route::any('payment-success','PaymentController@getTestPlan');
-	Route::any('payment-cancel','PaymentController@getTestPlan');
-	Route::any('payment-fail','PaymentController@getTestPlan');
+	Route::any('payment-success','PaymentController@paymentSuccess');
+	Route::any('payment-cancel','PaymentController@paymentCancel');
+	Route::any('payment-fail','PaymentController@paymentFail');
 });
 
 Route::get('/', 'HomeController@showHome');

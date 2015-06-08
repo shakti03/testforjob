@@ -40,6 +40,22 @@ class FrontUserController extends Controller {
 	}
 
 	public function getTestPlans(){
-		return View::make('front.test-plan.list');
+		$testPlans = TestPlan::getTestPlans();
+		$testPlanFeatures = DB::table('testplan_features')
+                                ->leftJoin('plan_features','plan_features.id','=','testplan_features.feature_id')
+                                ->select('test_plan_id',DB::raw('GROUP_CONCAT(plan_features.name) as features'))
+                                ->groupBy('testplan_features.test_plan_id')
+                                ->get();
+        $data = [];
+        $count = 0;
+        foreach($testPlanFeatures as $value){
+            $data[$value->test_plan_id] = $value->features;
+            $featureaCount = count(explode(',',$value->features));
+            $count = $count < $featureaCount ? $featureaCount : $count;
+        }  
+        $testPlanFeatures = $data;
+
+
+		return View::make('front.test-plan.list',['testPlans'=>$testPlans, 'testPlanFeatures'=>$testPlanFeatures, 'max_count'=>$count]);
 	}
 }

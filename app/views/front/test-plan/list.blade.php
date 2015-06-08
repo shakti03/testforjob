@@ -3,32 +3,48 @@
 <div class="container">
 	<div class="row">
 		<div>&nbsp;</div>
+		<div>&nbsp;</div>
+		<div>&nbsp;</div>
 		<div class="container container-int">
   			<div class="row pricing-table">
-  				<?php $plans = [ 
-  									'1' => [ 'name'=>'free', 'amount'=>0],
-  									'2' =>[ 'name'=>'plan1', 'amount'=>200],
-  									'3' =>[ 'name'=>'plan2', 'amount'=>300],
-  									'4' =>[ 'name'=>'plan3', 'amount'=>500]
-								];
-				 ?>
-  				@foreach($plans as $key=>$plan)
+
+  				@foreach($testPlans as $plan)
 			    <div class="col-sm-3">
 			      	<div class="panel panel-default text-center">
 				        <div class="panel-heading">
-				          <strong>{{ $plan['amount'] ? strtoupper($plan['name']) : 'FREE' }}</strong>
+				          <strong>{{ $plan->cost ? strtoupper($plan->name) : 'FREE' }}</strong>
 				        </div>
-			  		  
+			  		  	<?php
+			  		  		$features = isset($testPlanFeatures[$plan->id]) ? explode(',',$testPlanFeatures[$plan->id]) : [];
+			  		  	?>
 			    		<ul class="list-group">
-							<li class="list-group-item">1 User</li>
-							<li class="list-group-item">15 Stages</li>
-							<li class="list-group-item">Free Brain Games</li>
-							<li class="list-group-item">IQ Assessment</li>
-							<li class="list-group-item">Online Support</li>
-							<li class="list-group-item"><strong><i class="fa fa-inr"></i> {{$plan['amount']}}</strong></li>
-							<li class="list-group-item"><br><br><br><br><br></li>
+			    			<?php $count = 0; ?>
+			    			@foreach($features as $feature)
+							<li class="list-group-item">{{ucfirst($feature)}}</li>
+							<?php $count++;?>
+							@endforeach
+							
+							@for($i=$count;$count<$max_count;$count++)
+							<li class="list-group-item">-</li>
+							@endfor
+
+							@if(!empty($plan->time))
+							@if($plan->time < 1)
+							<?php 
+								$x = $plan->time;
+								$x = ($x - floor($x)) * 10;
+							 ?>
+				        	<li class="list-group-item">{{$x.' month';}}</li>
+				        	@else
+				        	<li class="list-group-item">{{$plan->time.' year';}}</li>
+				        	
+				        	@endif
+				        	@endif
+
+							<li class="list-group-item"><strong><i class="fa fa-inr"></i> {{$plan->cost}}</strong></li>
+							<li class="list-group-item">{{$plan->description}}</li>
 							<li class="list-group-item">
-							    <a class="btn btn-warning btn-lg btn-block" href="{{ URL::to('user/get-plan',$key)}}">Get Plan</a>	
+							    <a class="btn btn-warning btn-lg btn-block pull-down" style="bottom:0px;" href="{{ URL::to('user/get-plan',$plan->id)}}">Get Plan</a>	
 				 			</li>
 			        	</ul>
 			    	</div>          

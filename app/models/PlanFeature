@@ -1,0 +1,12 @@
+<?php
+
+class PlanFeature  extends Eloquent {
+
+	protected $table= 'plan_features';
+	protected $fillable = ['name'];
+	public static function getTestPlans(){
+		$result = TestPlan::get();
+		return $result;	
+		
+	}
+}

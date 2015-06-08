@@ -29,6 +29,7 @@
                             <th class="nosort"><input type="checkbox" id="selectAll"></th>
                             <th>Name</th>
                             <th>Description</th>
+                            <th>Test Features</th>
                             <th>Amount</th>
                             <th>Validity</th>
                             <th>Action</th>
@@ -52,6 +53,7 @@
                 order:[[1,'desc']],
                 aoColumns : [
                   { "bSortable": false,sClass : 'text-center' },
+                  { "bSortable": true },
                   { "bSortable": true },
                   { "bSortable": true },
                   { "bSortable": true },

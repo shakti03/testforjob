@@ -1,0 +1,9 @@
+<?php
+
+class TestPlanFeature  extends Eloquent {
+
+    protected $table = 'testplan_features';
+    protected $fillable = ['question','option_a','option_b','option_c','option_d','answer','subject_id','company_id','test_type','test_name','difficulty_level','test_slug'];
+
+
+}

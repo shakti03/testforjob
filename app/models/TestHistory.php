@@ -1,7 +1,5 @@
 <?php
 
-
-
 class TestHistory extends BaseModel {
 
 	protected $fillable = ['test_slug','question_ids', 'answers','viewed','user_id'];
@@ -38,4 +36,3 @@ class TestHistory extends BaseModel {
 	
 
 }
-

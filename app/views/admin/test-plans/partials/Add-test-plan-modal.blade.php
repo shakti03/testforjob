@@ -36,12 +36,9 @@
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <?php 
-                        $features = PlanFeature::lists('name','id');
-                    ?>
-                    @foreach($features as $feature)
+                    @foreach($features as $id=>$feature)
                         <div class="checkbox">
-                            <label><input type="checkbox" name="feature[]"> {{$feature}}</label>
+                            <label><input type="checkbox" name="feature[{{$id}}]"> {{$feature}}</label>
                         </div>
                     @endforeach
                 </div>
