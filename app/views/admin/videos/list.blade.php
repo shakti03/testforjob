@@ -12,14 +12,23 @@
         </div>
         <div class="col-md-2 col-xs-12">
           <div class="form-group">
-            {{Form::select('videoType',[''=>'- Select -']+VideoCategory::lists('name','id') , '', ['class'=>'form-control','id'=>'videoType'])}}
+            {{Form::select('videoType',[''=>'- Select -']+VideoCategory::lists('name','id') , '', ['class'=>'form-control','id'=>'videoType','autocomplete'=>'off'])}}
           </div>
         </div>
         <div class="col-md-2 col-xs-12">
             <button id="deleteCategory" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;Delete category</button>
         </div>
-        <div class="col-md-9 col-xs-12">
+        <div class="col-md-1 col-xs-12">
+          <span class="custom-heading">Plan</span>
+        </div>
+        <div class="col-md-2 col-xs-12">
+          <div class="form-group">
+            {{Form::select('testPlans',[''=>'- Select -']+$testPlans , '', ['class'=>'form-control','id'=>'testPlans','autocomplete'=>'off'])}}
+          </div>
+        </div>
+        <div class="col-md-4 col-xs-12">
             <div class="pull-right">
+                <button id="addPlan" class="btn btn-info" title="Add" data-toggle="modal" data-target="#addPlanModal"><i class="fa fa-money"></i> Link Plan</button>
                 <button class="btn btn-success" title="Add" data-toggle="modal" data-target="#uploadVideo"><i class="fa fa-plus"></i> Add </button>
             </div>
             <div class="clearfix"></div>
@@ -33,8 +42,9 @@
           <ul class="unstyledList">
             {{--*/ $i=1; /*--}}
             @foreach($videos as $video)
-              <li class="col-md-2 col-xs-12 col-sm-2 videoFile" data-filter="{{$video->video_category_id}}">
-                <div style="position:absolute;z-index:2;right:16px;">
+              <li class="col-md-2 col-xs-12 col-sm-2 videoFile" data-filter="{{$video->video_category_id}}" data-plan="{{$video->test_plan_ids}}">
+                <div class="pull-right">
+                  <input type="checkbox" class="selectVideo" name="testvideo[]" value="{{$video->id}}" autocomplete="off">
                   <a title="Edit" data-content="{{json_encode($video)}}" class="btn btn-xs btn-danger"><i class="fa fa-pencil"></i></a>
                   <a title="delete" href="{{URL::to('admin/videos/delete',$video->id)}}" class="btn btn-xs btn-danger delete"><i class="fa fa-trash"></i></a>
                 </div>
@@ -50,6 +60,7 @@
     </div>
 </div>
 @include('admin.videos.partials.upload-video')
+@include('admin.videos.partials.add-plan')
 
 @stop
 
@@ -92,6 +103,35 @@
       $('.loader').show();
      });
 
+      $('#addPlan').click(function(){
+        if($('.selectVideo:checked').length == 0) {
+          alert('Please select test first');
+          return false;
+        }
+        var data = [];
+        $('.selectVideo:checked').each(function(){
+            data.push($(this).val());
+        });
+
+        $('#addPlanModal #videoids').val(data.join(','));
+      });
+
+      $('#testPlans').change(function(){
+        var selectedPlan = ''+$(this).val();
+        if(selectedPlan) {
+          $('.videoFile').hide();
+          $('.videoFile').filter(function(){
+            var planIds = $(this).data('plan');
+            if(planIds){
+              planIds = planIds.split(',');
+            }
+            return $.inArray(selectedPlan, planIds) != -1;//=== ''+$(this).data('filter');
+          }).show();
+        }
+        else{
+          $('.videoFile').show();
+        }
+      });
    });
 </script>
 @stop

@@ -3,10 +3,11 @@
 class AdminController extends Controller {
 
     public function showVideos(){
-        $videos = DB::table('videos')->leftJoin('video_category','video_category.id','=','videos.video_category_id')
+        $data['videos'] = DB::table('videos')->leftJoin('video_category','video_category.id','=','videos.video_category_id')
                         ->get(['videos.*','video_category.name']);
 
-        return View::make('admin.videos.list',['videos'=>$videos]);
+        $data['testPlans'] = TestPlan::lists('name','id');        
+        return View::make('admin.videos.list',$data);
     }
 
 	public function uploadVideo(){
@@ -51,4 +52,20 @@ class AdminController extends Controller {
 		return Redirect::back();
 	}
 
+	public function linkVideoPlan(){
+		$inputData = Input::all();
+
+        $videoIDs = explode(',',$inputData['videoids']);
+        $plans = implode(',',$inputData['testplanIDs']);
+        $result = Video::updatePlans($videoIDs, $plans);
+ 
+        if($result){
+            $message = GlobalHelper::getAlertMessage('success', 'Test updated successfully');
+            return Response::json(['success'=>$message]);        
+        }
+        else{
+            $message = GlobalHelper::getAlertMessage('success', 'Update operation failed');
+            return Response::json(['error'=>$message]);        
+        }
+	}
 }

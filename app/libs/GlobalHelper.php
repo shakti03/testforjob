@@ -61,8 +61,8 @@ class GlobalHelper {
         $validFilepath = $fileRootPath . '/'.$testType.'/'. $file;
         $excel = [];
 		if(file_exists($validFilepath)) {
-			$excelArray = Excel::load($validFilepath)->get()->toArray();
-			$excel = array_keys($excelArray[0][0]);
+			$excelArray = Excel::selectSheetsByIndex(0)->load($validFilepath)->get()->toArray();
+			$excel = array_keys($excelArray[0]);
 		}
 		return $excel;
 	}

@@ -1,6 +1,6 @@
-<?php 
+<?php
 	$timeOver = false;
-	if($totalAnswered == $last || !( $hours || $minutes || $seconds)) {
+	if($test_status == 'completed' || Session::get('test-complete',false)) {
 		$timeOver = true;
 	} 
 ?>
@@ -9,7 +9,7 @@
 <div class="container">
 	<div>&nbsp;</div>
 	<div class="row">
-		<div id="questionBox" class="col-md-8 borderRight questionleftPane minHeight500">
+		<div id="questionBox" class="col-md-9 borderRight questionleftPane minHeight500">
 			<div class="row">
 				<div class="col-md-9">
 					<span class="text-saffron font18">
@@ -72,23 +72,24 @@
 		                </div>
 
 	                	<div class="row">
-	                    	<div class="col-md-3">
-								@if($answer == null)
-	        						@if(!$timeOver)
-									<button class="btn btn-lg btn-warning borderNone " type="submit" id="save"  name="save"> Save &amp; Next</button>
+	                    	<div class="col-md-12">
+	                    		<div class="pull-left">
+									@if($answer == null)
+		        						@if(!$timeOver)
+										<button class="btn btn-lg btn-warning borderNone " type="submit" id="save"  name="save"> Save &amp; Next</button>
+										@endif
+									@else	
+										<button class="btn btn-lg btn-info boldText borderNone" type="button" id="study" name="study"> Study Solution</button>   
 									@endif
-								@else	
-									<button class="btn btn-lg btn-info boldText borderNone" type="button" id="study" name="study"> Study Solution</button>   
-								@endif
-							</div>
-							<div class="col-md-9">
-								<div>&nbsp;</div>
-								<div>&nbsp;</div>
-								@if(!$timeOver)
-	        					@include('front.test.partials.pagination',['pag'=>$page,'las'=>$last])	
-	        					@endif
-							</div>
+									<button class="btn btn-lg btn-success boldText borderNone" type="button" id="submitTest" name="study">Submit test</button>   
+								</div>
+							
+								<div class="pull-right">
+	        						@include('front.test.partials.pagination',['pag'=>$page,'las'=>$last])	
+	        					</div>
+	        				</div>
 						</div>
+
 
 						<input type="hidden" id="hours" name="hours" value="{{$hours}}">
 						<input type="hidden" id="minutes" name="minutes" value="{{$minutes}}">
@@ -98,7 +99,7 @@
 			</div>
 		</div>
 		@if(!empty($answer))
-		<div id="studySolution" class="col-md-8 displayNone borderRight questionleftPane minHeight500">
+		<div id="studySolution" class="col-md-9 displayNone borderRight questionleftPane minHeight500">
 			<h1> Study solution <button type="button" class="btn btn-primary pull-right" id="goToQuesiton"><i class="fa fa-arrow-left"></i>Back to Question</button></h1>
 			<div>
 				@if(!empty($studySolution))
@@ -112,7 +113,7 @@
 				Discussion forum</button>
 		</div>
 		
-		<div id="discussionForum" class="col-md-8 displayNone borderRight displayNone questionleftPane minHeight500">
+		<div id="discussionForum" class="col-md-9 displayNone borderRight displayNone questionleftPane minHeight500">
 			<h1> Discussion forum &nbsp;<button type="button" class="btn btn-primary pull-right marginRight" id="studyButton"><i class="fa fa-arrow-left"></i>Study solution</button> &nbsp; <button type="button" class="btn btn-primary pull-right marginRight gotoQuestion" ><i class="fa fa-arrow-left"></i>Back to Question</button> &nbsp;</h1>
 			<hr>
 			<div class="well">
@@ -158,7 +159,7 @@
 		</div>	
 		@endif
 
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<label class="text-cadetBlue"><u>STATISTICS</u></label>
 				<div>&nbsp;</div>
 				<ul class="">
@@ -178,7 +179,6 @@
 
 {{ HTML::script('assets/admin/js/jquery.form.min.js')}}
 {{ HTML::script('assets/js/canvasjs.min.js')}}
-{{ HTML::script('assets/js/test/get-question.js')}}
 <script type="text/javascript">
 	var testOver = false;
 	<?php 
@@ -187,6 +187,124 @@
 		} 
 	?>
 	$(function(){
+		var hours = $("#hours").attr('value');
+		var minutes = $("#minutes").attr('value');
+		var seconds = $("#seconds").attr('value');
+		var timerId = null;
+
+		$('#timer').html(hours+':'+minutes+':'+seconds);
+
+		if(!testOver) {
+		    timerId = setInterval(function(){
+		        if(hours == 0 && minutes == 0 && seconds == 0){
+		            alert('Time Over');
+		            clearInterval(timerId);
+		        }
+		        else{
+		            if( minutes == 0 && hours !=0){
+		                hours--;
+		                minutes = 60;
+		            }
+
+		            if( seconds == 0){
+		                minutes--;
+		                seconds = 60;
+		            }
+					
+					$('#timer').html( hours+':'+minutes+':'+--seconds);
+		        }
+
+		    }, 1000);
+		}
+
+	    $('#frmTest').submit(function(){
+	    	$('#loader').show();
+			var questionType = $('[name=question_type]').val();
+			
+			if(questionType == 'objective'){
+				var option = $('input[name=option]:checked').val();
+
+				$("input#hours").attr('value', hours);
+				$("input#minutes").attr('value', minutes);
+				$("input#seconds").attr('value', seconds); 
+
+				if(!option) {
+					alert('Please select an option.');
+					$('#loader').hide();
+					return false;
+				}
+			}
+			clearInterval(timerId);	
+		});
+
+		$('.pagination a').click(function(e){
+			clearInterval(timerId);
+			$('#loader').show();
+			$.ajax({
+				url  : baseUrl+'/user/set-time',
+				type : 'post',
+				data : {'hours':hours, 'minutes':minutes, 'seconds': seconds},
+				async: false,
+				dataType: 'json',
+				success: function(){
+					return true;
+				}
+			});
+		});
+
+		$(window).on('beforeunload', function(){
+		    clearInterval(timerId);
+			$('#loader').show();
+			$.ajax({
+				url  : BASE_URL+'/set-time',
+				type : 'post',
+				data : {'hours':hours, 'minutes':minutes, 'seconds': seconds},
+				async: false,
+				dataType: 'json',
+				success: function(){
+					return true;
+				}
+			});
+		});
+
+		var chart = new CanvasJS.Chart("chartContainer",
+		{
+			legend: {
+				verticalAlign: "bottom",
+				horizontalAlign: "center"
+			},
+			theme: "theme2",
+			data: [{        
+						type: "pie",
+						indexLabelFontFamily: "Garamond",       
+						indexLabelFontSize: 20,
+						indexLabelFontWeight: "bold",
+						startAngle:0,
+						indexLabelFontColor: "MistyRose",       
+						indexLabelLineColor: "darkgrey", 
+						indexLabelPlacement: "inside", 
+						toolTipContent: "{name}: {y}",
+						showInLegend: true,
+						indexLabel: "#percent%", 
+						dataPoints: [
+							{  y: $('#unanswered').val()/10, name: "Unanswered", legendMarkerType: "square"},
+							{  y: $('#incorrect').val()/10, name: "Inorrect", legendMarkerType: "square"},
+							{  y: $('#correct').val()/10, name: "Correct", legendMarkerType: "square	"}
+						]
+				}]
+		});
+		chart.render();
+
+		$('.canvasjs-chart-credit').hide();
+
+		$('#submitTest').click(function(){
+			if(confirm('Would you like to complete your test?')){
+				$.get(baseUrl+'/user/test/complete', function(response){
+					window.location.reload();
+				});
+			}
+		});
+
 		$('#study').click(function(){
 			$('.questionleftPane').hide();
 			$('#studySolution').fadeIn(1000);
@@ -232,30 +350,22 @@
 			e.preventDefault();
 			var id = $('#showComments').data('id');
 			$('#commentForm').ajaxSubmit({
-                beforeSubmit:  function(){
-                    $('.loader').show();
-                }, 
-                success: function(response){
-                    $('.loader').hide();
-                    loadComments(id, function(){
-                    	$('#commentForm')[0].reset();	
-                    });
-                }
-            });	
+	            beforeSubmit:  function(){
+	                $('.loader').show();
+	            }, 
+	            success: function(response){
+	                $('.loader').hide();
+	                loadComments(id, function(){
+	                	$('#commentForm')[0].reset();	
+	                });
+	            }
+	        });	
 		});
 
 		$('.gotoQuestion').click(function(){
 			$('.questionleftPane').hide();
 			$('#questionBox').show(1000);
 		});
-
-		/*$('#frmTest').on("keyup keypress", function(e) {
-		  var code = e.keyCode || e.which; 
-		  if (code  == 13) {               
-		    e.preventDefault();
-		    return false;
-		  }
-		});*/
 	}); 
 </script>
 @stop

@@ -12,6 +12,7 @@
         </div>
         <div class="col-md-6 col-xs-12">
             <div class="pull-right">
+                <button id="addTestPlan" class="btn btn-info" title="Add" data-toggle="modal" data-target="#addTestPlanModal"><i class="fa fa-money"></i> Link Plan</button>
                 <button id="add" class="btn btn-success" title="Add" data-toggle="modal" data-target="#addTestModal"><i class="fa fa-plus"></i> Add </button>
                 <button id="edit" class="btn btn-primary" title="Update" data-toggle="modal" data-target="#editTestModal"><i class="fa fa-pencil"></i> Edit</button>
                 <button id="delete" class="btn btn-danger" title="Delete"><i class="fa fa-trash"></i> Delete</button>
@@ -50,7 +51,7 @@
             	<table id="testData" class="table-bordered" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th class="nosort"><input type="checkbox" id="selectAll"></th>
+                            <th class="nosort"><input type="checkbox" id="selectAll" autocomplete="off"></th>
                             <th>Name</th>
                             <th>Company</th>
                             <th>Subject</th>
@@ -59,6 +60,7 @@
                             <th>Difficulty</th>
                             <th>Total questions</th>
                             <th>Time</th>
+                            <th>Test Plan</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -69,6 +71,7 @@
 </div>
 @include('admin.test.partials.add-test')
 @include('admin.test.partials.edit-test')
+@include('admin.test.partials.add-test-plan')
 @stop
 
 @section('scripts')
@@ -87,8 +90,9 @@
                   { "bSortable": true },
                   { "bSortable": true },
                   { sClass : 'text-center'},
-                  { sWidth : '110px', sClass : 'text-center'},
+                  { sWidth : '60px', sClass : 'text-center'},
                   { "bSortable": true },
+                  { sWidth : '110px',"bSortable": true },
                   { "bSortable": true },
                 ]
             });
@@ -150,6 +154,19 @@
 
             $('#add').click(function(){
               $("#submitForm")[0].reset();
+            });
+
+            $('#addTestPlan').click(function(){
+              if($('.selectTest:checked').length == 0) {
+                alert('Please select test first');
+                return false;
+              }
+              var data = [];
+              $('.selectTest:checked').each(function(){
+                  data.push($(this).val());
+              });
+
+              $('#addTestPlanModal #testids').val(data.join(','));
             });
         });
     </script>

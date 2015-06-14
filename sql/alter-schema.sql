@@ -50,3 +50,11 @@ ALTER TABLE `discussion_forum`
 
 ALTER TABLE `discussion_forum`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `test_history` ADD `test_company_id` INT NOT NULL AFTER `user_id`, ADD `test_subject_id` INT NOT NULL AFTER `test_company_id`, ADD `test_difficulty_level` INT NOT NULL AFTER `test_subject_id`, ADD `test_type` VARCHAR(45) NOT NULL AFTER `test_difficulty_level`, ADD `test_question_type` VARCHAR(45) NOT NULL AFTER `test_type`;
+ALTER TABLE `test_history` ADD `end_time` DATETIME NOT NULL AFTER `test_question_type`;
+ALTER TABLE `test_history` ADD `test_status` ENUM('skipped','completed') NOT NULL DEFAULT 'skipped' AFTER `end_time`;
+ALTER TABLE `test_questions` ADD `test_plan_id` INT NOT NULL AFTER `study_solution_image`;
+ALTER TABLE `test_questions` CHANGE `test_plan_id` `test_plan_ids` VARCHAR(255) NOT NULL;
+ALTER TABLE `videos` ADD `test_plan_id` INT NOT NULL AFTER `video_category_value`;
+ALTER TABLE `videos` CHANGE `test_plan_id` `test_plan_ids` VARCHAR(255) NOT NULL;

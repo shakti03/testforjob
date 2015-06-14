@@ -11,7 +11,7 @@ class FrontTestController extends Controller {
 
     public function getTestListData(){
         $inputs = Input::all();
-        $tests = Test::getTestSets($inputs);
+        $tests = Test::getTestSets($inputs,true);
 
         return Datatable::collection($tests)
         ->addColumn('name',function($model) {
@@ -42,15 +42,22 @@ class FrontTestController extends Controller {
     public function startTest($testslug){
         $questionIDs = Test::getQuestionIDs($testslug);
         $testTime = Test::getTestTiming($testslug);
+        $test = Test::where('test_slug',$testslug)->first();
 
         shuffle($questionIDs);
         $testData['active_test'] = $questionIDs;
 
+
         $logged_user = App::make('authenticator')->getLoggedUser();
-        $testHistory = TestHistory::createOrUpdate( [
+        $testHistory = TestHistory::createOrUpdate([
                                                         'user_id'=>$logged_user->id,
                                                         'question_ids'=>json_encode($testData['active_test']),
-                                                        'test_slug' => $testslug
+                                                        'test_slug' => $testslug,
+                                                        'test_type' => $test->test_type,
+                                                        'test_question_type' => $test->question_type,
+                                                        'test_difficulty_level' => $test->difficulty_level,
+                                                        'test_subject_id' => $test->subject_id,
+                                                        'test_company_id' => $test->company_id,
                                                     ]);
         $testData['testHistory_id'] = $testHistory->id;
         $testData['user_id'] = $logged_user;
@@ -59,6 +66,7 @@ class FrontTestController extends Controller {
         Session::put('hours', $testTime['hours']);
         Session::put('minutes', $testTime['minutes']);
         Session::put('seconds', 0);
+        Session::put('test-complete',false);
 
         return Redirect::away(URL::to("user/get-question",1));
     }
@@ -83,7 +91,6 @@ class FrontTestController extends Controller {
             if(!in_array($qid,$viewedQuestion)){
                 $viewedQuestion[] = $qid;
                 $testHistory->viewed = json_encode($viewedQuestion);
-                $testHistory->save();
             }
 
             if(isset($testData['answers'])) {
@@ -93,24 +100,34 @@ class FrontTestController extends Controller {
                 }
                 $totalAnswered = count($testData['answers']);
             }
-
+            
             $hours = Session::get('hours');
             $minutes = Session::get('minutes');
             $seconds = Session::get('seconds');
 
-            return View::make('front.test.show-question',['question'  => $question,
-                                                    'page'      => $page,
-                                                    'last'      => $last,
-                                                    'answer'    => $answer,
-                                                    'totalAnswered' => $totalAnswered,
-                                                    'correctAnswered' => isset($testData['correct_answer']) ? $testData['correct_answer'] : 0, 
-                                                    'incorrectAnswered' => isset($testData['incorrect_answer']) ? $testData['incorrect_answer'] : 0,
-                                                    'hours'     => $hours,
-                                                    'minutes'   => $minutes,
-                                                    'seconds'   => $seconds,
-                                                    'studySolution' => $studySolution
-                                                   ]);
+            $data = ['question'  => $question,
+                    'page'      => $page,
+                    'last'      => $last,
+                    'answer'    => $answer,
+                    'totalAnswered' => $totalAnswered,
+                    'correctAnswered' => isset($testData['correct_answer']) ? $testData['correct_answer'] : 0, 
+                    'incorrectAnswered' => isset($testData['incorrect_answer']) ? $testData['incorrect_answer'] : 0,
+                    'hours'     => $hours,
+                    'minutes'   => $minutes,
+                    'seconds'   => $seconds,
+                    'studySolution' => $studySolution,
+                    'test_status' => ''
+                   ];
+
+            if($totalAnswered == $last && !( $hours || $minutes || $seconds)){
+                $testHistory->test_status = 'completed';
+                $data['test_status'] = 'completed';
+            }
+            $testHistory->save();
+                   
+            return View::make('front.test.show-question',$data);
         }
+        return Redirect::to('user/test/list');
     }
 
     public function setTime() {
@@ -183,6 +200,7 @@ class FrontTestController extends Controller {
 
                 $answered[$qid] = lcfirst($inputs['option']);
                 $testHistory->answers = json_encode($answered);
+                $testHistory->end_time = Date('Y-m-d h:i:s');
                 $testHistory->save();
             }
         }
@@ -213,4 +231,16 @@ class FrontTestController extends Controller {
         //$src = 'data: '.mime_content_type($image).';base64,'.$imageData;
         return json_encode($image);
     }
+
+    public function submitTest(){
+        // Session::forget('test_data');
+        $testData = Session::get('test_data');
+        $activeTest = $testData['active_test'];
+        $testHistory = TestHistory::find($testData['testHistory_id']);
+        $testHistory->end_time = Date('Y-m-d h:i:s');
+        $testHistory->test_status = 'skipped';
+        Session::put('test-complete',true);
+        return json_encode('success');
+    }
+
 }

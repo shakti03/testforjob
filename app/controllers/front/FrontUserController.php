@@ -7,9 +7,7 @@ class FrontUserController extends Controller {
 	}
 
 	public function showVideos(){
-		$videos = DB::table('videos')->leftJoin('video_category','video_category.id','=','videos.video_category_id')
-						->get(['videos.*','video_category.name']);
-
+		$videos = Video::getUserVideos();
 		return View::make('front.videos.list',['videos'=>$videos]);
 	}
 
@@ -55,7 +53,14 @@ class FrontUserController extends Controller {
         }  
         $testPlanFeatures = $data;
 
+        $loggedUser = App::make('authenticator')->getLoggedUser();
+        $userTestPlans = UserTestPlan::where('user_id',$loggedUser->id)->lists('plan_id'); 
 
-		return View::make('front.test-plan.list',['testPlans'=>$testPlans, 'testPlanFeatures'=>$testPlanFeatures, 'max_count'=>$count]);
+       	$viewdata['user_test_plans'] =  $userTestPlans;
+       	$viewdata['testPlans'] =  $testPlans;
+       	$viewdata['testPlanFeatures'] =  $testPlanFeatures;
+       	$viewdata['max_count'] =  $count;
+
+		return View::make('front.test-plan.list',$viewdata);
 	}
 }

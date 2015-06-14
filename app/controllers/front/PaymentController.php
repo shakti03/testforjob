@@ -2,16 +2,16 @@
 
 class PaymentController extends Controller{
 
-	public function getTestPlan($id = null) 
+	public function getTestPlan($planID = null) 
 	{
 		$posted = [];
 		
         if(Request::isMethod('post'))
 		{
 			$loggedUser = App::make('authenticator')->getLoggedUser();
-            // $userProfile = DB::table('user_profile')->find($loggedUser->id);
+            $userProfile = DB::table('user_profile')->find($loggedUser->id);
             
-            // $testPlan = TestPlan::find($planID);
+            $testPlan = TestPlan::find($planID);
 
             $MERCHANT_KEY = "JBZaLc";
 			$SALT = 'GQs7yium';
@@ -50,21 +50,31 @@ class PaymentController extends Controller{
 
         }
         else{
-            $planID =$id;
-            // echo '<pre>'; print_r(); echo '</pre>';exit;
             $testPlan = TestPlan::find($planID);
-            // echo '<pre>'; print_r(); echo '</pre>';exit;
-            $posted = array('firstname' => 'temp-user',
-                                'amount'=> isset($testPlan->cost) ? $testPlan->cost : 0,
-                                'productinfo'=>'Test Plan ',
-                                'email' => 'shaktisingh03@gmail.com',
-                                'phone' => '8983541172',
-                                'action' => URL::to('user/get-plans'),
-                                'hash' => ''
-                                );
-            Session::forget('txnid');
+            $loggedUser = App::make('authenticator')->getLoggedUser();
+            
+            if($testPlan->cost) {
+                $userProfile = DB::table('user_profile')->find($loggedUser->id);
+                
+                
+                $posted = array('firstname' => $userProfile->first_name,//'temp-user',
+                                    'amount'=> $testPlan->cost,//$userProfile-isset($testPlan->cost) ? $testPlan->cost : 0,
+                                    'productinfo'=>$testPlan->name.'#'.$testPlan->description,
+                                    'email' => $loggedUser->email,//'shaktisingh03@gmail.com',
+                                    'phone' => $userProfile->phone,//'8983541172',
+                                    'action' => URL::to('user/get-plans'),
+                                    'hash' => ''
+                                    );
+                Session::forget('txnid');
+            }
+            else{
+                UserTestPlan::firstOrCreate(['user_id'=>$loggedUser->id, 'plan_id'=>$planID]);
+                Session::flash('success','Test plan subscribed successsfully');
+                return Redirect::back();
+            }
+            
         }
-        $posted['plan_id'] = $id;
+        $posted['plan_id'] = $planID;
 		return View::make('front.test-plan.get-plan',$posted);
 	}
 

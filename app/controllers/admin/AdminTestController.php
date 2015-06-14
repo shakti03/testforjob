@@ -7,11 +7,13 @@ class AdminTestController extends Controller {
         $data['subjects'] = Subject::lists('name','id');
         $data['companies'] = Company::lists('name','id');
         $data['excel_include_columns'] = Config::get('admin.excel_include_columns');
+        $data['testPlans'] = TestPlan::lists('name','id');
         return View::make('admin.test.list', $data);
     }
 
     public function getTestListData(){
         $tests = Test::getTestSets();
+        $testPlans = TestPlan::lists('name','id');
 
         return Datatable::collection($tests)
         ->addColumn('select',function($model) {
@@ -41,6 +43,20 @@ class AdminTestController extends Controller {
         })
         ->addColumn('time',function($model) {
             return empty($model->time) ? '00:20'.' hours' : date('h:i').' hours' ;
+        })
+        ->addColumn('testplans',function($model) use($testPlans){
+            $testPlanStr = '';
+            
+            if(!empty($model->test_plan_ids)){
+                $testPlanIds = explode(',',$model->test_plan_ids);
+                foreach($testPlanIds as $testPlanID){
+                    $testPlanStr .= $testPlans[$testPlanID].', ';
+                }
+            }
+            else{
+                $testPlanStr = '-';    
+            }
+            return $testPlanStr;
         })
         ->addColumn('actions',function($model) {
             $slug = $model->test_slug;
@@ -161,22 +177,31 @@ class AdminTestController extends Controller {
         if(Input::file('excel')->isValid()){
             $excelFile = Input::file('excel');
             $filePath = UploadHelper::uploadExcel($excelFile);
+            $error = false;
             
-            $excelFileData = Excel::load($filePath)->get()->toArray();
-            $uploadFileKeys = array_keys($excelFileData[0][0]);
-
-            $excelIncludedColumns = Input::get('excelColumns', []);
-
-            $validKeys = GlobalHelper::getValidExcelFormat($excelIncludedColumns, Input::get('test-type'), Input::get('options'));
-            
-            if($uploadFileKeys == $validKeys){
-                Test::createByExcelData($excelFileData[0], $inputs);
-                $message = GlobalHelper::getAlertMessage('success', 'File saved');
-                return Response::json(['success'=>$message]);        
+            try{
+                $excel = Excel::selectSheetsByIndex(0)->load($filePath);
+                $excelFileData = $excel->get();//->toArray();
             }
-            else{
-                $message = GlobalHelper::getAlertMessage('error', 'Excel file not valid' );
+            catch(PHPExcel_Exception $e){
+                $message = GlobalHelper::getAlertMessage('error', 'Excel file error: '. $e->getMessage() );
                 return Response::json(['error'=>$message]);
+            }
+
+            if($excelFileData->count()) {
+                $excelFileData = $excelFileData->toArray();
+                $uploadFileKeys = array_keys($excelFileData[0]);
+                $excelIncludedColumns = Input::get('excelColumns', []);
+                $validKeys = GlobalHelper::getValidExcelFormat($excelIncludedColumns, Input::get('test-type'), Input::get('options'));
+                if(!$error && $uploadFileKeys == $validKeys){
+                    Test::createByExcelData($excelFileData, $inputs);
+                    $message = GlobalHelper::getAlertMessage('success', 'File saved');
+                    return Response::json(['success'=>$message]);        
+                }
+                else{
+                    $message = GlobalHelper::getAlertMessage('error', 'Excel file not valid' );
+                    return Response::json(['error'=>$message]);
+                }
             }
         }
         $message = GlobalHelper::getAlertMessage('error', 'Excel file not valid' );
@@ -233,5 +258,22 @@ class AdminTestController extends Controller {
             Test::create($data);
             return Redirect::back()->with('success','Question added successfullty');
         }
+    }
+
+    public function linkTestPlan(){
+        $inputData = Input::all();
+
+        $testSlugs = explode(',',$inputData['testids']);
+        $testPlans = implode(',', isset($inputData['testplanIDs']) ? $inputData['testplanIDs'] : []);
+        $result = Test::updatePlans($testSlugs, $testPlans);
+ 
+        if($result){
+            $message = GlobalHelper::getAlertMessage('success', 'Test updated successfully');
+            return Response::json(['success'=>$message]);        
+        }
+        else{
+            $message = GlobalHelper::getAlertMessage('success', 'Update operation failed');
+            return Response::json(['error'=>$message]);        
+        }        
     }
 }

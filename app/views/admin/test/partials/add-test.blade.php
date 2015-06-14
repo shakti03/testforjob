@@ -197,6 +197,16 @@
                         else if(response.error) {
                             $('#alertMessage').html( response.error );
                         }
+
+                        setTimeout(function(){
+                            $('.loader').hide();
+                        },10000);
+                    },
+                    error: function(){
+                        $('#alertMessage').html('<div class="alert alert-danger">Excel file is not valid</div>');
+                    },
+                    complete: function(){
+                        $('.loader').hide();
                     }
                 });
             }

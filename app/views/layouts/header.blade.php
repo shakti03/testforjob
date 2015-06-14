@@ -15,7 +15,7 @@
 	        <div class="collapse navbar-collapse pull-right" id="nav-main-menu">
 	            <ul class="nav navbar-nav">
 					<li><a href="login">Home</a></li>
-					<li><a href="#">Test Plan</a></li>
+					<li><a href="{{URL::to('test-plan')}}"><span>Test plans</span></a></li>
 					<li><a href="it-fresher">IT Fresher</a></li>
 					<li><a href="it-experience">IT Experience</a></li>
 					<li><a href="contact-us">Contact us</a></li>

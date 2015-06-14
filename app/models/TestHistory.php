@@ -2,7 +2,18 @@
 
 class TestHistory extends BaseModel {
 
-	protected $fillable = ['test_slug','question_ids', 'answers','viewed','user_id'];
+	protected $fillable = [ 'test_slug',
+							'question_ids',
+							'answers',
+							'viewed',
+							'user_id',
+							'test_company_id', 
+							'test_subject_id',
+							'test_difficulty_level',
+							'test_type',
+							'test_question_type',
+							'test_status',
+							'end_time'];
 
 	protected $table = 'test_history';
 
@@ -24,6 +35,15 @@ class TestHistory extends BaseModel {
 
 		return $testHistory;
 
+	}
+
+	public static function getUserTestHistory($id){
+		$testHistory = TestHistory::join('subjects','subjects.id','=','test_history.test_subject_id')
+						->join('companies','companies.id','=','test_history.test_company_id')
+						->select('test_history.*', 'subjects.name as subject_name', 'companies.name as company_name', DB::raw('TIMEDIFF(end_time, test_history.created_at) as user_time'))
+						->where('user_id',$id)
+						->get();
+		return $testHistory;						
 	}
 	
 	public static function getTestHistoryByUser($id) {

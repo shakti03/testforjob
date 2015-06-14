@@ -266,3 +266,5 @@ section.content{float:left;width:100%; padding:1%; height:90%; min-height:500px;
 .thumbnail-padding{margin:0px;padding:0 20px 10px 20px;}
 .unstyledList{list-style: none;}
 .error{color:red;}
+.displayNone{display:none;}
+.main-container{min-height: 560px;display: block;overflow: auto;}

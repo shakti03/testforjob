@@ -44,7 +44,13 @@
 							<li class="list-group-item"><strong><i class="fa fa-inr"></i> {{$plan->cost}}</strong></li>
 							<li class="list-group-item">{{$plan->description}}</li>
 							<li class="list-group-item">
-							    <a class="btn btn-warning btn-lg btn-block pull-down" style="bottom:0px;" href="{{ URL::to('user/get-plan',$plan->id)}}">Get Plan</a>	
+								@if(!in_array($plan->id, $user_test_plans))
+							    <a class="btn btn-warning btn-lg btn-block pull-down" style="bottom:0px;" href="{{ URL::to('user/get-plan',$plan->id)}}">Get Plan</a>
+							    @else
+								<div class="padding10">
+									<span class="text-success" style="font-size:26px;"><i class="fa fa-check"></i>Purchased</span>
+							    </div>
+							    @endif
 				 			</li>
 			        	</ul>
 			    	</div>          

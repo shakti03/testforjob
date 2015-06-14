@@ -12,6 +12,7 @@ Route::group(['before'=>'admin_logged', 'prefix'=>'admin'], function(){
 	Route::post('test/add', 'AdminTestController@addTest');
 	Route::post('test/edit', 'AdminTestController@editTest');
 	Route::post('test/delete', 'AdminTestController@deleteSelectedTest');
+	Route::post('test/testplan/add', 'AdminTestController@linkTestPlan');
 
 	Route::get('test/delete/{slug}','AdminTestController@deleteTest')->where('slug', '[A-Za-z0-9\-]+');;
 	Route::get('download-excel/{testType}/{fileid}', 'AdminTestController@downloadExcelFile');
@@ -24,6 +25,7 @@ Route::group(['before'=>'admin_logged', 'prefix'=>'admin'], function(){
     Route::post('upload-video', 'AdminController@uploadVideo');
     Route::get('videos/category/delete/{id}', 'AdminController@deleteVideoCategory');
     Route::get('videos/delete/{id}', 'AdminController@deleteVideo');
+    Route::post('videos/plan/add', 'AdminController@linkVideoPlan');
 
     Route::get('test-plan/list', 'AdminTestPlanController@getTestPlanList');
     Route::any('test-plan-data', 'AdminTestPlanController@testPlanData');
@@ -44,10 +46,15 @@ Route::group(['before' => 'logged'], function() {
 	Route::post('user/submit-question', 'FrontTestController@submitQuestion');
 	Route::get('question/get-discussion-comments/{qid}', 'FrontTestController@getDiscussionComments');
 	Route::post('question/add-comment', 'FrontTestController@addComment');
+	Route::get('user/test/complete', 'FrontTestController@submitTest');
+
+	Route::any('user/test-history', 'FrontTestHistoryController@testHistory');
+	Route::get('user/test-history/data', 'FrontTestHistoryController@testHistoryData');
+	Route::get('user/test-history/review/{testid}/{id}', 'FrontTestHistoryController@testHistoryViewTest');
+	
 
 	Route::get('user/dashboard', 'FrontUserController@showDashboard');
 	Route::get('user/videos', 'FrontUserController@showVideos');
-	Route::get('user/test-history', 'FrontUserController@showTestHistory');
 	Route::get('user/test-plans','FrontUserController@getTestPlans');
 	Route::get('user/get-plan/{id}','PaymentController@getTestPlan');
 	Route::post('user/get-plans','PaymentController@getTestPlan');
@@ -55,6 +62,8 @@ Route::group(['before' => 'logged'], function() {
 	Route::any('payment-cancel','PaymentController@paymentCancel');
 	Route::any('payment-fail','PaymentController@paymentFail');
 });
+
+Route::get('test-plan','HomeController@testPlan');
 
 Route::get('/', 'HomeController@showHome');
 Route::get('/login', function(){

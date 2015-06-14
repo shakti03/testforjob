@@ -3,10 +3,11 @@
 class Test  extends Eloquent {
 
     protected $table = 'test_questions';
-    protected $fillable = ['question','option_a','option_b','option_c','option_d','answer','subject_id','company_id','test_type','test_name','difficulty_level','test_slug'];
+    protected $fillable = ['question','option_a','option_b','option_c','option_d','answer','subject_id','company_id','test_type','test_name','difficulty_level','test_slug','test_plan_id'];
 
-    public static function getTestSets($inputs = []) {
-        $result =  Test::select('test_questions.test_name as name', 'test_type', 'question_type', 'difficulty_level', DB::raw('count(test_questions.test_name) as no_of_questions'),'test_timings.time','test_questions.test_slug as test_slug','subjects.name as subject_name','companies.name as company_name')
+    public static function getTestSets($inputs = [], $planCheck=false) {
+        
+        $result =  Test::select('test_questions.test_name as name', 'test_type', 'question_type', 'difficulty_level', DB::raw('count(test_questions.test_name) as no_of_questions'),'test_timings.time','test_questions.test_slug as test_slug','subjects.name as subject_name','companies.name as company_name','test_plan_ids')
                     ->leftJoin('subjects','subjects.id','=','test_questions.subject_id')
                     ->leftJoin('companies','companies.id','=','test_questions.company_id')
                     ->leftJoin('test_timings','test_timings.test_slug','=','test_questions.test_slug');
@@ -31,72 +32,91 @@ class Test  extends Eloquent {
                 $result = $result->where('test_questions.difficulty_level',  0);
         }
             
+        if($planCheck){
+        $logged_user = App::make('authenticator')->getLoggedUser();
+
+        $userTestPlanIDs = UserTestPlan::where('user_id',$logged_user->id)->lists('id');
         
+        $result =   $result->where(function($query) use($userTestPlanIDs){
+                        $count = 0;
+                        foreach($userTestPlanIDs as $planID){
+                            if($count == 0){
+                                $query = $query->where('test_plan_ids','LIKE', '%'.$planID.'%');
+                                $count++;
+                            }
+                            else{
+                                $query = $query->orWhere('test_plan_ids','LIKE', '%,'.$planID.',%');   
+                            }
+                        }
+                    });
+        }
         $result =  $result->groupBy('test_questions.test_type')
                     ->groupBy('test_questions.question_type')
                     ->groupBy('test_questions.test_name')
                     ->get();
+        // echo '<pre>'; print_r($result) ; echo '</pre>'; exit;                    
         return $result;             
     }
 
     public static function createByExcelData($excelData, $inputData) {
-    	foreach($excelData as $row){
-            // validate input data
-            if(isset($inputData['company']) && $inputData['company'] == 'other') {
-                $newCompanyName = $inputData['other']['company'];
-                $company = Company::create(['name'=>$newCompanyName]);
-                $inputData['company'] = $company->id;
-            }
-            if(isset($inputData['subject']) && $inputData['subject'] == 'other') {
-                $newSubjectName = $inputData['other']['subject'];
-                $subject = Subject::create(['name'=>$newSubjectName]);
-                $inputData['subject'] = $subject->id;
-            }
-            if(isset($inputData['difficulty_level'])){
-                if($inputData['difficulty_level'] == 'experienced'){
-                    $inputData['difficulty_level'] = isset($inputData['other']['difficulty_level']) ? $inputData['other']['difficulty_level'] : 0;
+    	DB::transaction(function() use($inputData, $excelData){
+            foreach($excelData as $row){
+                // validate input data
+                if(isset($inputData['company']) && $inputData['company'] == 'other') {
+                    $newCompanyName = $inputData['other']['company'];
+                    $company = Company::firstOrCreate(['name'=>$newCompanyName]);
+                    $inputData['company'] = $company->id;
                 }
-                else{
-                    $inputData['difficulty_level'] = 0;
+                if(isset($inputData['subject']) && $inputData['subject'] == 'other') {
+                    $newSubjectName = $inputData['other']['subject'];
+                    $subject = Subject::firstOrCreate(['name'=>$newSubjectName]);
+                    $inputData['subject'] = $subject->id;
                 }
-            }
-            // end validate input data
+                if(isset($inputData['difficulty_level'])){
+                    if($inputData['difficulty_level'] == 'experienced'){
+                        $inputData['difficulty_level'] = isset($inputData['other']['difficulty_level']) ? $inputData['other']['difficulty_level'] : 0;
+                    }
+                    else{
+                        $inputData['difficulty_level'] = 0;
+                    }
+                }
+                // end validate input data
+        		$test = new Test;
+        		$test->test_type = $inputData['test'];
+                $test->question_type = $inputData['test-type'];
+        		$test->test_name = isset($row['test_set_name']) ? $row['test_set_name'] : (isset($inputData['test_name']) ? $inputData['test_name'] : 'test');
+        		$test->test_slug = Str::slug($test->test_name, '-');
+                $test->difficulty_level = isset($row['difficulty_level']) ? $row['difficulty_level'] : isset($inputData['difficulty_level']) ? $inputData['difficulty_level'] : 0;
+        		
+        		if(isset($row['subject'])) {
+                    $subject = Subject::findByNameOrNew($subjectName);
+                    $test->subject_id = $subject->id;  
+                }
+                elseif(isset($inputData['subject'])){
+                    $test->subject_id = $inputData['subject'];
+                }
 
-    		$test = new Test;
-    		$test->test_type = $inputData['test'];
-            $test->question_type = $inputData['test-type'];
-    		$test->test_name = isset($row['test_set_name']) ? $row['test_set_name'] : (isset($inputData['test_name']) ? $inputData['test_name'] : 'test');
-    		$test->test_slug = Str::slug($test->test_name, '-');
-            $test->difficulty_level = isset($row['difficulty_level']) ? $row['difficulty_level'] : isset($inputData['difficulty_level']) ? $inputData['difficulty_level'] : 0;
-    		
-    		if(isset($row['subject'])) {
-                $subject = Subject::findByNameOrNew($subjectName);
-                $test->subject_id = $subject->id;  
-            }
-            elseif(isset($inputData['subject'])){
-                $test->subject_id = $inputData['subject'];
-            }
+                if(isset($row['company'])){
+                    $company = Company::findByNameOrNew($subjectName);
+                    $test->company_id = $company->id;  
+                }
+                elseif(isset($inputData['company'])){
+                    $test->company_id = $inputData['company'];   
+                }
+        		
+        		$test->question = $row['question'];
+        		$test->answer = $row['answer'];
 
-            if(isset($row['company'])){
-                $company = Company::findByNameOrNew($subjectName);
-                $test->company_id = $company->id;  
-            }
-            elseif(isset($inputData['company'])){
-                $test->company_id = $inputData['company'];   
-            }
-    		
-    		$test->question = $row['question'];
-    		$test->answer = $row['answer'];
-
-            $test->study_solution = isset($row['study_solution']) ? $row['study_solution'] : null;
-    		if($inputData['test-type'] == 'objective') {
-    			$test->option_a = $row['option_a'];
-    			$test->option_b = $row['option_b'];
-    			$test->option_c = $row['option_c'];
-    			$test->option_d = $row['option_d'];
-    		}
-    		$test->save();
-    	}
+                $test->study_solution = isset($row['study_solution']) ? $row['study_solution'] : null;
+        		if($inputData['test-type'] == 'objective') {
+        			$test->option_a = $row['option_a'];
+        			$test->option_b = $row['option_b'];
+        			$test->option_c = $row['option_c'];
+        			$test->option_d = $row['option_d'];
+        		}
+        		$test->save();
+        	}
+        });
     }
 
     public static function deleteTest($slug){
@@ -181,5 +201,9 @@ class Test  extends Eloquent {
         $question = Test::find($qid);
         
         return $question->study_solution;
+    }
+
+    public static function updatePlans($testSlugs, $testplanIDs){
+        return Test::whereIn('test_slug',$testSlugs)->update(['test_plan_ids'=>$testplanIDs]);
     }
 }

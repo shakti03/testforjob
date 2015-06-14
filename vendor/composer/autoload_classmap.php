@@ -44,6 +44,7 @@ return array(
     'Enquiry' => $baseDir . '/app/models/Enquiry.php',
     'EnquiryController' => $baseDir . '/app/controllers/EnquiryController.php',
     'FrontTestController' => $baseDir . '/app/controllers/front/FrontTestController.php',
+    'FrontTestHistoryController' => $baseDir . '/app/controllers/front/FrontTestHistoryController.php',
     'FrontUserController' => $baseDir . '/app/controllers/front/FrontUserController.php',
     'HomeController' => $baseDir . '/app/controllers/HomeController.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
