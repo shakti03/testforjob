@@ -40,22 +40,39 @@ class FrontTestHistoryController extends Controller{
             return $model->user_time.' hours';//'00:20';//empty($model->time) ? '00:20'.' hours' : date('h:i').' hours' ;
         })
         ->addColumn('actions',function($model) {
-            return '<a href="'.URL::to('user/test-history/review',[$model->id,1]).'" class="btn btn-xs btn-warning" title="view test history"><i class="fa fa-eye"></i></a>
-            <a href="'.URL::to('user/test-history/review',[$model->id,1]).'" class="btn btn-xs btn-success" title="comments"><i class="fa fa-list"></i></a>';
+            // <a href="javascript:void(0);" class="btn btn-xs btn-warning" title="view test history"><i class="fa fa-eye"></i></a>
+            return '<a href="'.URL::to('user/test-history/review',$model->id).'" class="btn btn-xs btn-success" title="comments"><i class="fa fa-list"></i></a>';
         })
         ->make();
     }
 
-    public function testHistoryViewTest($testId){
+    public function testReview($testId){
     	$testHistoryData = TestHistory::find($testId);
     	$testData = [];
-    	if(!empty($testHistoryData)){
+
+    	if($testHistoryData->count()){
     		$testData['question_ids'] = json_decode($testHistoryData->question_ids);
-    		$testData['answers'] = json_decode($testHistoryData->answers);
+    		$testData['answers'] = (array)json_decode($testHistoryData->answers,true);
     		$testData['viewed'] = json_decode($testHistoryData->viewed);
 
-    		$discussionComments = DiscussionForum::whereIn('question_id',$testData['question_ids'])->get()->toArray();	
-    		echo '<pre>'; print_r($discussionComments) ; echo '</pre>'; exit;
+            $testData['questions'] = Test::whereIn('id',$testData['question_ids'])->get();
+    		
+            $logged_user = $logged_user = App::make('authenticator')->getLoggedUser();
+
+            $testData['discussionComments'] = DiscussionForum::whereIn('question_id',$testData['question_ids'])
+                                                    ->where('user_id',$logged_user->id)
+                                                    ->select('question_id',DB::raw('count(question_id) as comment_count'))
+                                                    ->lists('comment_count', 'question_id');
+
+            return View::make('front.test-history.review', $testData);
     	}
+    }
+
+    public function getDiscussionComments($qid) {
+        $result = DiscussionForum::fetchAllCommentsById($qid);
+        $logged_user = App::make('authenticator')->getLoggedUser();
+        $uid = $logged_user->id;
+        $data = ['result' =>$result, 'qid' => $qid, 'uid' => $uid];
+        return json_encode($data);
     }
 }

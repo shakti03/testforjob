@@ -99,6 +99,7 @@ return array(
     'TestPlan' => $baseDir . '/app/models/TestPlan.php',
     'User' => $baseDir . '/app/models/User.php',
     'UserController' => $baseDir . '/app/controllers/UserController.php',
+    'UserTestPlan' => $baseDir . '/app/models/UserTestPlan.php',
     'Video' => $baseDir . '/app/models/Video.php',
     'VideoCategory' => $baseDir . '/app/models/VideoCategory.php',
     'Whoops\\Module' => $vendorDir . '/filp/whoops/src/deprecated/Zend/Module.php',

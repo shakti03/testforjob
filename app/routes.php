@@ -50,8 +50,8 @@ Route::group(['before' => 'logged'], function() {
 
 	Route::any('user/test-history', 'FrontTestHistoryController@testHistory');
 	Route::get('user/test-history/data', 'FrontTestHistoryController@testHistoryData');
-	Route::get('user/test-history/review/{testid}/{id}', 'FrontTestHistoryController@testHistoryViewTest');
-	
+	Route::get('user/test-history/review/{testid}', 'FrontTestHistoryController@testReview');
+	Route::get('user/test-history/get-discussion-comments/{id}', 'FrontTestHistoryController@getDiscussionComments');
 
 	Route::get('user/dashboard', 'FrontUserController@showDashboard');
 	Route::get('user/videos', 'FrontUserController@showVideos');

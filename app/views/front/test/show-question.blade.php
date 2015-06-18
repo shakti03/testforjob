@@ -29,7 +29,9 @@
 			<div class="row">&nbsp;</div>
 			<div class="row">
 				<div class="col-md-12">
+					@if(!$timeOver)
 					<form method="post" action="{{URL::to('user/submit-question')}}" id="frmTest">
+					@endif
 						{{--*/ $questionType = $question->question_type;/*--}}
 						<input type="hidden" name="question_type" value="{{$questionType}}">
 						<input type="hidden" name="qid" value="{{$page}}"/>
@@ -94,7 +96,9 @@
 						<input type="hidden" id="hours" name="hours" value="{{$hours}}">
 						<input type="hidden" id="minutes" name="minutes" value="{{$minutes}}">
 						<input type="hidden" id="seconds" name="seconds" value="{{$seconds}}">
+    				@if(!$timeOver)
     				</form>
+    				@endif
 				</div>
 			</div>
 		</div>
@@ -161,18 +165,23 @@
 
 		<div class="col-md-3">
 			<label class="text-cadetBlue"><u>STATISTICS</u></label>
-				<div>&nbsp;</div>
+			<div>&nbsp;</div>
+			<div id="statistics">
 				<ul class="">
 					<li><label><span class="width-fixed-150">Unanswered </span>: {{ $unanswered = $last - $totalAnswered}} <input type="hidden" id="unanswered" value="{{$unanswered}}"></label></li>
 					<li><label><span class="width-fixed-150">Total answered </span>: {{ $totalAnswered }} <input type="hidden" id="totalAnswered" value="{{$totalAnswered}}"></label></li>
 					<li><label><span class="width-fixed-150">Correct answered </span>: {{ $correctAnswered }} <input type="hidden" id="correct" value="{{$correctAnswered}}"></label></li>
 					<li><label><span class="width-fixed-150">Incorrect answered </span>: {{$incorrectAnswered}} <input type="hidden" id="incorrect" value="{{$incorrectAnswered}}"></label></li>
 				</ul>
-				<div>&nbsp;</div>	
+			</div>
+			<div>&nbsp;</div>
+			<div id="">
 				<div id="chartContainer" style="height: 250px; width: 100%;"></div>
+			</div>
 		</div>
 	</div>
 </div>
+@include('front.test.partials.test-complete-modal')
 @stop
 
 @section('scripts')
@@ -216,6 +225,17 @@
 
 		    }, 1000);
 		}
+		else{
+			showTestCompleteModal();
+			$('#submitTest').text('Show result');
+		}
+
+		function showTestCompleteModal(){
+			$('#modalStatisticsPart').html($('#statistics').html());
+			chartCreate("modalChartContainer",true);
+			$('#testCompleteModal').modal('show');
+		}
+
 
 	    $('#frmTest').submit(function(){
 	    	$('#loader').show();
@@ -267,37 +287,48 @@
 			});
 		});
 
-		var chart = new CanvasJS.Chart("chartContainer",
-		{
-			legend: {
-				verticalAlign: "bottom",
-				horizontalAlign: "center"
-			},
-			theme: "theme2",
-			data: [{        
-						type: "pie",
-						indexLabelFontFamily: "Garamond",       
-						indexLabelFontSize: 20,
-						indexLabelFontWeight: "bold",
-						startAngle:0,
-						indexLabelFontColor: "MistyRose",       
-						indexLabelLineColor: "darkgrey", 
-						indexLabelPlacement: "inside", 
-						toolTipContent: "{name}: {y}",
-						showInLegend: true,
-						indexLabel: "#percent%", 
-						dataPoints: [
-							{  y: $('#unanswered').val()/10, name: "Unanswered", legendMarkerType: "square"},
-							{  y: $('#incorrect').val()/10, name: "Inorrect", legendMarkerType: "square"},
-							{  y: $('#correct').val()/10, name: "Correct", legendMarkerType: "square	"}
-						]
-				}]
-		});
-		chart.render();
+		function chartCreate(id,label) {
+			labelText = "";
+			if(label){
+				labelText = '{name}';
+			}
+			var chart = new CanvasJS.Chart(id,
+			{
+				legend: {
+					verticalAlign: "bottom",
+					horizontalAlign: "center"
+				},
+				theme: "theme2",
+				data: [{        
+							type: "pie",
+							indexLabelFontFamily: "Garamond",       
+							indexLabelFontSize: 20,
+							indexLabelFontWeight: "bold",
+							startAngle:0,
+							indexLabelFontColor: "MistyRose",       
+							indexLabelLineColor: "darkgrey", 
+							indexLabelPlacement: "inside", 
+							toolTipContent: "{name}: {y}",
+							showInLegend: true,
+							indexLabel: "#percent% "+labelText, 
+							dataPoints: [
+								{  y: $('#unanswered').val()/10, name: "Unanswered", legendMarkerType: "square"},
+								{  y: $('#incorrect').val()/10, name: "Inorrect", legendMarkerType: "square"},
+								{  y: $('#correct').val()/10, name: "Correct", legendMarkerType: "square	"}
+							]
+					}]
+			});
+			chart.render();
+		}
+		chartCreate('chartContainer');
 
 		$('.canvasjs-chart-credit').hide();
 
 		$('#submitTest').click(function(){
+			if(testOver){
+				showTestCompleteModal();
+				return;
+			}
 			if(confirm('Would you like to complete your test?')){
 				$.get(baseUrl+'/user/test/complete', function(response){
 					window.location.reload();
