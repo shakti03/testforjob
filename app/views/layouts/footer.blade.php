@@ -67,7 +67,7 @@
                     <li>Privacy Policy</li>
                     <li>Disclaimer</li>
                 </ul>
-                @2015  TCY Learning(P) LTD. All Rights Reserved.
+                @2015  Test For Job Learning(P) LTD. All Rights Reserved.
             </div>
             <div class="col-md-2">
                 <ul class="horizontal ">

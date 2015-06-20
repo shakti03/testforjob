@@ -70,7 +70,9 @@ p {
   text-align: center;
 }
 .news {
-  
+  background-color: #494949;
+  height: 400px;
+  color: #FFF;
 }
 
 /*  .header Section  */
@@ -147,7 +149,7 @@ ul.horizontal li{
 }
 
 .footer-end {
-    background: #C62E2B;
+    background: #00AA94;
     color: #FFF;
     padding-top: 5px;
     /*padding-bottom: 5px;*/

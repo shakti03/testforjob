@@ -86,7 +86,7 @@
 						'assets/images/language_skill.png',
 						'assets/images/sci_techno.png',
 						'assets/images/school_pro.png',
-						'assets/images/feature_8.jpg'
+						'assets/images/school_pro.png',
 					];
 ?>
 <div class="container-fluid">
