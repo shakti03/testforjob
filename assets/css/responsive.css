@@ -1,4 +1,7 @@
 /*  General CSS  */
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,400,400italic,500,500italic,700,700italic,900,900italic&subset=latin,latin-ext,cyrillic,cyrillic-ext,greek-ext,greek,vietnamese);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext,cyrillic-ext,cyrillic,greek-ext,greek,vietnamese);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&subset=latin,latin-ext,greek-ext,greek,vietnamese,cyrillic,cyrillic-ext);
 .navbar {
   -webkit-border-radius: 0 !important;
      -moz-border-radius: 0 !important;
@@ -13,19 +16,22 @@ body{
 
 
 h1, h2, h3, h4, h5 ,h6{
-    color: #626262;
-    font-family: Helvetica, Arial, sans-serif;
+    /*color: #626262;*/
+    /*font-family: Helvetica, Arial, sans-serif;*/
+    font-family: Roboto !important;
+    font-size: 14pt !important;
+    font-weight: 400 !important;
     letter-spacing: 1px;
 }
 
 h1              { font-size: 2em; margin: .67em 0 }
-h2              { font-size: 1.5em; margin: .75em 0 }
-h3              { font-size: 1.17em; margin: .83em 0 }
+h2              { font-size: 1.5em;  }
+h3              { font-size: 1.17em; }
 h4              { font-size: 1.01em; margin: 1.0em 0 }
 h5              { font-size: .83em; margin: 1.5em 0 }
 h6              { font-size: .75em; margin: 1.67em 0 }
 h1, h2, h3, h4,
-h5, h6          { font-weight: bolder }
+h5, h6          { font-weight: 300 }
 
 p {
   font-family: "Helvetica Neue", "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
@@ -33,7 +39,9 @@ p {
   margin-top: .5em; color: #666;
   line-height: 1.7;
 }
-
+.mini-org-img{
+  box-shadow: 4px 4px 1px #ccc;
+}
 .clearfix:before,  
 .clearfix:after {  
     content: " ";  
@@ -46,6 +54,25 @@ p {
 .clearfix {  
     *zoom: 1;  
 }
+.mini-images {
+  margin-top: 2%;
+}
+.background-purple {
+  background-color: #4F455F;
+  color: #FFF;
+  padding: 1px;
+}
+.background-darkblue {
+  background-color: #2C3E50;
+  color: #FFF;
+  padding: 1px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+.news {
+  
+}
+
 /*  .header Section  */
 .header{
   width:100%;
@@ -70,8 +97,9 @@ p {
 }
 
 .below-header-bg-row{
-  height:95px;
-  background: #0FAA86;
+  height:90px;
+  background-color: #34495E;
+  color: #FFF;
 }
 
 .header .logo{
@@ -99,9 +127,9 @@ p {
 /*  .footer  */
 .footer{
     color: #bbb;
-    padding: 2%;
     width: 100%;
     background: #494949;
+    padding-top: 1%;
     border-top: 4px solid #50B75E;
 }
 
@@ -110,9 +138,17 @@ p {
   margin-left: 0;
   padding-left: 0;
   line-height: 1.5em;
+  font-size: 13px;
 }
 
 ul.horizontal li{
     list-style: none;
     display:inline;
+}
+
+.footer-end {
+    background: #C62E2B;
+    color: #FFF;
+    padding-top: 5px;
+    /*padding-bottom: 5px;*/
 }

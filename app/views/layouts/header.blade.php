@@ -50,7 +50,7 @@
     
     <!-- Wrapper for Slides -->
     <div class="carousel-inner">
-	<img style="background-repeat: repeat-y; position:absolute; left:0px; top:0px; z-index:0;" width=100% src="{{URL::to('assets/images/bg_green.png')}}">
+	<img style="background-repeat: repeat-y; position:absolute; left:0px; top:0px; z-index:0;" height=80% width=100% src="{{URL::to('assets/images/bg_green.png')}}">
     	<?php $sliderImages = [	'assets/images/sliderimages1.png',
 				'assets/images/sliderimages2.png',
 				'assets/images/sliderimages3.png',
@@ -79,7 +79,7 @@
 
 </div>
 <?php
-	$featuresImgs =                [	'assets/images/Management.png',
+	$featuresImgs = [	'assets/images/Management.png',
 						'assets/images/study_abd.png',
 						'assets/images/jobs.png',
 						'assets/images/arts_sci_law.png',
@@ -89,18 +89,17 @@
 						'assets/images/feature_8.jpg'
 					];
 ?>
-<div class="container">
-	<div class="row">&nbsp;</div>
-	<div class="row">&nbsp;</div>
-	<h1 class="text-center">100+ Exam Categories</h1>
-	<h5 class="text-center">Crack your exam with India's no 1 testing platform.</h5>
-	<div class="row">&nbsp;</div>
-	<div class="row">&nbsp;</div>
-	<div class="row">&nbsp;</div>
-	<div class="row">
+<div class="container-fluid">
+		<div class="row">
+    <div class="background-purple">
+		<h1 class="text-center">100+ Exam Categories</h1>
+		<h5 class="text-center">Crack your exam with India's no 1 testing platform.</h5>
+	</div>
+		</div>
+	<div class="row mini-images">
 		@foreach($featuresImgs as $img)
 		<div class="col-md-3">
-			<center><img src="{{URL::to($img)}}" class="img-responsive"></center>
+			<center><img src="{{URL::to($img)}}" class="img-responsive mini-org-img"></center>
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
     	</div>

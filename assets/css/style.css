@@ -10,10 +10,9 @@ p
 }
 
 h3{
-	color: #444749;
 	font-family: 'Open Sans', sans-serif;
-	line-height: 25px;
-	margin: 10px;
+	/*line-height: 25px;*/
+	margin: 0px;
 }
 .container-body
 {
