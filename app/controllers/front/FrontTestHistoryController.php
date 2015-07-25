@@ -75,4 +75,20 @@ class FrontTestHistoryController extends Controller{
         $data = ['result' =>$result, 'qid' => $qid, 'uid' => $uid];
         return json_encode($data);
     }
+
+    public function addComment() {
+        $inputs = Input:: all();
+        if(isset($inputs['question_id']) && isset($inputs['comment'])) {
+            $loggedUser = App::make('authenticator')->getLoggedUser();
+
+            $data = [];
+            $data['question_id'] = $inputs['question_id'];
+            $data['user_id'] = $loggedUser->id;
+            $data['comment'] = $inputs['comment'];
+
+            DiscussionForum::insertComment($data);
+            return json_encode('success');
+        }
+        return json_encode('false');
+    }
 }

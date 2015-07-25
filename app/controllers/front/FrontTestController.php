@@ -105,7 +105,7 @@ class FrontTestController extends Controller {
             $minutes = Session::get('minutes');
             $seconds = Session::get('seconds');
 
-            $data = ['question'  => $question,
+            $data = ['question' => $question,
                     'page'      => $page,
                     'last'      => $last,
                     'answer'    => $answer,
@@ -119,9 +119,10 @@ class FrontTestController extends Controller {
                     'test_status' => ''
                    ];
 
-            if($totalAnswered == $last && !( $hours || $minutes || $seconds)){
+            if($totalAnswered == $last || !( $hours || $minutes || $seconds)){
                 $testHistory->test_status = 'completed';
                 $data['test_status'] = 'completed';
+                Session::put('test-complete',true);
             }
             $testHistory->save();
                    

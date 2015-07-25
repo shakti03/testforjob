@@ -8,6 +8,7 @@ class DiscussionForum extends BaseModel {
         $result = DiscussionForum::leftJoin('user_profile','user_profile.id','=','discussion_forum.user_id')
                                 ->where('discussion_forum.question_id',$qid)
                                 ->select('user_profile.first_name','discussion_forum.comment')
+                                ->orderBy('discussion_forum.created_at')
                                 ->get();
         return $result;
     }

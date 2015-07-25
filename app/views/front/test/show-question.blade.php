@@ -76,19 +76,21 @@
 	                	<div class="row">
 	                    	<div class="col-md-12">
 	                    		<div class="pull-left">
-									@if($answer == null)
-		        						@if(!$timeOver)
-										<button class="btn btn-lg btn-warning borderNone " type="submit" id="save"  name="save"> Save &amp; Next</button>
+									@if(!$timeOver)
+										@if($answer == null)
+			        						<button class="btn btn-lg btn-warning borderNone " type="submit" id="save"  name="save"> Save &amp; Next</button>
+											
+										@else	
+											<button class="btn btn-lg btn-info boldText borderNone" type="button" id="study" name="study"> Study Solution</button>   
 										@endif
-									@else	
-										<button class="btn btn-lg btn-info boldText borderNone" type="button" id="study" name="study"> Study Solution</button>   
-									@endif
+									@endif	
 									<button class="btn btn-lg btn-success boldText borderNone" type="button" id="submitTest" name="study">Submit test</button>   
 								</div>
-							
+								
 								<div class="pull-right">
 	        						@include('front.test.partials.pagination',['pag'=>$page,'las'=>$last])	
 	        					</div>
+	        					
 	        				</div>
 						</div>
 
@@ -168,16 +170,18 @@
 			<div>&nbsp;</div>
 			<div id="statistics">
 				<ul class="">
-					<li><label><span class="width-fixed-150">Unanswered </span>: {{ $unanswered = $last - $totalAnswered}} <input type="hidden" id="unanswered" value="{{$unanswered}}"></label></li>
-					<li><label><span class="width-fixed-150">Total answered </span>: {{ $totalAnswered }} <input type="hidden" id="totalAnswered" value="{{$totalAnswered}}"></label></li>
-					<li><label><span class="width-fixed-150">Correct answered </span>: {{ $correctAnswered }} <input type="hidden" id="correct" value="{{$correctAnswered}}"></label></li>
-					<li><label><span class="width-fixed-150">Incorrect answered </span>: {{$incorrectAnswered}} <input type="hidden" id="incorrect" value="{{$incorrectAnswered}}"></label></li>
+					<li id="unanswered"><label><span class="width-fixed-150">Unanswered </span>: {{ $unanswered = $last - $totalAnswered}} <input type="hidden" id="unanswered" value="{{$unanswered}}"></label></li>
+					<li id="totalAnswered"><label><span class="width-fixed-150">Total answered </span>: {{ $totalAnswered }} <input type="hidden" id="totalAnswered" value="{{$totalAnswered}}"></label></li>
+					<li id="correctAnswered" class="displayNone"><label><span class="width-fixed-150">Correct answered </span>: {{ $correctAnswered }} <input type="hidden" id="correct" value="{{$correctAnswered}}"></label></li>
+					<li id="incorrectAnswered" class="displayNone"><label><span class="width-fixed-150">Incorrect answered </span>: {{$incorrectAnswered}} <input type="hidden" id="incorrect" value="{{$incorrectAnswered}}"></label></li>
 				</ul>
 			</div>
 			<div>&nbsp;</div>
 			<div id="">
 				<div id="chartContainer" style="height: 250px; width: 100%;"></div>
 			</div>
+
+			<h2 id="notifyCompleted" class="text-success text-center displayNone"><i class="fa fa-check"></i> Test completed</h2>
 		</div>
 	</div>
 </div>
@@ -189,6 +193,25 @@
 {{ HTML::script('assets/admin/js/jquery.form.min.js')}}
 {{ HTML::script('assets/js/canvasjs.min.js')}}
 <script type="text/javascript">
+	(function ($) {
+    var _oldShow = $.fn.show;
+
+    $.fn.show = function (speed, oldCallback) {
+        return $(this).each(function () {
+            var obj = $(this),
+                newCallback = function () {
+                    if ($.isFunction(oldCallback)) {
+                        oldCallback.apply(obj);
+                    }
+
+                    obj.trigger('afterShow');
+                };
+
+            obj.trigger('beforeShow');
+
+            _oldShow.apply(obj, [speed, newCallback]);
+        });
+    };
 	var testOver = false;
 	<?php 
 		if($timeOver) {
@@ -226,13 +249,41 @@
 		    }, 1000);
 		}
 		else{
-			showTestCompleteModal();
+			// showTestCompleteModal();
+			$('#notifyCompleted').show();
 			$('#submitTest').text('Show result');
+
+			var unanswered = $('input#unanswered').val();
+			var correct = $('input#correct').val();
+			var incorrect = $('input#incorrect').val();
+
+			var chartPoints = [	
+				{  y: unanswered/10, name: "Unanswered", legendMarkerType: "square"	},
+				{  y: incorrect/10, name: "Incorrect", legendMarkerType: "square"},
+				{  y: correct/10, name: "Correct", legendMarkerType: "square"}
+			];
+
+			chartCreate("modalChartContainer",chartPoints, true);
+			$('#modalStatisticsPart').html($('#statistics').html());
+			var timeValue = $('#timer').text();
+			timeValueArr = timeValue.split(':');
+			var minutes = 20 - parseInt(timeValueArr[1]);
+			var seconds = 59 - parseInt(timeValueArr[2]);
+			$('#modalTimer').html('00:'+minutes+":"+seconds);
+			$('#modalStatisticsPart li').show();
+
 		}
 
+		$('#testCompleteModal').bind('beforeShow',function(){
+			var chartHeight = $('#modalChartContainer').height();
+			var chartWidth = $('#modalChartContainer').width();
+			$('.canvasjs-chart-canvas').css('height', chartHeight);
+			$('.canvasjs-chart-canvas').css('width', chartWidth);
+
+		});
+
 		function showTestCompleteModal(){
-			$('#modalStatisticsPart').html($('#statistics').html());
-			chartCreate("modalChartContainer",true);
+			// $('#testCompleteModal').resize();
 			$('#testCompleteModal').modal('show');
 		}
 
@@ -287,7 +338,7 @@
 			});
 		});
 
-		function chartCreate(id,label) {
+		function chartCreate(id, chartPoints, label) {
 			labelText = "";
 			if(label){
 				labelText = '{name}';
@@ -310,17 +361,47 @@
 							indexLabelPlacement: "inside", 
 							toolTipContent: "{name}: {y}",
 							showInLegend: true,
-							indexLabel: "#percent% "+labelText, 
-							dataPoints: [
-								{  y: $('#unanswered').val()/10, name: "Unanswered", legendMarkerType: "square"},
-								{  y: $('#incorrect').val()/10, name: "Inorrect", legendMarkerType: "square"},
-								{  y: $('#correct').val()/10, name: "Correct", legendMarkerType: "square	"}
-							]
+							indexLabel: "#percent% ", 
+							dataPoints: chartPoints
 					}]
 			});
 			chart.render();
+			$('.canvasjs-chart-credit').hide();
 		}
-		chartCreate('chartContainer');
+
+		function init(){
+			var chartPoints = [];
+
+			var unanswered = $('input#unanswered').val();
+			var correct = $('input#correct').val();
+			var incorrect = $('input#incorrect').val();
+	
+			/*if(testOver){
+				$('#statistics li').hide();
+				if(unanswered > 0){
+					var perUnanswered = {  y: unanswered/10, name: "Unanswered", legendMarkerType: "square"	};
+					chartPoints.push(perUnanswered); 
+					$('li#unanswered').show();
+				}
+
+				var correctAnswerd = {  y: correct/10, name: "Answered", legendMarkerType: "square"};
+				var incorrectAnswered =  {  y: incorrect/10, name: "Answered", legendMarkerType: "square"};  
+				chartPoints.push(correctAnswerd);
+				chartPoints.push(incorrectAnswered);
+				$('li#correctAnswered').show();
+				$('li#incorrectAnswered').show();
+			}
+			else{*/
+				chartPoints = [ 
+							{  y: unanswered/10, name: "Unanswered", legendMarkerType: "square"},
+							{  y: (incorrect+correct)/10, name: "Answered", legendMarkerType: "square"}
+						];
+			/*}*/
+			chartCreate('chartContainer', chartPoints);	
+		}
+
+		init();
+		
 
 		$('.canvasjs-chart-credit').hide();
 
@@ -338,19 +419,19 @@
 
 		$('#study').click(function(){
 			$('.questionleftPane').hide();
-			$('#studySolution').fadeIn(1000);
+			$('#studySolution').show(1000);
 		});
 
 		$('#goToQuesiton').click(function(){
 			$('.questionleftPane').hide();
-			$('#questionBox').fadeIn(1000);
+			$('#questionBox').show(1000);
 		});
 
 		$('#showComments').click(function(){
 			var id = $(this).data('id');
 			loadComments(id, function(){
 				$('.questionleftPane').hide();
-				$('#discussionForum').fadeIn(1000);
+				$('#discussionForum').show(1000);
 			});
 		});
 
@@ -374,7 +455,7 @@
 
 		$('#studyButton').click(function(){
 			$('.questionleftPane').hide();
-			$('#studySolution').fadeIn(1000);
+			$('#studySolution').show(1000);
 		});
 
 		$('#commentForm').submit(function(e){
@@ -397,7 +478,9 @@
 			$('.questionleftPane').hide();
 			$('#questionBox').show(1000);
 		});
-	}); 
+	});
+
+})(jQuery); 
 </script>
 @stop
 

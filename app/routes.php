@@ -52,6 +52,7 @@ Route::group(['before' => 'logged'], function() {
 	Route::get('user/test-history/data', 'FrontTestHistoryController@testHistoryData');
 	Route::get('user/test-history/review/{testid}', 'FrontTestHistoryController@testReview');
 	Route::get('user/test-history/get-discussion-comments/{id}', 'FrontTestHistoryController@getDiscussionComments');
+	Route::post('user/test-history/add-comment', 'FrontTestHistoryController@addComment');
 
 	Route::get('user/dashboard', 'FrontUserController@showDashboard');
 	Route::get('user/videos', 'FrontUserController@showVideos');

@@ -1,17 +1,26 @@
 @extends('front.layout')
 @section('content')
+<style type="text/css">
+.questionItem.active {
+  background: #ebe29d none repeat scroll 0 0;
+}
+</style>
 <div class="container">
 	<div>&nbsp;</div>
 	<div class="row">
 		<div class="col-md-6" style="border-right:solid #b3afc3;">
-			<?php $i=1;?>
+			<?php $i=1; $firstQuestionId = 0;?>
 			@foreach($questions as $question)
 				<?php
 					$answer['user_answer'] = isset($answers[$question->id]) ? $answers[$question->id] : null;
 			    	$answer['correct'] = lcfirst($question->answer);
+
+			    	if($i==1){
+			    		$firstQuestionId = $question->id;
+			    	}
 			    ?>
 				
-				<div class="questionItem" data-id="{{$question->id}}">		
+				<div class="questionItem @if($i==1) active @endif" data-id="{{$question->id}}">		
 					<div>&nbsp;</div>
 					<span class="boldText" id="question"> {{"Q:".$i++." &nbsp;".$question->question}}</span>
 					@if($question->question_type == 'objective')
@@ -53,9 +62,20 @@
 			<hr>
 			<div id="comments">
 			</div>
+			<br>
+			{{ Form::open(['url'=>'user/test-history/add-comment','method'=>'post','id'=>'commentForm'])}}
+				<input type="hidden" name="question_id" value="{{$firstQuestionId}}">
+				
+				{{Form::textarea('comment',null , ['class'=>'form-control','placeholder'=>'Enter your feedback','rows'=>'3','required'])}}
+		
+				<div>&nbsp;</div>
+				<button type="submit" class="btn btn-warning" id="AddFeedback">
+				Add feedback</button>
+			{{Form::close()}}
 		</div>	
 	</div>
 </div>
+{{ HTML::script('assets/admin/js/jquery.form.min.js')}}
 <script type="text/javascript">
 	function loadComments(id, callback){
 		$('.loader').show();
@@ -77,14 +97,35 @@
 		});
 	}
 
+	loadComments($('.questionItem:first').data('id'), function(){
+		$('.loader').hide();
+	});
+
 	$(function(){
 		$('.questionItem').click(function(){
+			$('.questionItem').removeClass('active');
+			$(this).addClass('active');
 			var id = $(this).data('id');
+			$('input[name=question_id]').val(id);
 			loadComments(id, function(){
 				$('.loader').hide();
 			});
 		});
-		
+		$('#commentForm').submit(function(e){
+			e.preventDefault();
+			var id = $('input[name=question_id]').val();
+			$('#commentForm').ajaxSubmit({
+	            beforeSubmit:  function(){
+	                $('.loader').show();
+	            }, 
+	            success: function(response){
+	                $('.loader').hide();
+	                loadComments(id, function(){
+	                	$('#commentForm')[0].reset();	
+	                });
+	            }
+	        });	
+		});
 	});
 </script>
 @stop
