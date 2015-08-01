@@ -24,13 +24,13 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary search-panel">
-                {{ Form::open(['url'=>'admin/test/search','method'=>'post','class'=>'form-inline','id'=>"searchForm"])}}
+                {{ Form::open(['url'=>'admin/test/list-data','method'=>'post','class'=>'form-inline','id'=>"searchForm"])}}
                     {{--*/ 
                             $data['company']   = [''=>'-Select company-'] + $companies;
                             $data['subject']   = [''=>'-Select subject-'] + $subjects;
-                            $data['test_types'] = [''=>'-Select test type-'] + $test_types;
-                            $data['question_types'] = [''=>'-Select question type-'] + $question_types;
-                            $data['difficulty_levels'] = [''=>'-Select difficulty-'] + $difficulty_levels; 
+                            $data['test_type'] = [''=>'-Select test type-'] + $test_types;
+                            $data['question_type'] = [''=>'-Select question type-'] + $question_types;
+                            $data['difficulty_level'] = [''=>'-Select difficulty-'] + $difficulty_levels; 
                      /*--}}
                   <div class="form-group">
                     <label><strong>Search : </strong></label>
@@ -79,8 +79,17 @@
     <script type="text/javascript">
         $(document).ready(function(){
             
-            $('#testData').dataTable({
-                "ajax": "{{URL::to('admin/test/list-data')}}",
+          table =  $('#testData').dataTable({
+                "ajax": {
+                        url : "{{URL::to('admin/test/list-data')}}",
+                        data : function(d){
+                          d.company = $('#searchForm [name=company]').val();
+                          d.subject = $('#searchForm [name=subject]').val();
+                          d.test_type = $('#searchForm [name=test_type]').val();  
+                          d.question_type = $('#searchForm [name=question_type]').val();
+                          d.difficulty_level = $('#searchForm [name=difficulty_level]').val();
+                        }
+                      },
                 order:[[1,'desc']],
                 aoColumns : [
                   { "bSortable": false,sClass : 'text-center' },
@@ -95,6 +104,14 @@
                   { sWidth : '110px',"bSortable": true },
                   { "bSortable": true },
                 ]
+            });
+
+            $('#searchForm').submit(function(e){
+                e.preventDefault();
+                $('.loader').show();
+                table.api().ajax.reload(function(){
+                  $('.loader').hide();
+                });
             });
 
             $('#selectAll').change(function(){

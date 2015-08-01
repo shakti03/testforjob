@@ -4,9 +4,29 @@ class FrontUserController extends Controller {
 
 	public function showDashboard(){
 		$logged_user = App::make('authenticator')->getLoggedUser();
+		$user_id = $logged_user->id;
+		$user = User::fetchUserDetails($user_id);
+		$user->educations = UserDegree::join('degrees','degrees.id','=','user_degree.degree_id')
+									->where('user_id','=',$user_id)
+									->select('user_degree.*','degrees.name as degree')
+									->get()
+									->toArray();
+									
+		$user->technical_skills = UserSkill::join('technical_skills','technical_skills.id','=','user_skills.skill_id')
+									->where('user_id','=',$user_id)
+									->lists('technical_skills.name');
+
+		$user->current_company = UserCompany::join('companies','companies.id','=','user_company.company_id')
+									->where('user_id','=',$user_id)
+									->select('companies.name as name',DB::raw('DATE_FORMAT(FROM_DAYS(DATEDIFF(to_date, from_date)), "%Y")+0 as experience'))
+									->orderBy('to_date')
+									->first();
+
+		$data['user'] = $user;				
 		$testHistoryData = TestHistory::where('user_id', $logged_user->id)->groupBy('test_question_type')->select('test_question_type',DB::raw('count(id) as test_count'))->lists('test_count', 'test_question_type');
 		$data['objective'] = isset($testHistoryData['objective']) ? $testHistoryData['objective'] : 0;
 		$data['subjective'] = isset($testHistoryData['subjective']) ? $testHistoryData['subjective'] : 0;
+
 
 		return View::make('front.user.dashboard',$data);
 	}

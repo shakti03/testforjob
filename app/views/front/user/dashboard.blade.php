@@ -42,9 +42,10 @@
 						        </div>
 						    </div>
 						    <div class="col-md-7">
-						    	<p>Shakti singh</p>
-						    	<p>PHP Developer</p>
-						    	<p>ABC tech solutions (1 year experience)</p>
+						    	<p>{{ $user->first_name ." ".$user->last_name}}</p>
+						    	<p>{{ $user->tag_line }}</p>
+						    	<p>{{ $user->current_company->name. " (".$user->current_company->experience." year experience)"}}</p>
+						    	
 						    </div>
 						    <div class="col-md-1">
 						    	<button class="btn btn-xs btn-primary pull-right">Edit profile <i class="fa fa-pencil"></i></button>
@@ -54,13 +55,9 @@
                         	<div class="col-md-12">
                         		<h3>Technical skills</h3>
                         		<div class="details">
-	                        		<a href="javascript:;"><span class="tag"> C </span></a>
-	                        		<a href="javascript:;"><span class="tag"> C++ </span></a>
-	                        		<a href="javascript:;"><span class="tag"> JAVA </span></a>
-	                        		<a href="javascript:;"><span class="tag"> PHP </span></a>
-	                        		<a href="javascript:;"><span class="tag"> SQL </span></a>
-	                        		<a href="javascript:;"><span class="tag"> PLSQL </span></a>
-	                        		<a href="javascript:;"><span class="tag"> Android </span></a>
+                        			@foreach($user->technical_skills as $skill)
+	                        		<a href="javascript:;"><span class="tag"> {{ $skill }} </span></a>
+	                        		@endforeach
                         		</div>
                         	</div>
                         </div>
@@ -74,26 +71,13 @@
 											<th>Degree/Course</th>
 											<th>Percent/Grade</th>
 										</tr>
+										@foreach($user->educations as $education)
 										<tr>
-											<th>2014</th>
-											<td>MCA</td>
-											<td>70%</td>
+											<th>{{ $education['year'] }}</th>
+											<td>{{ $education['degree'] }}</td>
+											<td>{{ $education['grade'] }}</td>
 										</tr>
-										<tr>
-											<th>2011</td>
-											<td>BSC (IT)</td>
-											<td>69%</td>
-										</tr>
-										<tr>
-											<th>2008</th>
-											<td>HSC</td>
-											<td>60%</td>
-										</tr>
-										<tr>
-											<th>2006</th>
-											<td>10th</td>
-											<td>61%</td>
-										</tr> 
+										@endforeach
 									</tbody>
 								</table>
                         	</div>
@@ -144,10 +128,10 @@
 						<th>Subjective test</th>
 						<td>{{$subjective}}</td>
 					</tr>
-					<tr>
+					<!-- <tr>
 						<th>User rank</th>
 						<td>1</td>
-					</tr> 
+					</tr>  -->
 				</tbody>
 			</table>	
 

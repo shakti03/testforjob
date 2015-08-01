@@ -121,11 +121,11 @@
         if(selectedPlan) {
           $('.videoFile').hide();
           $('.videoFile').filter(function(){
-            var planIds = $(this).data('plan');
-            if(planIds){
-              planIds = planIds.split(',');
-            }
-            return $.inArray(selectedPlan, planIds) != -1;//=== ''+$(this).data('filter');
+            var planIds = "" +$(this).data('plan');
+            var plans=[];
+
+            plans = planIds.split(',');
+            return $.inArray(""+selectedPlan, plans) != -1;//=== ''+$(this).data('filter');
           }).show();
         }
         else{

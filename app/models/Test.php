@@ -29,7 +29,7 @@ class Test  extends Eloquent {
             if($inputs['difficulty_level'] == 'experienced')
                 $result = $result->where('test_questions.difficulty_level', '>', 0);
             else
-                $result = $result->where('test_questions.difficulty_level',  0);
+                $result = $result->where('test_questions.difficulty_level', '=', 0);
         }
             
         if($planCheck){

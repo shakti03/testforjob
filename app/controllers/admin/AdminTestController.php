@@ -12,9 +12,10 @@ class AdminTestController extends Controller {
     }
 
     public function getTestListData(){
-        $tests = Test::getTestSets();
+        $inputs = Input::all();
+        $tests = Test::getTestSets($inputs,true);
         $testPlans = TestPlan::lists('name','id');
-
+        
         return Datatable::collection($tests)
         ->addColumn('select',function($model) {
             return '<input type="checkbox" value="'.$model->test_slug.'" class="selectTest">';
