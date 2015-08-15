@@ -63,8 +63,9 @@ class AuthController extends Controller {
         catch(JacopoExceptionsInterface $e)
         {
             $errors = $this->authenticator->getErrors();
-            return Redirect::action('Jacopo\Authentication\Controllers\AuthController@getClientLogin')->withInput()->withErrors($errors);
-        }
+            // return Redirect::action('Jacopo\Authentication\Controllers\AuthController@getClientLogin')->withInput()->withErrors($errors);
+            return Redirect::back()->withInput()->withErrors($errors);
+        }   
 
         return Redirect::to(Config::get('laravel-authentication-acl::config.user_login_redirect_url'));
     }

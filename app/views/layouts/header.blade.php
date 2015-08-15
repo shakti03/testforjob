@@ -3,7 +3,7 @@
 	    <div class="container">
 	        <div class="navbar-header">
 	        	<a class="" href="login">
-	    			<img class="logo" src="assets/images/logo.png">
+	    			<img class="logo" src="{{ URL::to('assets/images/logo.png') }}">
 	    		</a>
 	        	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-main-menu">
 	            <span class="sr-only">Toggle navigation</span>

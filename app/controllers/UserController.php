@@ -56,8 +56,8 @@ class UserController extends Controller {
             $service->register(Input::all());
         } catch(JacopoExceptionsInterface $e)
         {
-            // return Redirect::action('UserController@signup')->withErrors($service->getErrors())->withInput();
-            return Redirect::back()->withErrors($service->getErrors())->withInput();
+            return Redirect::action('UserController@signup')->withErrors($service->getErrors())->withInput();
+            // return Redirect::back()->withErrors($service->getErrors())->withInput();
         }
         return Redirect::action('UserController@signupSuccess');
     }
@@ -65,6 +65,7 @@ class UserController extends Controller {
     public function signupSuccess()
     {
         $email_confirmation_enabled = Config::get('laravel-authentication-acl::email_confirmation');
+        Session::flash('success', 'Your account has been created successfully. An account activation link is sent to you email address.');
         return $email_confirmation_enabled ? Redirect::back()->with('signup_success',true) : View::make('home.signup-success');
     }
 

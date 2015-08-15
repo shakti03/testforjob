@@ -40,5 +40,10 @@
 	
 	@yield('misc-scripts')
 	@yield('scripts')
+	<script type="text/javascript">
+		$(function(){
+			$('#loader').hide();
+		})
+	</script>
 </body>
 </html>

@@ -27,7 +27,6 @@ class FrontUserController extends Controller {
 		$data['objective'] = isset($testHistoryData['objective']) ? $testHistoryData['objective'] : 0;
 		$data['subjective'] = isset($testHistoryData['subjective']) ? $testHistoryData['subjective'] : 0;
 
-
 		return View::make('front.user.dashboard',$data);
 	}
 

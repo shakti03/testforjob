@@ -13,7 +13,7 @@ class AdminTestController extends Controller {
 
     public function getTestListData(){
         $inputs = Input::all();
-        $tests = Test::getTestSets($inputs,true);
+        $tests = Test::getTestSets($inputs,false);
         $testPlans = TestPlan::lists('name','id');
         
         return Datatable::collection($tests)

@@ -7,6 +7,16 @@ class Test  extends Eloquent {
 
     public static function getTestSets($inputs = [], $planCheck=false) {
         
+        $logged_user = App::make('authenticator')->getLoggedUser();
+        $userTestPlanIDs = [];
+
+        if($planCheck){
+            $userTestPlanIDs = UserTestPlan::where('user_id',$logged_user->id)->lists('id');
+            if(empty($userTestPlanIDs)) {
+                return Test::where('test_questions.test_plan_ids','=','-1')->get();    
+            }
+        }
+
         $result =  Test::select('test_questions.test_name as name', 'test_type', 'question_type', 'difficulty_level', DB::raw('count(test_questions.test_name) as no_of_questions'),'test_timings.time','test_questions.test_slug as test_slug','subjects.name as subject_name','companies.name as company_name','test_plan_ids')
                     ->leftJoin('subjects','subjects.id','=','test_questions.subject_id')
                     ->leftJoin('companies','companies.id','=','test_questions.company_id')
@@ -33,11 +43,7 @@ class Test  extends Eloquent {
         }
             
         if($planCheck){
-        $logged_user = App::make('authenticator')->getLoggedUser();
-
-        $userTestPlanIDs = UserTestPlan::where('user_id',$logged_user->id)->lists('id');
-        
-        $result =   $result->where(function($query) use($userTestPlanIDs){
+            $result =   $result->where(function($query) use($userTestPlanIDs){
                         $count = 0;
                         foreach($userTestPlanIDs as $planID){
                             if($count == 0){
@@ -49,6 +55,7 @@ class Test  extends Eloquent {
                             }
                         }
                     });
+            
         }
         $result =  $result->groupBy('test_questions.test_type')
                     ->groupBy('test_questions.question_type')
