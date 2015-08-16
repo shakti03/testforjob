@@ -33,7 +33,7 @@
 <div class="header-bg-row">
 	&nbsp;
 </div>
-<div class="below-header-bg-row row">
+<div class="below-header-bg-row row" style="margin-left:0;margin-right:0;">
 	<div class="col-md-3 col-md-push-1"><h2>Number of Questions</h2> <h3>15000</h3></div>
 	<div class="col-md-3 col-md-push-1"><h2>User visited</h2> <h3>15000</h3></div>
 	<div class="col-md-3 col-md-push-1"><h2>Number of Questions</h2> <h3>15000</h3></div>
@@ -49,8 +49,7 @@
   	</ol>
     
     <!-- Wrapper for Slides -->
-    <div class="carousel-inner">
-	<img style="background-repeat: repeat-y; position:absolute; left:0px; top:0px; z-index:0;" height=80% width=100% src="{{URL::to('assets/images/bg_green.png')}}">
+    <div class="carousel-inner" style="background:url({{URL::to('assets/images/bg_green.png')}});background-size:100% 100%;">
     	<?php $sliderImages = [	'assets/images/sliderimages1.png',
 				'assets/images/sliderimages2.png',
 				'assets/images/sliderimages3.png',
