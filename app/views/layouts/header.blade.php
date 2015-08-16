@@ -2,7 +2,7 @@
 	<div class="navbar navbar-default" role="navigation">
 	    <div class="container">
 	        <div class="navbar-header">
-	        	<a class="" href="login">
+	        	<a class="" href="{{URL::to('/')}}">
 	    			<img class="logo" src="{{ URL::to('assets/images/logo.png') }}">
 	    		</a>
 	        	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-main-menu">
@@ -33,6 +33,19 @@
 <div class="header-bg-row">
 	&nbsp;
 </div>
+@if(Session::has('flash-msg'))
+    <div role="alert" class="alert alert-warning alert-dismissible fade in">
+      <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+        {{Session::get('flash_msg')}} 
+            <i class="fa fa-check"></i>
+    </div>
+@endif
+@if(Session::has('success'))
+    <div role="alert" class="alert alert-success alert-dismissible fade in">
+    	<button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+        {{Session::get('success')}} 
+    </div>
+@endif
 <div class="below-header-bg-row row" style="margin-left:0;margin-right:0;">
 	<div class="col-md-3 col-md-push-1"><h2>Number of Questions</h2> <h3>15000</h3></div>
 	<div class="col-md-3 col-md-push-1"><h2>User visited</h2> <h3>15000</h3></div>

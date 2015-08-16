@@ -65,7 +65,7 @@ class UserController extends Controller {
     public function signupSuccess()
     {
         $email_confirmation_enabled = Config::get('laravel-authentication-acl::email_confirmation');
-        Session::flash('success', 'Your account has been created successfully. An account activation link is sent to you email address.');
+        Session::flash('success', 'Your account has been created successfully. An account activation link has been sent to your email address.');
         return $email_confirmation_enabled ? Redirect::back()->with('signup_success',true) : View::make('home.signup-success');
     }
 

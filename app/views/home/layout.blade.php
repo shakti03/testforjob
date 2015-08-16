@@ -15,13 +15,7 @@
 </head>
 <body>
     @include('layouts.header')
-    @if(Session::has('flash-msg'))
-        <div role="alert" class="alert alert-warning alert-dismissible fade in">
-          <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
-            {{Session::get('flash_msg')}} 
-                <i class="fa fa-check"></i>
-        </div>
-    @endif
+
     <div class="main-container">
         @yield('content')
     </div>

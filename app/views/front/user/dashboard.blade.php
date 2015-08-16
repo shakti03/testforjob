@@ -44,8 +44,9 @@
 						    <div class="col-md-7">
 						    	<p>{{ $user->first_name ." ".$user->last_name}}</p>
 						    	<p>{{ $user->tag_line }}</p>
+						    	@if(isset($user->current_company))
 						    	<p>{{ $user->current_company->name. " (".$user->current_company->experience." year experience)"}}</p>
-						    	
+						    	@endif
 						    </div>
 						    <div class="col-md-1">
 						    	<button class="btn btn-xs btn-primary pull-right">Edit profile <i class="fa fa-pencil"></i></button>
