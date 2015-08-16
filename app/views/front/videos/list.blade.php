@@ -10,9 +10,10 @@
 		    </div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-12 col-xs-12 col-sm-12" id="videos">
-			<div class="row">
+	<div class="container">
+		@if(!empty($videos))
+		<div class="row">
+			<div class="col-md-12 col-xs-12 col-sm-12" id="videos">
 				<ul class="unstyledList">
 					{{--*/ $i=1; /*--}}
 					@foreach($videos as $video)
@@ -24,8 +25,11 @@
 						</li>
 					@endforeach
 				</ul>
-			</div>
+			</div>	
 		</div>
+		@else
+		<p> No video available. Pleaes purchase a payment plan. </p>
+		@endif
 	</div>
 </div>
 @stop

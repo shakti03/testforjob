@@ -50,7 +50,7 @@
 				    @else
 				    	<div>&nbsp;</div>
 				    	<div class="form-group">
-				        	{{ empty($answer['user_answer']) ? '--No answer-' : $answer['user_answer']}}
+				        	{{ empty($answer['user_answer']) ? '--No answer-' : '<pre>'.$answer['user_answer']. '</pre>' }}
 				    	</div>
 				    @endif
 				</div>

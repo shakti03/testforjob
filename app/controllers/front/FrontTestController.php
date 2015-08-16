@@ -196,6 +196,7 @@ class FrontTestController extends Controller {
 
             // save user answer in database
             $testHistory = TestHistory::find($testData['testHistory_id']);
+            
             $answered = $testHistory->answers ? (array)json_decode($testHistory->answers) : [];
             if(!array_key_exists($qid,$answered) ){
 
@@ -213,9 +214,14 @@ class FrontTestController extends Controller {
             $testData['answers'][$qid] = $answer;
             
             $testHistory = TestHistory::find($testData['testHistory_id']);
-            $testHistory->answers = $answer['user_answer'];
-            $testHistory->end_time = Date('Y-m-d h:i:s');
-            $testHistory->save();
+            $answered = $testHistory->answers ? (array)json_decode($testHistory->answers) : [];
+                        
+            if(!array_key_exists($qid,$answered) ){
+                $answered[$qid] = $inputs['answer'];
+                $testHistory->answers = json_encode($answered);
+                $testHistory->end_time = Date('Y-m-d h:i:s');
+                $testHistory->save();
+            }
         }
 
         Session::put('test_data',$testData);
