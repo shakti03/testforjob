@@ -49,7 +49,9 @@ class AdminTestController extends Controller {
             $testPlanStr = '';
             
             if(!empty($model->test_plan_ids)){
-                $testPlanIds = explode(',',$model->test_plan_ids);
+                $test_plan_ids = str_replace('#','',$model->test_plan_ids);
+
+                $testPlanIds = explode(',',$test_plan_ids);
                 foreach($testPlanIds as $testPlanID){
                     $testPlanStr .= $testPlans[$testPlanID].', ';
                 }
@@ -263,9 +265,17 @@ class AdminTestController extends Controller {
 
     public function linkTestPlan(){
         $inputData = Input::all();
-
+        $tests = [];
         $testSlugs = explode(',',$inputData['testids']);
-        $testPlans = implode(',', isset($inputData['testplanIDs']) ? $inputData['testplanIDs'] : []);
+        
+        $testPlans = isset($inputData['testplanIDs']) ? $inputData['testplanIDs'] : [];
+        
+        foreach($testPlans as $planID){
+            $testPlanIDS[] = '#'.$planID.'#';
+        }
+
+        $testPlans = implode(',', $testPlanIDS);
+        
         $result = Test::updatePlans($testSlugs, $testPlans);
  
         if($result){

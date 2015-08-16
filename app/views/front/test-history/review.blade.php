@@ -50,7 +50,7 @@
 				    @else
 				    	<div>&nbsp;</div>
 				    	<div class="form-group">
-				        	{{Form::textarea('answer',$answer['user_answer'] , ['class'=>'form-control','placeholder'=>'Type your answer','rows'=>'7','required','disabled'])}}
+				        	{{ empty($answer['user_answer']) ? '--No answer-' : $answer['user_answer']}}
 				    	</div>
 				    @endif
 				</div>

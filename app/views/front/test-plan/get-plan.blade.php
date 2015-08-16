@@ -18,8 +18,8 @@
                 <div class="form-group">
                     <label class="col-md-2">Plan name</label>
                     <div class="col-md-3">
-                        <input type="hidden" name="productinfo" value="{{ $productinfo }}">
-                        <label>{{ $productinfo }} </label>
+                        <input type="hidden" name="productinfo" value='{{ $productinfo }}'>
+                        <label>{{ $planName }} </label>
                     </div>
                 </div>
                 <div class="form-group">

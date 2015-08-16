@@ -9,6 +9,14 @@
 <div class="container">
 	<div>&nbsp;</div>
 	<div class="row">
+		<div class="col-md-9 borderRight">
+			<span class="text-saffron font18 pull-right">Time: <span id='timer'></span> &nbsp;
+		</div>
+		<div class="col-md-3">
+			&nbsp;
+		</div>
+	</div>
+	<div class="row">
 		<div id="questionBox" class="col-md-9 borderRight questionleftPane minHeight500">
 			<div class="row">
 				<div class="col-md-9">
@@ -20,9 +28,6 @@
 				    		{{ ucfirst($question->company_name)}}    
 				    	@endif
 					</span>
-				</div>
-				<div class="col-md-3">
-					<span class="text-saffron font18 pull-right">Time: <span id='timer'></span>
 				</div>
 			</div>
 			
@@ -64,10 +69,11 @@
 			                @else
 			                	<div>&nbsp;</div>
 			                	<div class="form-group">
+
 			                		@if($answer == null)
 				                	{{Form::textarea('answer',null , ['class'=>'form-control','placeholder'=>'Type your answer','rows'=>'7','required'])}}
 			                		@else
-				                	{{Form::textarea('answer',$answer['user_answer'] , ['class'=>'form-control','placeholder'=>'Type your answer','rows'=>'7','required','disabled'])}}
+				                	 <pre>{{ $answer['user_answer'] }}</pre>
 				                	@endif
 			                	</div>
 			                @endif	
@@ -84,7 +90,7 @@
 											<button class="btn btn-lg btn-info boldText borderNone" type="button" id="study" name="study"> Study Solution</button>   
 										@endif
 									@endif	
-									<button class="btn btn-lg btn-success boldText borderNone" type="button" id="submitTest" name="study">Submit test</button>   
+									&nbsp;<button class="btn btn-lg btn-success boldText borderNone" type="button" id="submitTest" name="study">Submit test</button>   
 								</div>
 								
 								<div class="pull-right">
@@ -249,7 +255,7 @@
 		    }, 1000);
 		}
 		else{
-			// showTestCompleteModal();
+			/* showTestCompleteModal(); */
 			$('#notifyCompleted').show();
 			$('#submitTest').text('Show result');
 
@@ -283,7 +289,7 @@
 		});
 
 		function showTestCompleteModal(){
-			// $('#testCompleteModal').resize();
+			/* $('#testCompleteModal').resize(); */
 			$('#testCompleteModal').modal('show');
 		}
 
@@ -419,19 +425,19 @@
 
 		$('#study').click(function(){
 			$('.questionleftPane').hide();
-			$('#studySolution').show(1000);
+			$('#studySolution').fadeIn(1000);
 		});
 
 		$('#goToQuesiton').click(function(){
 			$('.questionleftPane').hide();
-			$('#questionBox').show(1000);
+			$('#questionBox').fadeIn(1000);
 		});
 
 		$('#showComments').click(function(){
 			var id = $(this).data('id');
 			loadComments(id, function(){
 				$('.questionleftPane').hide();
-				$('#discussionForum').show(1000);
+				$('#discussionForum').fadeIn(1000);
 			});
 		});
 
@@ -455,7 +461,7 @@
 
 		$('#studyButton').click(function(){
 			$('.questionleftPane').hide();
-			$('#studySolution').show(1000);
+			$('#studySolution').fadeIn(1000);
 		});
 
 		$('#commentForm').submit(function(e){
@@ -476,7 +482,7 @@
 
 		$('.gotoQuestion').click(function(){
 			$('.questionleftPane').hide();
-			$('#questionBox').show(1000);
+			$('#questionBox').fadeIn(1000);
 		});
 	});
 

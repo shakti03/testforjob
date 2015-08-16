@@ -1,4 +1,4 @@
-@extends('home.layout')
+@extends('home.layout-no-slider')
 @section('content')
 <div class="container">
     <div class="row">

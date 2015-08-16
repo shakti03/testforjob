@@ -11,7 +11,8 @@ class Test  extends Eloquent {
         $userTestPlanIDs = [];
 
         if($planCheck){
-            $userTestPlanIDs = UserTestPlan::where('user_id',$logged_user->id)->lists('id');
+            $userTestPlanIDs = UserTestPlan::where('user_id',$logged_user->id)->lists('plan_id');
+            
             if(empty($userTestPlanIDs)) {
                 return Test::where('test_questions.test_plan_ids','=','-1')->get();    
             }
@@ -44,15 +45,9 @@ class Test  extends Eloquent {
             
         if($planCheck){
             $result =   $result->where(function($query) use($userTestPlanIDs){
-                        $count = 0;
                         foreach($userTestPlanIDs as $planID){
-                            if($count == 0){
-                                $query = $query->where('test_plan_ids','LIKE', '%'.$planID.'%');
-                                $count++;
-                            }
-                            else{
-                                $query = $query->orWhere('test_plan_ids','LIKE', '%,'.$planID.',%');   
-                            }
+
+                            $query = $query->orWhere('test_plan_ids','LIKE', '%#'.$planID.'#%');   
                         }
                     });
             
@@ -60,8 +55,8 @@ class Test  extends Eloquent {
         $result =  $result->groupBy('test_questions.test_type')
                     ->groupBy('test_questions.question_type')
                     ->groupBy('test_questions.test_name')
-                    ->get();
-        // echo '<pre>'; print_r($result) ; echo '</pre>'; exit;                    
+                    ->get();                   
+                    
         return $result;             
     }
 

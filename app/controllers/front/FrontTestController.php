@@ -206,11 +206,16 @@ class FrontTestController extends Controller {
             }
         }
         else{
+
             $qanswer = Test::getAnswer($qid);
             $answer['correct'] = lcfirst($qanswer);
             $answer['user_answer'] = $inputs['answer'];
             $testData['answers'][$qid] = $answer;
             
+            $testHistory = TestHistory::find($testData['testHistory_id']);
+            $testHistory->answers = $answer['user_answer'];
+            $testHistory->end_time = Date('Y-m-d h:i:s');
+            $testHistory->save();
         }
 
         Session::put('test_data',$testData);
